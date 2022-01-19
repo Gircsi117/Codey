@@ -1,0 +1,70 @@
+body{
+    background-color: black;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    background-color: white;
+    min-height: 50vh;
+    padding: 0;
+}
+
+header{
+    height: 200px;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-form input{
+    margin-bottom: 10px;
+}
+
+.content{
+    min-height: 450px;
+}
+
+.content div{
+    height: 500px;
+}
+
+.left-side-bar{
+    background-color: burlywood;
+}
+
+.right-side-bar{
+    background-color: coral;
+}
+
+.left-side-bar div{
+    height: 45%;
+    width: 95%;
+    background-color: darkgray;
+}
+
+footer{
+    background-color: gray;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.kozep{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alul{
+    margin-bottom: 15px;
+}
+
+.profil-item{
+    background-color: gray;
+}
