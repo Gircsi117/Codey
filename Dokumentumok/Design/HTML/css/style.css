@@ -1,5 +1,14 @@
+:root {
+    --a: #BA9568;
+    --b: #7A6245;
+    --c: #FAC98D;
+    --d: #3B2F21;
+    --e: #E0B47E;
+    --f: rgba(245, 222, 179, 0.9);
+  }
+
 body{
-    background-color: rgb(67, 78, 60);
+    background-color: var(--d);
 }
 
 *{
@@ -25,7 +34,7 @@ header{
 
 header h1{
     padding: 5px;
-    background-color: rgba(245, 222, 179, 0.9);
+    background-color: var(--f);
     text-align: center;
     width: 100%;
 }
@@ -44,7 +53,7 @@ header h1{
 
 
 footer{
-    background-color: gray;
+    background-color: var(--b);
     height: 50px;
     display: flex;
     justify-content: center;
@@ -52,11 +61,19 @@ footer{
 }
 
 .gray{
-    background-color: gray;
+    background-color: var(--c);
 }
 
 .left-bar{
-    background-color: rgb(202, 241, 228);
+    background-color: var(--a);
+}
+
+.right-bar{
+    background-color: var(--c);
+}
+
+.right-bar h3{
+    background-color: var(--f);
 }
 
 .row{
@@ -73,7 +90,7 @@ footer{
 }
 
 input[type=submit]{
-    background-color: rgb(0, 90, 255);
+    background-color: var(--b);
     color: white;
     padding: 5px;
     box-shadow: none;
