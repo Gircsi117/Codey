@@ -94,6 +94,7 @@ input[type=submit]{
     color: white;
     padding: 5px;
     box-shadow: none;
+    border: 0;
 }
 
 input[type=submit]:hover{
