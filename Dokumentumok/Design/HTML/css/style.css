@@ -1,5 +1,5 @@
 body{
-    background-color: black;
+    background-color: rgb(67, 78, 60);
 }
 
 *{
@@ -9,11 +9,13 @@ body{
 
 .container{
     background-color: white;
-    min-height: 50vh;
     padding: 0;
 }
 
 header{
+    background-image: url('../Img/header.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
     height: 200px;
     background-color: aqua;
     display: flex;
@@ -21,31 +23,25 @@ header{
     align-items: center;
 }
 
+header h1{
+    padding: 5px;
+    background-color: rgba(245, 222, 179, 0.9);
+    text-align: center;
+    width: 100%;
+}
+
+.nav-item{
+    border-radius: 5px;
+}
+
+.nav-item:hover{
+    background-color: rgba(255, 0, 0, 0.8);
+}
+
 .user-form input{
     margin-bottom: 10px;
 }
 
-.content{
-    min-height: 450px;
-}
-
-.content div{
-    height: 500px;
-}
-
-.left-side-bar{
-    background-color: burlywood;
-}
-
-.right-side-bar{
-    background-color: coral;
-}
-
-.left-side-bar div{
-    height: 45%;
-    width: 95%;
-    background-color: darkgray;
-}
 
 footer{
     background-color: gray;
@@ -55,16 +51,29 @@ footer{
     align-items: center;
 }
 
+.gray{
+    background-color: gray;
+}
+
+.left-bar{
+    background-color: rgb(202, 241, 228);
+}
+
+.row{
+    margin: 0;
+    padding: 0;
+}
+
+.etkezes, .mozgas{
+    min-height: 200px;
+}
+
+.food-item{
+    border: 1px solid black;
+}
+
 .kozep{
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.alul{
-    margin-bottom: 15px;
-}
-
-.profil-item{
-    background-color: gray;
 }
