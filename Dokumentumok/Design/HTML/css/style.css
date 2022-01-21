@@ -96,6 +96,11 @@ input[type=submit]{
     box-shadow: none;
 }
 
+input[type=submit]:hover{
+    background-color: var(--f);
+    color: black;
+}
+
 .food-item{
     border: 1px solid black;
 }
