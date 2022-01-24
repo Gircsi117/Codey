@@ -1,14 +1,21 @@
 :root {
-    --a: #BA9568;
-    --b: #7A6245;
-    --c: #FAC98D;
-    --d: #3B2F21;
-    --e: #E0B47E;
-    --f: rgba(245, 222, 179, 0.9);
+    --content: #6F4E37;
+    --div: #A67B5B;
+    --button: #6F4E37;
+    --footer: #EFB67E;
+
+    --body: #301e0c;
+    --cim-back: #fed8b1e7;
+    --cim: #000000;
+    --button-text: #e9e9e9;
+    --button-hover: #fed8b1e7;
+    --button-hover-text: #030303;
+    --text: #ffffff;
+    --footer-text: #000000;
   }
 
 body{
-    background-color: var(--d);
+    background-color: var(--body);
 }
 
 *{
@@ -17,8 +24,8 @@ body{
 }
 
 .container{
-    background-color: white;
     padding: 0;
+    color: var(--text);
 }
 
 header{
@@ -34,7 +41,8 @@ header{
 
 header h1{
     padding: 5px;
-    background-color: var(--f);
+    background-color: var(--cim-back);
+    color: var(--cim);
     text-align: center;
     width: 100%;
 }
@@ -44,16 +52,21 @@ header h1{
 }
 
 .nav-item:hover{
-    background-color: rgba(255, 0, 0, 0.8);
+    background-color: var(--content);
+    color: black;
 }
 
 .user-form input{
     margin-bottom: 10px;
 }
 
+.content{
+    background-color: var(--content);
+}
 
 footer{
-    background-color: var(--b);
+    background-color: var(--footer);
+    color: var(--footer-text);
     height: 50px;
     display: flex;
     justify-content: center;
@@ -61,19 +74,15 @@ footer{
 }
 
 .gray{
-    background-color: var(--c);
+    background-color: var(--div);
 }
 
 .left-bar{
-    background-color: var(--a);
+    background-color: var(--content);
 }
 
 .right-bar{
-    background-color: var(--c);
-}
-
-.right-bar h3{
-    background-color: var(--f);
+    background-color: var(--div);
 }
 
 .row{
@@ -89,17 +98,21 @@ footer{
     margin-bottom: 10px;
 }
 
+input, label{
+    color: black;
+}
+
 input[type=submit]{
-    background-color: var(--b);
-    color: white;
+    background-color: var(--button);
+    color: var(--button-text);
     padding: 5px;
     box-shadow: none;
     border: 0;
 }
 
 input[type=submit]:hover{
-    background-color: var(--f);
-    color: black;
+    background-color: var(--button-hover);
+    color: var(--button-hover-text);
 }
 
 .food-item{
