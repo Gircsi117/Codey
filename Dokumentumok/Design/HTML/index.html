@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" ng-app="CodyApp">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,9 +14,9 @@
         <header>
             <h1>Home</h1>
         </header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark alma">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark alma" ng-controller="menuCtrl">
             <div class="container-fluid">
-                <a class="navbar-brand" href="./login.html">Cody</a>
+                <a class="navbar-brand" href="./login.html">{{ nev }}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -30,12 +30,7 @@
                               Eszküzök
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Cél meghatározása</a></li>
-                                <li><a class="dropdown-item" href="#">Étkezési napló</a></li>
-                                <li><a class="dropdown-item" href="#">Grafikonok</a></li>
-                                <li><a class="dropdown-item" href="#">Kalória táblázat</a></li>
-                                <li><a class="dropdown-item" href="#">Saját ételek</a></li>
-                                <li><a class="dropdown-item" href="#">Beállítások</a></li>
+                                <li ng-repeat="item in eszkozok"><a class="dropdown-item" href="{{item.url}}">{{item.name}}</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -43,10 +38,7 @@
                               Információ
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Blog</a></li>
-                                <li><a class="dropdown-item" href="#">GYIK</a></li>
-                                <li><a class="dropdown-item" href="#">Kalóriaszámlálásról</a></li>
-                                <li><a class="dropdown-item" href="#">Rólunk</a></li>
+                                <li ng-repeat="item in info"><a class="dropdown-item" href="{{item.url}}">{{item.name}}</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -131,6 +123,7 @@
         </footer>
     </div>
 
+    <script src="./js/angular.min.js"></script>
     <script src="./js/bootstrap.js"></script>
     <script src="./js/jquery-3.6.0.min.js"></script>
     <script src="./js/jquery-ui.min.js"></script>
