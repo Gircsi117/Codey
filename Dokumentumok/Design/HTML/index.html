@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu" ng-app="CodyApp">
+<html lang="hu" ng-app="CodyApp" ng-init="page='Home'">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,42 +11,11 @@
 </head>
 <body>
     <div class="container mt-0 mt-sm-3">
-        <header>
-            <h1>Home</h1>
-        </header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark alma" ng-controller="menuCtrl">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="./login.html">{{ nev }}</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav pt-2 pt-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link ps-2 p-lg-2" href="./index.html">Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle ps-2 p-lg-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Eszküzök
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li ng-repeat="item in eszkozok"><a class="dropdown-item" href="{{item.url}}">{{item.name}}</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle ps-2 p-lg-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Információ
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li ng-repeat="item in info"><a class="dropdown-item" href="{{item.url}}">{{item.name}}</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+
+        <menu></menu>
+
         <div class="content row m-0 p-0">
-            <div class="left-bar col-12 col-md-8 d-flex flex-column">
+            <div class="left-bar col-12 col-md-9 d-flex flex-column">
                 <div class="etkezes kozep gray m-3">
                     <div class="col-10 col-md-9 m-3">
                         <h2>Étkezés felvétele</h2>
@@ -108,19 +77,18 @@
                     </form>
                 </div>
             </div>
-            <div class="right-bar col-12 col-md-4">
+            <div class="right-bar col-12 col-md-3">
                 <h3 class="text-center p-2">Hírek</h3>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem iste ullam iusto blanditiis ipsum officiis quos, culpa hic mollitia, error nam eos nesciunt laboriosam porro! Minima enim quas placeat inventore.
                 <hr style="color: black; height: 2px; opacity: 1;">
                 <img src="./Img/water.jpg" title="Water.jpg" class="col-12">
                 <label for="vizMennyiseg" id="water-text" class="text-center col-12">Víz mennyiség: 3dl</label>
-                <input type="range" name="vizMennyiseg" id="waterRange" class="col-12" min="1" max="10" value="3">
+                <input type="range" name="vizMennyiseg" id="waterRange" class="col-12" min="1" max="5" value="3">
                 <input type="submit" value="Felvétel" class="col-12 mb-2">
             </div>
         </div>
-        <footer>
-            <h2>Footer</h2>
-        </footer>
+        
+        <own-footer></own-footer>
     </div>
 
     <script src="./js/angular.min.js"></script>
