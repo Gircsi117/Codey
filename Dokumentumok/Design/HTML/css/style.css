@@ -124,3 +124,9 @@ input[type=submit]:hover{
     justify-content: center;
     align-items: center;
 }
+
+.gyik-item{
+    background-color: var(--div);
+    padding: 15px;
+    margin-bottom: 20px;
+}
