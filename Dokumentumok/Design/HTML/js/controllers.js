@@ -6,7 +6,7 @@ app.controller("menuCtrl", ($scope)=>{
         {name:"Grafikonok", url:"#"},
         {name:"Kalória táblázat", url:"#"},
         {name:"Saját ételek", url:"#"},
-        {name:"Beállítások", url:"#"}
+        {name:"Beállítások", url:"settings.html"}
     ];
     $scope.info = [
         {name:"Blog", url:"blog.html"},

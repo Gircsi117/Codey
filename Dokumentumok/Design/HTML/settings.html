@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="hu" ng-app="CodyApp" ng-init="page='Settings'">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./Img/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div class="container mt-0 mt-sm-3">
+
+        <menu></menu>
+        <div class="content row justify-content-around m-0 p-3">
+
+            <form class="user-form col-12 col-lg-6 p-4">
+                <h1 class="h3 mb-3 fw-normal">Adatlap módosítása</h1>
+                
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Username">
+                    <label for="floatingInput">Username</label>
+                </div>
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">New password</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">New password again</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Napi tápanyag eloszlás</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Napi tápanyag javaslat</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Napi kalória keret</label>
+                </div>
+                <input class="col-12 p-2" style="border-radius: 5px; font-size: larger;" type="submit" value="Módosítás">
+            </form>
+
+            <div class="col-12 col-lg-6 p-3 pe-3 pe-lg-0 kozep">
+                <img src="./Img/avatar.png" alt="" class="col-12 m-0 p-0">
+
+            </div>
+            
+        </div>
+        <own-footer></own-footer>
+
+    </div>
+
+    <script src="./js/systemJs/angular.min.js"></script>
+    <script src="./js/systemJs/bootstrap.js"></script>
+    <script src="./js/systemJs/jquery-3.6.0.min.js"></script>
+    <script src="./js/systemJs/jquery-ui.min.js"></script>
+    <script src="./js/code.js"></script>
+    <script src="./js/controllers.js"></script>
+    <script src="./js/directives.js"></script>
+    <script src="./js/filters.js"></script>
+</body>
+</html>

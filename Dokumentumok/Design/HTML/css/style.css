@@ -103,12 +103,17 @@ input, label{
     color: black;
 }
 
+.user-form{
+    background-color: var(--div);
+}
+
 input[type=submit]{
     background-color: var(--button);
     color: var(--button-text);
     padding: 5px;
     box-shadow: none;
     border: 0;
+    border: 1px solid black;
 }
 
 input[type=submit]:hover{
@@ -156,4 +161,36 @@ input[type=submit]:hover{
     height: 345px;
     overflow: hidden;
     margin-bottom: 25px;
+}
+
+.form-switch{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.form-switch input[type=checkbox]{
+    margin: 0;
+    width: 60px;
+    padding: 15px;
+    color: yellow;
+    margin-right: 5px;
+    border: 1px solid var(--footer);
+    color: red;
+}
+
+input[type=checkbox]:checked{
+    background-color: var(--footer);
+    border: 1px solid var(--footer);
+}
+
+input[type=checkbox]:focus{
+    box-shadow: none;
+    border: 1px solid var(--footer);
+}
+
+.form-switch label{
+    color: var(--text);
+    font-size: larger;
 }
