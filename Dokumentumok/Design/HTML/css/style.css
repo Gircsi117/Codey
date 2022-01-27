@@ -151,3 +151,9 @@ input[type=submit]:hover{
     color: white;
     border: 1px solid black;
 }
+
+.blog-content{
+    height: 345px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
