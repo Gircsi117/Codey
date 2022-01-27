@@ -17,7 +17,7 @@ app.directive("menu", ()=>{
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle ps-2 p-lg-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Eszküzök
+                                Eszközök
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li ng-repeat="item in eszkozok"><a class="dropdown-item" href="{{item.url}}">{{item.name}}</a></li>
@@ -96,7 +96,7 @@ app.directive("blogItem", ()=>{
                     <h2 class="d-block p-0" style="width: calc(100% - 100px)">{{cim}}</h2>
                     <button style="width: 100px" class="{{status}}">Status</button>
                 </div>
-                <h6>{{szerkeszto}}</h6>
+                <h6>Made by: {{szerkeszto}}</h6>
                 <hr>
                 <div class="blog-content">
                     <p>{{tartalom}}</p>
