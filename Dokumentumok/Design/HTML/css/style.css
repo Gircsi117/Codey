@@ -75,6 +75,7 @@ footer{
 
 .gray{
     background-color: var(--div);
+    padding: 15px;
 }
 
 .left-bar{
@@ -129,4 +130,12 @@ input[type=submit]:hover{
     background-color: var(--div);
     padding: 15px;
     margin-bottom: 20px;
+}
+
+.nevjegy h1{
+    background-color: var(--body);
+    color: var(--button-text);
+    width: 100%;
+    text-align: center;
+    border-radius: 0 0 5px 5px
 }
