@@ -15,7 +15,7 @@ app.controller("menuCtrl", function ($scope) {
         {name:"Beállítások", url:"#"}
     ];
     $scope.info = [
-        {name:"Blog", url:"#"},
+        {name:"Blog", url:"blog.html"},
         {name:"GYIK", url:"gyik.html"},
         {name:"Kalóriaszámlálásról", url:"#"},
         {name:"Rólunk", url:"rolunk.html"}
@@ -27,6 +27,15 @@ app.controller("gyikCtrl", ($scope)=>{
         { kerdes:"Kérdés?", valasz: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of de Finibus Bonorum et Malorum (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, Lorem ipsum dolor sit amet.., comes from a line in section 1.10.32."},
         { kerdes:"Kérdés?", valasz: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."}
     ];
+})
+
+app.controller("blogCtrl", ($scope)=>{
+    $scope.blogs = [
+        {cim: "Első", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:true},
+        {cim: "Első", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:true},
+        {cim: "Első", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:false},
+        {cim: "Első", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:true},
+    ]
 })
 
 app.directive("menu", ()=>{
@@ -108,6 +117,28 @@ app.directive("nevjegy", ()=>{
                 <h1>{{nev}}</h1>
                 <p>{{leiras}}</p>
             </div>
+        `
+    }
+})
+
+app.directive("blogItem", ()=>{
+    return {
+        scope:{
+            cim: "@",
+            tartalom:"@",
+            datum:"@",
+            szerkeszto:"@",
+            status:"@"
+        },
+        template: `
+            <div class="row p-0 m-0">
+                <h2 class="d-block" style="width: calc(100% - 100px)">{{cim}}</h2>
+                <button style="width: 100px" class="${(true)?("green"):("red")}">{{status}}</button>
+            </div>
+            <div>
+
+            </div>
+
         `
     }
 })
