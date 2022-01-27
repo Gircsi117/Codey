@@ -31,10 +31,10 @@ app.controller("gyikCtrl", ($scope)=>{
 
 app.controller("blogCtrl", ($scope)=>{
     $scope.blogs = [
-        {cim: "Első", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:true},
-        {cim: "Első", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:true},
-        {cim: "Első", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:false},
-        {cim: "Első", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:true},
+        {cim: "Első", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:"true"},
+        {cim: "Második", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:"true"},
+        {cim: "Harmadik", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:"false"},
+        {cim: "Negyedik", tartalom:"Ez a tartalom", datum:"2022.01.27 10:11", szerkeszto:"Erik", status:"true"},
     ]
 })
 
@@ -123,22 +123,27 @@ app.directive("nevjegy", ()=>{
 
 app.directive("blogItem", ()=>{
     return {
+        controller: function($scope) {
+            
+        },
         scope:{
             cim: "@",
-            tartalom:"@",
-            datum:"@",
-            szerkeszto:"@",
-            status:"@"
+            tartalom: "@",
+            datum: "@",
+            szerkeszto: "@",
+            status: "@"
         },
         template: `
             <div class="row p-0 m-0">
                 <h2 class="d-block" style="width: calc(100% - 100px)">{{cim}}</h2>
-                <button style="width: 100px" class="${(true)?("green"):("red")}">{{status}}</button>
+                <button style="width: 100px" class="{{status}}">{{status}}</button>
             </div>
-            <div>
-
-            </div>
-
         `
+    }
+})
+
+app.filter("blogStatus", ()=>{
+    return (x)=>{
+        return x
     }
 })

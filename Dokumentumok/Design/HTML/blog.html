@@ -16,16 +16,15 @@
         <div class="content row m-0 p-3" ng-controller="blogCtrl">
 
             <blog-item
-                ng-repeat="item in blogs"
+                ng-repeat="item in blogs | blog-status"
 
                 cim="{{item.cim}}"
                 tartalom="{{item.tartalom}}"
                 datum="{{item.datum}}"
                 szerkeszto="{{item.szerkeszto}}"
-                status="{{item.status}}"
+                status="{{item.status }}"
                 class="gray mt-3"
             ></blog-item>
-
                 
         </div>
         <own-footer></own-footer>
