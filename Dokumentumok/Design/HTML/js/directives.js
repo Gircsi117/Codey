@@ -31,6 +31,9 @@ app.directive("menu", ()=>{
                                     <li ng-repeat="item in info"><a class="dropdown-item" href="{{item.url}}">{{item.name}}</a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item log-out">
+                                <a class="nav-link ps-2 p-lg-2" href="#">Log out</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
