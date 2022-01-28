@@ -190,7 +190,19 @@ input[type=checkbox]:focus{
     border: 1px solid var(--footer);
 }
 
-.form-switch label{
+.form-switch label, .date-item label{
     color: var(--text);
     font-size: larger;
+}
+
+.date-item input{
+    padding: 5px;
+}
+
+.date-item td{
+    padding-right: 10px;
+}
+
+.table td, th{
+    color: var(--text);
 }

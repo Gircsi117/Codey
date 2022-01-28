@@ -3,3 +3,9 @@ app.filter("blog_status", ()=>{
         return (x == "true") ? ("green") : ("red")
     }
 })
+
+app.filter("db", ()=>{
+    return (x)=>{
+        var szam = 0;
+    }
+})

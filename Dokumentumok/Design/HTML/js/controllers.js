@@ -2,7 +2,7 @@ app.controller("menuCtrl", ($scope)=>{
     $scope.nev = "Codey";
     $scope.eszkozok = [
         {name:"Cél meghatározása", url:"#"},
-        {name:"Étkezési napló", url:"#"},
+        {name:"Étkezési napló", url:"naplo.html"},
         {name:"Grafikonok", url:"#"},
         {name:"Kalória táblázat", url:"#"},
         {name:"Saját ételek", url:"#"},
@@ -69,5 +69,20 @@ app.controller("blogCtrl", ($scope)=>{
             szerkeszto:"Oszasz",
             status:"false"
         },
+    ]
+})
+
+app.controller("naploCtrl", ($scope)=>{
+    $scope.adatok = [
+        {datum: "2022.01.28", bevitel: "5000", egetes: "1500"},
+        {datum: "2022.01.29", bevitel: "4070", egetes: "1200"},
+        {datum: "2022.01.31", bevitel: "7800", egetes: "3500"},
+        {datum: "2022.02.02", bevitel: "5230", egetes: "1100"},
+        {datum: "2022.02.03", bevitel: "3500", egetes: "500"},
+        {datum: "2022.02.04", bevitel: "9870", egetes: "4000"},
+        {datum: "2022.02.05", bevitel: "2200", egetes: "200"},
+        {datum: "2022.02.06", bevitel: "3600", egetes: "990"},
+        {datum: "2022.02.07", bevitel: "7890", egetes: "2760"},
+        {datum: "2022.02.08", bevitel: "5005", egetes: "1500"},
     ]
 })
