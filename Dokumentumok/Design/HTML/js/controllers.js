@@ -84,5 +84,7 @@ app.controller("naploCtrl", ($scope)=>{
         {datum: "2022.02.06", bevitel: "3600", egetes: "990"},
         {datum: "2022.02.07", bevitel: "7890", egetes: "2760"},
         {datum: "2022.02.08", bevitel: "5005", egetes: "1500"},
+        {datum: "2022.02.09", bevitel: "6750", egetes: "1300"},
+        {datum: "2022.02.10", bevitel: "4930", egetes: "1430"},
     ]
 })

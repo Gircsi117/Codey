@@ -206,3 +206,7 @@ input[type=checkbox]:focus{
 .table td, th{
     color: var(--text);
 }
+
+tfoot tr{
+    background-color: var(--content);
+}

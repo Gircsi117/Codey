@@ -4,8 +4,12 @@ app.filter("blog_status", ()=>{
     }
 })
 
-app.filter("db", ()=>{
+app.filter("count", ()=>{
     return (x)=>{
         var szam = 0;
+        x.forEach(element => {
+            szam++;
+        });
+        return szam
     }
 })
