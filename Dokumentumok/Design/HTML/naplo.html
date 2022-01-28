@@ -16,21 +16,23 @@
         <div class="content row m-0 p-3">
 
             <div class="gray row p-2">
-                <table class="date-item d-block col-12 col-md-7">
-                    <tr>
-                        <td class="d-flex align-items-center"><label for="date-tol">Kezdő dátum:</label></td>
-                        <td><input type="date" name="date-tol" id=""></td>
-                    </tr>
-                    <tr>
-                        <td class="d-flex align-items-center"><label for="date-ig">Vége dátum:</label></td>
-                        <td><input type="date" name="date-ig" id=""></td>
-                    </tr>
+                <table class="date-item col-12 col-md-7">
+                    <tbody style="width: 100%;">
+                        <tr class="col-12">
+                            <td class="d-flex align-items-center"><label for="date-tol">Kezdő dátum:</label></td>
+                            <td><input type="date" name="date-tol" id="" class="col-12"></td>
+                        </tr>
+                        <tr class="col-12">
+                            <td class="d-flex align-items-center"><label for="date-ig">Vége dátum:</label></td>
+                            <td><input type="date" name="date-ig" id="" class="col-12"></td>
+                        </tr>
+                    </tbody>
                 </table>
-                <div class="col-12 col-md-5 d-flex align-items-center mt-3 m-md-0">
-                    <h2 class="col-12 text-start text-md-end">Összesen 12 nap</h2>
+                <hr style="height: 5px; border-radius: 5px; background-color: var(--body);" class="mt-3 md-3 d-block d-md-none">
+                <div class="col-12 col-md-5 d-flex align-items-center  m-md-0">
+                    <h2 class="col-12 text-center text-md-end">Összesen 12 nap</h2>
                 </div>
             </div>
-
             <div class="gray mt-3" ng-controller="naploCtrl">
                 <table class="table table-hover">
                     <thead>
@@ -38,6 +40,7 @@
                             <th>Dátum</th>
                             <th>Bevitel (Kcal)</th>
                             <th>Égetés (Kcal)</th>
+                            <th>Folyadék (dl)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,11 +48,12 @@
                             <td>{{item.datum}}</td>
                             <td>{{item.bevitel}}</td>
                             <td>{{item.egetes}}</td>
+                            <td>{{item.folyadek}}</td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3" class="text-center">Összesen: <strong>{{adatok | count}}</strong></td>
+                            <td colspan="4" class="text-center">Összesen: <strong>{{adatok | count}}</strong></td>
                         </tr>
                     </tfoot>
                 </table>

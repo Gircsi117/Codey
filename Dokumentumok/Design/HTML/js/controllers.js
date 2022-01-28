@@ -74,17 +74,13 @@ app.controller("blogCtrl", ($scope)=>{
 
 app.controller("naploCtrl", ($scope)=>{
     $scope.adatok = [
-        {datum: "2022.01.28", bevitel: "5000", egetes: "1500"},
-        {datum: "2022.01.29", bevitel: "4070", egetes: "1200"},
-        {datum: "2022.01.31", bevitel: "7800", egetes: "3500"},
-        {datum: "2022.02.02", bevitel: "5230", egetes: "1100"},
-        {datum: "2022.02.03", bevitel: "3500", egetes: "500"},
-        {datum: "2022.02.04", bevitel: "9870", egetes: "4000"},
-        {datum: "2022.02.05", bevitel: "2200", egetes: "200"},
-        {datum: "2022.02.06", bevitel: "3600", egetes: "990"},
-        {datum: "2022.02.07", bevitel: "7890", egetes: "2760"},
-        {datum: "2022.02.08", bevitel: "5005", egetes: "1500"},
-        {datum: "2022.02.09", bevitel: "6750", egetes: "1300"},
-        {datum: "2022.02.10", bevitel: "4930", egetes: "1430"},
+        {datum: "2022.01.28", bevitel: "5000", egetes: "1500", folyadek: "15"},
+        {datum: "2022.01.29", bevitel: "4070", egetes: "1200", folyadek: "17"},
+        {datum: "2022.01.31", bevitel: "7800", egetes: "3500", folyadek: "18"},
+        {datum: "2022.02.02", bevitel: "5230", egetes: "1100", folyadek: "14"},
+        {datum: "2022.02.07", bevitel: "7890", egetes: "2760", folyadek: "13"},
+        {datum: "2022.02.08", bevitel: "5005", egetes: "1500", folyadek: "26"},
+        {datum: "2022.02.09", bevitel: "6750", egetes: "1300", folyadek: "30"},
+        {datum: "2022.02.10", bevitel: "4930", egetes: "1430", folyadek: "11"},
     ]
 })
