@@ -86,7 +86,7 @@ app.controller("naploCtrl", ($scope)=>{
 })
 
 app.controller("hozzavaloCtrl", ($scope)=>{
-    $scope.head = ["Név", "Kal/kg", "A-vitamin", "B-vitamin", "C-vitamin"];
+    $scope.head = ["Név", "Kal/kg", "A-vit", "B-vit", "C-vit"];
     $scope.adatok = [
         {nev:"Alma", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
         {nev:"Körte", kal:"150", vitA:"45", vitB:"26", vitC:"78"},

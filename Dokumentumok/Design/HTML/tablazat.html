@@ -14,28 +14,35 @@
 
         <menu></menu>
         <div class="content row m-0 p-3">
+            <div class="d-flex align-items-center gray mb-3">
 
-           <table class="table table-hover" ng-controller="hozzavaloCtrl">
-                <thead>
-                    <tr>
-                        <th ng-repeat="item in head">{{item}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in adatok">
-                        <td>{{item.nev}}</td>
-                        <td>{{item.kal}}</td>
-                        <td>{{item.vitA}}</td>
-                        <td>{{item.vitB}}</td>
-                        <td>{{item.vitC}}</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="{{head | count}}" class="text-center" style="background-color: var(--body);"> Összes hozzávaló: <strong>{{adatok | count}}</strong></td>
-                    </tr>
-                </tfoot>
-           </table>
+                <label for="" class="pe-3">Szűrés:</label>
+                <input type="text" >
+
+            </div>
+            <div class="gray">
+                <table class="table table-hover" ng-controller="hozzavaloCtrl">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="item in head">{{item}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in adatok">
+                            <td>{{item.nev}}</td>
+                            <td>{{item.kal}}</td>
+                            <td>{{item.vitA}}</td>
+                            <td>{{item.vitB}}</td>
+                            <td>{{item.vitC}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="{{head | count}}" class="text-center" style="background-color: var(--body);"> Összes hozzávaló: <strong>{{adatok | count}}</strong></td>
+                        </tr>
+                    </tfoot>
+            </table>
+           </div>
                 
         </div>
         <own-footer></own-footer>
