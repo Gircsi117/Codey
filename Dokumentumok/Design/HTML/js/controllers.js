@@ -86,24 +86,17 @@ app.controller("naploCtrl", ($scope)=>{
 })
 
 app.controller("hozzavaloCtrl", ($scope)=>{
-    $scope.head = ["Név", "Kal/kg", "A-vit", "B-vit", "C-vit"];
+    $scope.head = ["Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír"];
     $scope.adatok = [
-        {nev:"Alma", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Körte", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Krumli", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Liszt", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Cukor", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Só", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Saláta", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Káposzta", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Uborka", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Paradicsom", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Hagyma", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Marha hús", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Csirke hús", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Disznó hús", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Tojás", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Margarin", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-        {nev:"Olaj", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
-    ]
+        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+    ];
 })
