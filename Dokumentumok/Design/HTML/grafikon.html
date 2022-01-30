@@ -8,6 +8,45 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/style.css">
     <title>{{ title }}</title>
+    <script>
+        window.onload = function() {
+        
+        var dataPoints = [];
+        
+        var options =  {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Fogyasztások"
+            },
+            axisX: {
+                valueFormatString: "DD MMM YYYY",
+            },
+            axisY: {
+                title: "USD",
+                titleFontSize: 24
+            },
+            data: [{
+                type: "spline", 
+                yValueFormatString: "$#,###.##",
+                dataPoints: dataPoints
+            }]
+        };
+        
+        function addData(data) {
+            for (var i = 0; i < data.length; i++) {
+                dataPoints.push({
+                    x: new Date(data[i].date),
+                    y: data[i].units
+                });
+            }
+            $("#chartContainer").CanvasJSChart(options);
+        
+        }
+        $.getJSON("https://canvasjs.com/data/gallery/jquery/daily-sales-data.json", addData);
+        
+        }
+    </script>
 </head>
 <body>
     <div class="container mt-0 mt-sm-3">
@@ -15,7 +54,9 @@
         <menu></menu>
         <div class="content row m-0 p-3">
 
-           
+            <div class="gray">
+                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            </div>
                 
         </div>
         <own-footer></own-footer>
@@ -26,6 +67,8 @@
     <script src="./js/systemJs/bootstrap.js"></script>
     <script src="./js/systemJs/jquery-3.6.0.min.js"></script>
     <script src="./js/systemJs/jquery-ui.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     <script src="./js/code.js"></script>
     <script src="./js/controllers.js"></script>
     <script src="./js/directives.js"></script>

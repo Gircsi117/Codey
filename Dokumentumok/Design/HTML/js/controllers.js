@@ -3,7 +3,7 @@ app.controller("menuCtrl", ($scope)=>{
     $scope.eszkozok = [
         {name:"Cél meghatározása", url:"#"},
         {name:"Étkezési napló", url:"naplo.html"},
-        {name:"Grafikonok", url:"#"},
+        {name:"Grafikonok", url:"grafikon.html"},
         {name:"Kalória táblázat", url:"tablazat.html"},
         {name:"Saját ételek", url:"#"},
         {name:"Beállítások", url:"settings.html"}
