@@ -4,7 +4,7 @@ app.controller("menuCtrl", ($scope)=>{
         {name:"Cél meghatározása", url:"#"},
         {name:"Étkezési napló", url:"naplo.html"},
         {name:"Grafikonok", url:"#"},
-        {name:"Kalória táblázat", url:"#"},
+        {name:"Kalória táblázat", url:"tablazat.html"},
         {name:"Saját ételek", url:"#"},
         {name:"Beállítások", url:"settings.html"}
     ];
@@ -82,5 +82,28 @@ app.controller("naploCtrl", ($scope)=>{
         {datum: "2022.02.08", bevitel: "5005", egetes: "1500", folyadek: "26"},
         {datum: "2022.02.09", bevitel: "6750", egetes: "1300", folyadek: "30"},
         {datum: "2022.02.10", bevitel: "4930", egetes: "1430", folyadek: "11"},
+    ]
+})
+
+app.controller("hozzavaloCtrl", ($scope)=>{
+    $scope.head = ["Név", "Kal/kg", "A-vitamin", "B-vitamin", "C-vitamin"];
+    $scope.adatok = [
+        {nev:"Alma", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Körte", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Krumli", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Liszt", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Cukor", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Só", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Saláta", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Káposzta", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Uborka", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Paradicsom", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Hagyma", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Marha hús", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Csirke hús", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Disznó hús", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Tojás", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Margarin", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
+        {nev:"Olaj", kal:"150", vitA:"45", vitB:"26", vitC:"78"},
     ]
 })
