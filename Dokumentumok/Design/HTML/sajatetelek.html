@@ -28,10 +28,11 @@
                             <option ng-repeat="item in adatok" value="{{item.nev}}">
                         </datalist>
                         <div class="form-floating p-0 col-6">
-                            <input type="number" class="form-control" id="floatingInput" placeholder="Username">
-                            <label for="floatingInput">Mennyiség gramm-ban</label>
+                            <input type="number" class="form-control" id="floatingInput" placeholder="Username" min="0">
+                            <label for="floatingInput">Mennyiség(g)</label>
                         </div>
                     </div>
+                    <input class="p-2" style="border-radius: 5px; font-size: larger;" type="submit" value="Hozzáad">
                     <input class="col-12 p-2" style="border-radius: 5px; font-size: larger;" type="submit" value="Mentés">
                 </form>
             </div>
