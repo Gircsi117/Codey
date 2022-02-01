@@ -1,7 +1,7 @@
 app.controller("menuCtrl", ($scope)=>{
     $scope.nev = "Codey";
     $scope.eszkozok = [
-        {name:"Cél meghatározása", url:"#"},
+        {name:"Cél meghatározása", url:"cel.html"},
         {name:"Étkezési napló", url:"naplo.html"},
         {name:"Grafikonok", url:"grafikon.html"},
         {name:"Kalória táblázat", url:"tablazat.html"},
