@@ -67,10 +67,6 @@ header h1{
 footer{
     background-color: var(--footer);
     color: var(--footer-text);
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .gray{
