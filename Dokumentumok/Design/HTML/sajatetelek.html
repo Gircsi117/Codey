@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="hu" ng-app="CodyApp" ng-init="page='Saját ételek'">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./Img/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div class="container mt-0 mt-sm-3">
+
+        <menu></menu>
+        <div class="content row m-0 p-3" ng-controller="sajatetelekCtrl">
+            <div class="gray">
+                <form class="user-form col-12 p-4">
+                    <h1 class="h3 mb-3 fw-normal">Adatlap módosítása</h1>
+                    
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Username">
+                        <label for="floatingInput">Étel neve</label>
+                    </div>
+                    <div class="row p-0 m-0">
+                        <input class="form-control" list="browsers" name="browser" id="browser" placeholder="Hozzávaló neve" style="width: 50%;">
+                        <datalist id="browsers" ng-controller="hozzavaloCtrl">
+                            <option ng-repeat="item in adatok" value="{{item.nev}}">
+                        </datalist>
+                        <div class="form-floating p-0 col-6">
+                            <input type="number" class="form-control" id="floatingInput" placeholder="Username">
+                            <label for="floatingInput">Mennyiség gramm-ban</label>
+                        </div>
+                    </div>
+                    <input class="col-12 p-2" style="border-radius: 5px; font-size: larger;" type="submit" value="Mentés">
+                </form>
+            </div>
+            <div ng-repeat="item in etelAdatok" class="mt-3 col-12 col-lg-6">
+                <div class="col-12 gray">
+                    <div class="row p-0 m-0 align-items-center">
+                        <h2 class="d-block col-8">{{item.name}}</h2>
+                        <button class="button d-block col-2" style="background-color: yellow;">Edit</button>
+                        <button class="button d-block col-2 red">Delet</button>
+                    </div>
+                    <hr>
+                    <table class="table table-hover" ng-controller="hozzavaloCtrl">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="item in head">{{item}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in adatok">
+                                <td>{{item.nev}}</td>
+                                <td>{{item.kcal}}</td>
+                                <td>{{item.feherje}}</td>
+                                <td>{{item.szenhidrat}}</td>
+                                <td>{{item.zsir}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="{{head | count}}" class="text-center" style="background-color: var(--body);"> Összes hozzávaló: <strong>{{adatok | count}}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+                
+        </div>
+        <own-footer></own-footer>
+
+    </div>
+
+    <script src="./js/systemJs/angular.min.js"></script>
+    <script src="./js/systemJs/bootstrap.js"></script>
+    <script src="./js/systemJs/jquery-3.6.0.min.js"></script>
+    <script src="./js/systemJs/jquery-ui.min.js"></script>
+    <script src="./js/code.js"></script>
+    <script src="./js/controllers.js"></script>
+    <script src="./js/directives.js"></script>
+    <script src="./js/filters.js"></script>
+</body>
+</html>

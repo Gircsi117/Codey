@@ -5,7 +5,7 @@ app.controller("menuCtrl", ($scope)=>{
         {name:"Étkezési napló", url:"naplo.html"},
         {name:"Grafikonok", url:"grafikon.html"},
         {name:"Kalória táblázat", url:"tablazat.html"},
-        {name:"Saját ételek", url:"#"},
+        {name:"Saját ételek", url:"sajatetelek.html"},
         {name:"Beállítások", url:"settings.html"}
     ];
     $scope.info = [
@@ -89,14 +89,25 @@ app.controller("hozzavaloCtrl", ($scope)=>{
     $scope.head = ["Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír"];
     $scope.adatok = [
         {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
-        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
-        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
-        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
-        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
-        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
-        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
-        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
-        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
-        {nev:"Alma", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Só", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Bors", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Csirkemell", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        {nev:"Olivaolaj", kcal:"150", feherje:"45", szenhidrat:"26", zsir:"78"},
+        
     ];
+})
+
+app.controller("sajatetelekCtrl", ($scope)=>{
+    $scope.etelAdatok = [
+        {name:"Rántott hús", url:"rantott-hus.jpg"},
+        {name:"Rántott hús", url:"rantott-hus.jpg"},
+        {name:"Rántott hús", url:"rantott-hus.jpg"},
+        {name:"Rántott hús", url:"rantott-hus.jpg"},
+        {name:"Rántott hús", url:"rantott-hus.jpg"},
+        {name:"Rántott hús", url:"rantott-hus.jpg"},
+        {name:"Rántott hús", url:"rantott-hus.jpg"},
+        {name:"Rántott hús", url:"rantott-hus.jpg"},
+        {name:"Rántott hús", url:"rantott-hus.jpg"},
+
+    ]
 })
