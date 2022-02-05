@@ -73,3 +73,18 @@ exports.postRegisterVerification = async (req, res) => {
       res.send({ success: false });
     });
 };
+
+exports.postLogin = async (req, res) => {
+  const { email, password } = req.body;
+
+  let errors = [];
+  if (!email || !password) errors.push('Tölts ki minden mezőt');
+  if (errors.length > 0) return res.send({ success: false, errors });
+
+  const foundUser = await User.findOne({ where: { email } });
+  if (!foundUser) return res.send({ success: false, errors: ['Helytelen e-mail cím vagy jelszó'] });
+  const isMatching = await bcrypt.compare(password, foundUser.password);
+  if (!isMatching) return res.send({ success: false, errors: ['Helytelen e-mail cím vagy jelszó'] });
+
+  res.send({ success: true, user: foundUser });
+};
