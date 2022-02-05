@@ -1,0 +1,34 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "calorie calculator assistant",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gircsi117/Codey.git"
+  },
+  "author": "PB GE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gircsi117/Codey/issues"
+  },
+  "homepage": "https://github.com/Gircsi117/Codey#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.2",
+    "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.2",
+    "protonmail-api": "^2.2.0",
+    "sequelize": "^6.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
