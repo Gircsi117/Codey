@@ -1,0 +1,23 @@
+const express = require('express');
+const app = express();
+const sequelize = require('sequelize');
+const flash = require('express-flash');
+const bcrypt = require('bcrypt');
+
+const PORT = 3000 || process.env.PORT;
+
+app.set('views', 'views');
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use('/auth', require('./routes/auth.routes'));
+
+app.listen(PORT, (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(`hosting on ${PORT}`);
+  }
+});

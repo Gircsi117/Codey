@@ -1,0 +1,42 @@
+<%- include ('../header.ejs') %>
+<h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+<div class="container kozep gray" style="height: 100vh">
+  <form class="user-form col-10 col-sm-10 col-md-8 col-lg-6" method="POST" id="reg-form">
+    <h1 class="h3 mb-3 fw-normal">Regisztráció</h1>
+
+    <div class="form-floating">
+      <input type="email" class="form-control" id="reg-email" placeholder="name@example.com" />
+      <label for="reg-email">E-mail cím</label>
+    </div>
+    <div class="form-floating">
+      <input type="email" class="form-control" id="reg-username" placeholder="name@example.com" />
+      <label for="reg-email">Felhasználói név</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="password1" placeholder="Jelszó" />
+      <label for="password1">Jelszó</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="password2" placeholder="Jelszó megismétlése" />
+      <label for="password2">Jelszó</label>
+    </div>
+    <input class="col-12 p-2" style="border-radius: 5px; font-size: larger" type="submit" value="Regisztráció" />
+  </form>
+</div>
+<script>
+  $('#reg-form').on('submit', (e) => {
+    e.preventDefault();
+    const email = $('#reg-email').val();
+    const username = $('#reg-username').val();
+    const password1 = $('#password1').val();
+    const password2 = $('#password2').val();
+
+    $.ajax({ method: 'post', url: '/auth/register', data: { email, username, password1, password2 } })
+      .done((res) => {
+        console.log(res);
+      })
+      .fail((err) => {})
+      .always(() => {});
+  });
+</script>
+<%- include ('../footer.ejs') %>
