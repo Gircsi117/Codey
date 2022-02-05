@@ -1,6 +1,6 @@
 <%- include ('../header.ejs') %>
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-<div class="container kozep gray" style="height: 100vh">
+<div class="container kozep gray" style="height: 100vh; display: flex; flex-direction: column">
   <form class="user-form col-10 col-sm-10 col-md-8 col-lg-6" method="POST" id="reg-form">
     <h1 class="h3 mb-3 fw-normal">Regisztráció</h1>
 
@@ -22,6 +22,7 @@
     </div>
     <input class="col-12 p-2" style="border-radius: 5px; font-size: larger" type="submit" value="Regisztráció" />
   </form>
+  <a href="/" class="p-2" style="border-radius: 5px; font-size: larger">Bejelentkezés</a>
 </div>
 <script>
   $('#reg-form').on('submit', (e) => {

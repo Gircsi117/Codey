@@ -1,0 +1,43 @@
+<%- include ('../header') %>
+
+<h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+<div class="container kozep gray" style="height: 100vh; display: flex; flex-direction: column">
+  <form class="user-form col-10 col-sm-10 col-md-8 col-lg-6" id="login-form">
+    <h1 class="h3 mb-3 fw-normal">Bejelentkezés</h1>
+
+    <div class="form-floating">
+      <input type="email" class="form-control" id="login-email" placeholder="name@example.com" />
+      <label for="login-email">Email cím</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="login-password" placeholder="Password" />
+      <label for="login-password">Jelszó</label>
+    </div>
+    <input class="col-12 p-2" style="border-radius: 5px; font-size: larger" type="submit" value="Bejelentkezés" />
+  </form>
+  <a href="/auth/register" class="p-2" style="border-radius: 5px; font-size: larger">Regisztráció</a>
+</div>
+
+<script>
+  $('#login-form').on('submit', (e) => {
+    e.preventDefault();
+    const email = $('#login-email').val();
+    const password = $('#login-password').val();
+
+    $.ajax({ method: 'post', url: '/auth/login', data: { email, password } })
+      .done((res) => {
+        console.log(res);
+        if (!res.success) {
+          res.errors.forEach((error) => {
+            notify(error);
+          });
+          return;
+        }
+        window.location.href = 'http://localhost:3000/';
+      })
+      .fail((err) => {})
+      .always(() => {});
+  });
+</script>
+
+<%- include ('../footer') %>
