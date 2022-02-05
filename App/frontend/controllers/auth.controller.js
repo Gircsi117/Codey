@@ -39,3 +39,35 @@ exports.getRegisterVerification = (req, res) => {
       console.log(err);
     });
 };
+
+exports.getLogin = (req, res) => {
+  res.render('auth/login');
+};
+
+exports.postLogin = (req, res) => {
+  const { email, password } = req.body;
+
+  axios({
+    method: 'post',
+    url: 'http://localhost:3001/auth/login',
+    headers: { apisecret: '123' },
+    data: { email, password },
+  })
+    .then((result) => {
+      console.log(result.data);
+      if (!result.data.success) return res.send(result.data);
+      result.data.user.password = undefined;
+      req.session.user = result.data.user;
+      req.session.isAuth = true;
+      req.session.save();
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.getLogout = async (req, res) => {
+  req.session.destroy();
+  res.redirect('/auth/login');
+};
