@@ -9,7 +9,7 @@
       <label for="reg-email">E-mail cím</label>
     </div>
     <div class="form-floating">
-      <input type="email" class="form-control" id="reg-username" placeholder="name@example.com" />
+      <input type="text" class="form-control" id="reg-username" placeholder="name@example.com" />
       <label for="reg-email">Felhasználói név</label>
     </div>
     <div class="form-floating">
@@ -34,6 +34,14 @@
     $.ajax({ method: 'post', url: '/auth/register', data: { email, username, password1, password2 } })
       .done((res) => {
         console.log(res);
+        if (!res.success) {
+          res.errors.forEach((error) => {
+            notify(error);
+          });
+          return;
+        }
+        notify('Sikeresen regisztráltál');
+        //window.location.href = 'http://localhost:3000/login';
       })
       .fail((err) => {})
       .always(() => {});

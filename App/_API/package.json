@@ -24,6 +24,8 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.17.2",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.2",
+    "protonmail-api": "^2.2.0",
     "sequelize": "^6.15.0"
   },
   "devDependencies": {

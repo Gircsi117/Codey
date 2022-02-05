@@ -14,6 +14,7 @@ User.init(
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     jogosultsag: DataTypes.TINYINT,
+    reg_token: DataTypes.STRING,
     magassag: DataTypes.INTEGER,
     suly: DataTypes.DOUBLE,
     cel_suly: DataTypes.DOUBLE,

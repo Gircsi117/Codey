@@ -1,10 +1,17 @@
 const express = require('express');
 const app = express();
 const sequelize = require('sequelize');
-const flash = require('express-flash');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 
-const PORT = 3000 || process.env.PORT;
+const PORT = 3001 || process.env.PORT;
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(require('./middleware/access.middleware').auth);
+
+app.use('/auth', require('./routes/auth.routes'));
 
 app.listen(PORT, (err) => {
   if (err) {
