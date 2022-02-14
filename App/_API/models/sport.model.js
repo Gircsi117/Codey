@@ -1,5 +1,5 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('Codey_health', 'root', '', {
+const sequelize = new Sequelize('codey_health', 'root', '', {
   dialect: 'mysql',
   dialectOptions: {
     connectTimeout: 5000,
