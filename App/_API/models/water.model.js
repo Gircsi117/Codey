@@ -11,7 +11,7 @@ Water.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     mennyiseg: DataTypes.DOUBLE,
-    datum: DataTypes.DATE,
+    datum: DataTypes.DATEONLY,
     felhasznalo_id: DataTypes.INTEGER,
   },
   { sequelize, tableName: 'folyadek_bevitel', timestamps: false }

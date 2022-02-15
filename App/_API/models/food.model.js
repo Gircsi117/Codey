@@ -11,7 +11,7 @@ Food.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     nev: DataTypes.STRING,
-    hozzadva: DataTypes.DATE,
+    hozzadva: DataTypes.DATEONLY,
     felhasznalo_id: DataTypes.INTEGER,
   },
   { sequelize, tableName: 'etelek', timestamps: false }

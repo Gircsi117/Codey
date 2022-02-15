@@ -11,7 +11,7 @@ Sport.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     felhasznalo_id: DataTypes.INTEGER,
-    datum: DataTypes.DATE,
+    datum: DataTypes.DATEONLY,
     mennyiseg: DataTypes.INTEGER,
   },
   { sequelize, tableName: 'testmozgasok', timestamps: false }
