@@ -84,6 +84,25 @@ exports.postSportByUser = async (req, res)=>{
     return res.send({success: true, item: item});
 }
 
-exports.postFoodByUser = (req, res)=>{
-    
+exports.postFoodByUser = async (req, res)=>{
+    const { id, food } = req.body
+    console.log(food);
+
+    const newFood = await Food.create({
+        nev: food.name,
+        hozzadva: food.date,
+        felhasznalo_id: id
+    })
+
+    if(!newFood) return res.send({success: false});
+
+    food.hozzavalok.forEach(element => {
+        FoodXIngredient.create({
+            etel_id: newFood.id,
+            hozzavalo_id: element.hozzavalo_id,
+            adag_szorzo: element.szorzo
+        })
+    });
+
+    return res.send({success: true});
 }
