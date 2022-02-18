@@ -15,7 +15,7 @@ exports.postGetFoodsByUser = async (req, res) => {
     for await (const food of foods) {
         const foodAssoc = await FoodXIngredient.findAll({ where: { etel_id: food.id } });
 
-        foodsArray.push({ id: food.id, hozzavalok: [] });
+        foodsArray.push({ id: food.id, name: food.nev, hozzavalok: [] });
 
         for await (const foodAssocDetail of foodAssoc) {
             const ing = await Ingredients.findOne({ where: { id: foodAssocDetail.hozzavalo_id } });
@@ -28,22 +28,62 @@ exports.postGetFoodsByUser = async (req, res) => {
         }
     }
 
-    return res.send({ success: true, foodsArray: foodsArray });
+    return res.send({ success: true, foodArray: foodsArray });
 };
 
-exports.postGetSport = async (req, res) => {
-    const { id } = req.body;
+exports.postGetSportByUser = async (req, res) => {
+    const { id, date } = req.body;
 
-    const sports = await Sport.findAll({where: {felhasznalo_id: id}});
+    const sports = await Sport.findAll({where: {felhasznalo_id: id, datum: date}});
 
     return res.send({success: true, sports : sports});
 }
 
-exports.postGetWater = async (req, res) => {
+exports.postGetWaterByUser = async (req, res) => {
     const { id, date } = req.body;
 
     const waters = await Water.findAll({where: {felhasznalo_id: id, datum: date}});
     //console.log(waters);
 
     return res.send({success: true, waters : waters[0]});
+}
+
+exports.postWaterByUser = async (req, res)=>{
+    const {id, mennyiseg, date} = req.body;
+    
+    const foundItem = await Water.findOne({where: {felhasznalo_id: id, datum: date}})
+
+    if (!foundItem) {
+        const item = await Water.create({
+            mennyiseg: mennyiseg,
+            datum: date,
+            felhasznalo_id: id 
+        });
+        return res.send({success: true, item: item});
+    }
+
+    const item = await Water.update({mennyiseg: foundItem.mennyiseg + mennyiseg}, {where: {felhasznalo_id: id, datum: date}});
+    return res.send({success: true, item: item});
+}
+
+exports.postSportByUser = async (req, res)=>{
+    const {id, mennyiseg, date} = req.body;
+    
+    const foundItem = await Sport.findOne({where: {felhasznalo_id: id, datum: date}})
+
+    if (!foundItem) {
+        const item = await Sport.create({
+            mennyiseg: mennyiseg,
+            datum: date,
+            felhasznalo_id: id 
+        });
+        return res.send({success: true, item: item});
+    }
+
+    const item = await Sport.update({mennyiseg: foundItem.mennyiseg + mennyiseg}, {where: {felhasznalo_id: id, datum: date}});
+    return res.send({success: true, item: item});
+}
+
+exports.postFoodByUser = (req, res)=>{
+    
 }
