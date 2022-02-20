@@ -13,6 +13,7 @@ app.use(require('./middleware/access.middleware').auth);
 
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/', require("./routes/user.routes"));
+app.use('/admin', require("./routes/admin.routes"));
 
 app.listen(PORT, (err) => {
   if (err) {
