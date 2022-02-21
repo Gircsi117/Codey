@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const sequelize = require('sequelize');
-const flash = require('express-flash');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 
@@ -15,7 +14,7 @@ app.use(express.json());
 app.use(session({ secret: 'asd', resave: true, saveUninitialized: true }));
 
 app.use('/auth', require('./routes/auth.routes'));
-app.use('/', require('./routes/user.routes'));
+app.use('/', require('./routes/dashboard.routes'));
 
 app.listen(PORT, (err) => {
   if (err) {
