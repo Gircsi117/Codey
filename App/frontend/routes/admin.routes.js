@@ -9,5 +9,6 @@ router.post('/newIngredient', require('../middleware/auth.middleware'), adminCon
 router.post('/setIngredient', require('../middleware/auth.middleware'), adminController.postSetIngredient);
 router.post('/deleteIngredient', require('../middleware/auth.middleware'), adminController.postDeleteIngredient);
 router.post('/setBlogStatus', require('../middleware/auth.middleware'), adminController.postSetBlogStatus);
+router.get('/getAllBlog', require('../middleware/auth.middleware'), adminController.getAllBlogData);
 
 module.exports = router;

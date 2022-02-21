@@ -9,5 +9,6 @@ router.post('/newIngredient', adminController.postNewIngredients);
 router.post('/setIngredient', adminController.postSetIngredient);
 router.post('/deleteIngredient', adminController.postDeleteIngredient);
 router.post('/setBlogStatus', adminController.postSetBlogStatus);
+router.get('/getAllBlogData', adminController.getAllBlogData);
 
 module.exports = router;

@@ -27,7 +27,7 @@ exports.postDeleteUser = async (req, res)=>{
         data: {id}
     })
     .then((results)=>{
-        return res.send({success: true});
+        return res.send({data: results.data});
     })
     .catch((err)=>{
         console.log(err);
@@ -44,7 +44,7 @@ exports.postSetUserData = async (req, res)=>{
         data: {id, username, email, status, magassag, suly, cel}
     })
     .then((results)=>{
-        return res.send({success: true});
+        return res.send({data: results.data});
     })
     .catch((err)=>{
         console.log(err);
@@ -61,7 +61,7 @@ exports.postNewIngredient = async (req, res)=>{
         data: { nev, kcal, feherje, szenhidrat, zsir, ehetoe_magaban }
     })
     .then((results)=>{
-        return res.send({success: true});
+        return res.send({data: results.data});
     })
     .catch((err)=>{
         console.log(err);
@@ -78,7 +78,7 @@ exports.postSetIngredient = async (req, res)=>{
         data: { id, nev, kcal, feherje, szenhidrat, zsir, ehetoe_magaban }
     })
     .then((results)=>{
-        return res.send({success: true});
+        return res.send({data: results.data});
     })
     .catch((err)=>{
         console.log(err);
@@ -95,7 +95,21 @@ exports.postDeleteIngredient = async (req, res)=>{
         data: { id }
     })
     .then((results)=>{
-        return res.send({success: true});
+        return res.send({data: results.data});
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+}
+
+exports.getAllBlogData = async (req, res)=>{
+    axios({
+        method: 'GET',
+        url: 'http://localhost:3001/admin/getAllBlogData',
+        headers: {apisecret: 123}
+    })
+    .then((results)=>{
+        return res.send({success: true, blogs: results.data.blogs});
     })
     .catch((err)=>{
         console.log(err);
@@ -112,7 +126,7 @@ exports.postSetBlogStatus = async (req, res)=>{
         data: { id, status }
     })
     .then((results)=>{
-        return res.send({success: true});
+        return res.send({data: results.data});
     })
     .catch((err)=>{
         console.log(err);

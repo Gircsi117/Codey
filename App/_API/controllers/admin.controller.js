@@ -111,8 +111,12 @@ exports.postSetIngredient = async (req, res) => {
     return res.send({ succes: true });
 };
 
-exports.postGetAllBlogData = async (req, res)=>{
-    //TODO csináld meg a blog adatok lekérését!!!
+exports.getAllBlogData = async (req, res)=>{
+    const blogs = await Blog.findAll();
+
+    if(!blogs) return res.send({succes: false});
+
+    res.send({succes:true, blogs: blogs});
 }
 
 exports.postSetBlogStatus = async (req, res) => {
