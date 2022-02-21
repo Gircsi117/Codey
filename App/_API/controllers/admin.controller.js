@@ -92,16 +92,16 @@ exports.postDeleteIngredient = async (req, res) => {
 };
 
 exports.postSetIngredient = async (req, res) => {
-    const { id, newData } = req.body;
+    const { id, nev, kcal, feherje, szenhidrat, zsir, ehetoe_magaban } = req.body;
 
     const updated = await Ingredients.update(
         {
-            nev: newData.nev,
-            kcal: newData.kcal,
-            feherje: newData.feherje,
-            szenhidrat: newData.szenhidrat,
-            zsir: newData.zsir,
-            ehetoe_magaban: newData.ehetoe_magaban,
+            nev: nev,
+            kcal: kcal,
+            feherje: feherje,
+            szenhidrat: szenhidrat,
+            zsir: zsir,
+            ehetoe_magaban: ehetoe_magaban,
         },
         { where: { id: id } }
     );
@@ -110,6 +110,10 @@ exports.postSetIngredient = async (req, res) => {
 
     return res.send({ succes: true });
 };
+
+exports.postGetAllBlogData = async (req, res)=>{
+    //TODO csináld meg a blog adatok lekérését!!!
+}
 
 exports.postSetBlogStatus = async (req, res) => {
     const { id, status } = req.body;
