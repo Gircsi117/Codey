@@ -16,6 +16,7 @@ app.use(session({ secret: 'asd', resave: true, saveUninitialized: true }));
 
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/admin', require('./routes/admin.routes'));
+app.use('/info', require('./routes/info.routes'));
 app.use('/', require('./routes/user.routes'));
 
 app.listen(PORT, (err) => {
