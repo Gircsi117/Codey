@@ -13,19 +13,19 @@ exports.postGetAllUserData = async (req, res) => {
     const { id } = req.body;
 
     const users = await User.findAll({ where: { id: { [Op.not]: id } } });
-    return res.send({ succes: true, users: users });
+    return res.send({ success: true, users: users });
 };
 
 exports.postDeleteUser = async (req, res) => {
     const { id } = req.body;
 
     const user = await User.findOne({ where: { id: id } });
-    if (!user) return res.send({ succes: false, err: 'Felhasználó nem található!' });
+    if (!user) return res.send({ success: false, err: 'Felhasználó nem található!' });
 
     const deleted = await user.destroy();
-    if (!deleted) return res.send({ succes: false, err: 'A felhasználó adatainak törlése sikertelen!' });
+    if (!deleted) return res.send({ success: false, err: 'A felhasználó adatainak törlése sikertelen!' });
 
-    return res.send({ succes: true });
+    return res.send({ success: true });
 };
 
 exports.postSetUserData = async (req, res) => {
@@ -57,9 +57,9 @@ exports.postSetUserData = async (req, res) => {
         { where: { id: id } }
     );
 
-    if (!user) return res.send({ succes: false, err: 'Sikertelen adatmódosítás' });
+    if (!user) return res.send({ success: false, err: 'Sikertelen adatmódosítás' });
 
-    return res.send({succes: true});
+    return res.send({success: true});
 };
 
 exports.postNewIngredients = async (req, res) => {
@@ -74,21 +74,21 @@ exports.postNewIngredients = async (req, res) => {
         ehetoe_magaban: ehetoe_magaban,
     });
 
-    if (!newIngredients) return res.send({ succes: false, err: 'Sikertelen felvétel!' });
+    if (!newIngredients) return res.send({ success: false, err: 'Sikertelen felvétel!' });
 
-    return res.send({ succes: true });
+    return res.send({ success: true });
 };
 
 exports.postDeleteIngredient = async (req, res) => {
     const { id } = req.body;
 
     const ingredient = await Ingredients.findOne({ where: { id: id } });
-    if (!ingredient) return res.send({ succes: false, err: 'A hozzávaló nem található!' });
+    if (!ingredient) return res.send({ success: false, err: 'A hozzávaló nem található!' });
 
     const deleted = await ingredient.destroy();
-    if (!deleted) return res.send({ succes: false, err: 'A hozzávaló adatainak törlése sikertelen!' });
+    if (!deleted) return res.send({ success: false, err: 'A hozzávaló adatainak törlése sikertelen!' });
 
-    return res.send({ succes: true });
+    return res.send({ success: true });
 };
 
 exports.postSetIngredient = async (req, res) => {
@@ -106,17 +106,17 @@ exports.postSetIngredient = async (req, res) => {
         { where: { id: id } }
     );
 
-    if (!updated) return res.send({ succes: false, err: 'Sikertelen adatmódosítás!' });
+    if (!updated) return res.send({ success: false, err: 'Sikertelen adatmódosítás!' });
 
-    return res.send({ succes: true });
+    return res.send({ success: true });
 };
 
 exports.getAllBlogData = async (req, res)=>{
     const blogs = await Blog.findAll();
 
-    if(!blogs) return res.send({succes: false});
+    if(!blogs) return res.send({success: false});
 
-    res.send({succes:true, blogs: blogs});
+    res.send({success:true, blogs: blogs});
 }
 
 exports.postSetBlogStatus = async (req, res) => {
@@ -129,7 +129,7 @@ exports.postSetBlogStatus = async (req, res) => {
         { where: { id: id } }
     );
 
-    if (!blog) return res.send({ succes: false, err: 'Sikertelen adatmódosítás!' });
+    if (!blog) return res.send({ success: false, err: 'Sikertelen adatmódosítás!' });
 
-    return res.send({ succes: true });
+    return res.send({ success: true });
 };
