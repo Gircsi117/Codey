@@ -48,6 +48,7 @@ exports.postRegister = async (req, res) => {
       pm.close();
     })
     .catch((err) => {
+      console.log(err);
       res.send({ success: false });
     });
 };
