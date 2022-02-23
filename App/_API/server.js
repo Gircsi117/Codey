@@ -12,8 +12,9 @@ app.use(express.json());
 app.use(require('./middleware/access.middleware').auth);
 
 app.use('/auth', require('./routes/auth.routes'));
-app.use('/', require("./routes/user.routes"));
-app.use('/admin', require("./routes/admin.routes"));
+app.use('/', require('./routes/dashboard.routes'));
+app.use('/admin', require('./routes/admin.routes'));
+app.use('/user', require('./routes/user.routes'));
 app.use('/info', require("./routes/info.routes"));
 
 app.listen(PORT, (err) => {
