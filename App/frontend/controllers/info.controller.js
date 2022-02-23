@@ -5,7 +5,7 @@ exports.getBlogPage = async (req, res)=>{
 }
 
 exports.getGyakoriPage = async (req, res)=>{
-    res.render('info/gyakori');
+    res.render('info/gyik');
 }
 
 exports.getKaloriarolPage = async (req, res)=>{
