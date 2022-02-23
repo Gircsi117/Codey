@@ -18,6 +18,7 @@ app.use('/auth', require('./routes/auth.routes'));
 app.use('/admin', require('./routes/admin.routes'));
 app.use('/', require('./routes/dashboard.routes'));
 app.use('/user', require('./routes/user.routes'));
+app.use('/info', require('./routes/info.routes'));
 
 app.listen(PORT, (err) => {
   if (err) {
