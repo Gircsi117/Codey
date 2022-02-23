@@ -1,108 +1,31 @@
-const User = require("../models/user.model");
-const FoodXIngredient = require("../models/foodXingredient.model");
-const Food = require("../models/food.model");
-const Ingredients = require("../models/ingredient.model");
-const Sport = require("../models/sport.model");
-const Water = require("../models/water.model");
+const User = require('../models/user.model');
+const bcrypt = require('bcrypt');
 
-exports.postGetFoodsByUser = async (req, res) => {
-    const { id } = req.body;
+exports.postModifyUsername = async (req, res) => {
+  const { id, username } = req.body;
 
-    const foods = await Food.findAll({ where: { felhasznalo_id: id } });
+  if (!username) return res.send({ success: false, error: 'A felhasználónév mező nem lehet üres' });
 
-    let foodsArray = [];
+  const foundUser = await User.findOne({ where: id });
 
-    for await (const food of foods) {
-        const foodAssoc = await FoodXIngredient.findAll({ where: { etel_id: food.id } });
+  const isMatching = await bcrypt.compare(username, foundUser.password);
+  if (isMatching) return res.send({ success: false, error: 'A felhasználónév és a jelszó nem egyezhetnek' });
+  const newUsername = await User.update({ nev: username }, { where: { id: id } });
+  if (!newUsername) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
 
-        foodsArray.push({ id: food.id, name: food.nev, hozzavalok: [] });
-
-        for await (const foodAssocDetail of foodAssoc) {
-            const ing = await Ingredients.findOne({ where: { id: foodAssocDetail.hozzavalo_id } });
-
-            const foodIndex = foodsArray.findIndex((food) => {
-                return food.id == foodAssocDetail.etel_id;
-            });
-
-            foodsArray[foodIndex].hozzavalok.push(ing);
-        }
-    }
-
-    return res.send({ success: true, foodArray: foodsArray });
+  res.send({ success: true });
 };
 
-exports.postGetSportByUser = async (req, res) => {
-    const { id, date } = req.body;
+exports.postModifyPassword = async (req, res) => {
+  const { id, oldpassword, password1, password2 } = req.body;
 
-    const sports = await Sport.findAll({where: {felhasznalo_id: id, datum: date}});
+  if (oldpassword == password1) return res.send({ success: false, error: 'Az új jelszó nem egyezhet a régivel' });
+  if (!password1 || !password2) return res.send({ success: false, error: 'Tölts ki minden mezőt' });
+  if (password1 != password2) return res.send({ success: false, error: 'A jelszavak nem egyeznek' });
 
-    return res.send({success: true, sports : sports});
-}
+  const hashedPassword = await bcrypt.hash(password1, 10);
+  const newPassword = await User.update({ password: hashedPassword }, { where: { id: id } });
+  if (!newPassword) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
 
-exports.postGetWaterByUser = async (req, res) => {
-    const { id, date } = req.body;
-
-    const waters = await Water.findAll({where: {felhasznalo_id: id, datum: date}});
-    //console.log(waters);
-
-    return res.send({success: true, waters : waters[0]});
-}
-
-exports.postWaterByUser = async (req, res)=>{
-    const {id, mennyiseg, date} = req.body;
-    
-    const foundItem = await Water.findOne({where: {felhasznalo_id: id, datum: date}})
-
-    if (!foundItem) {
-        const item = await Water.create({
-            mennyiseg: mennyiseg,
-            datum: date,
-            felhasznalo_id: id 
-        });
-        return res.send({success: true, item: item});
-    }
-
-    const item = await Water.update({mennyiseg: foundItem.mennyiseg + mennyiseg}, {where: {felhasznalo_id: id, datum: date}});
-    return res.send({success: true, item: item});
-}
-
-exports.postSportByUser = async (req, res)=>{
-    const {id, mennyiseg, date} = req.body;
-    
-    const foundItem = await Sport.findOne({where: {felhasznalo_id: id, datum: date}})
-
-    if (!foundItem) {
-        const item = await Sport.create({
-            mennyiseg: mennyiseg,
-            datum: date,
-            felhasznalo_id: id 
-        });
-        return res.send({success: true, item: item});
-    }
-
-    const item = await Sport.update({mennyiseg: foundItem.mennyiseg + mennyiseg}, {where: {felhasznalo_id: id, datum: date}});
-    return res.send({success: true, item: item});
-}
-
-exports.postFoodByUser = async (req, res)=>{
-    const { id, food } = req.body
-    console.log(food);
-
-    const newFood = await Food.create({
-        nev: food.name,
-        hozzadva: food.date,
-        felhasznalo_id: id
-    })
-
-    if(!newFood) return res.send({success: false});
-
-    food.hozzavalok.forEach(element => {
-        FoodXIngredient.create({
-            etel_id: newFood.id,
-            hozzavalo_id: element.hozzavalo_id,
-            adag_szorzo: element.szorzo
-        })
-    });
-
-    return res.send({success: true});
-}
+  res.send({ success: true });
+};
