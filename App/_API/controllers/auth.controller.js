@@ -86,6 +86,7 @@ exports.postLogin = async (req, res) => {
   if (!foundUser) return res.send({ success: false, errors: ['Helytelen e-mail cím vagy jelszó'] });
   const isMatching = await bcrypt.compare(password, foundUser.password);
   if (!isMatching) return res.send({ success: false, errors: ['Helytelen e-mail cím vagy jelszó'] });
+  if (foundUser.reg_token) return res.send({ success: false, errors: ['Nem aktiváltad a fiókodat!'] });
 
   res.send({ success: true, user: foundUser });
 };
