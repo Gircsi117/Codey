@@ -17,13 +17,16 @@ exports.postRegister = async (req, res) => {
 
   let errors = [];
 
-  if (!email || !username || !password1 || !password2) errors.push('Tölts ki minden mezőt');
+  if (!email || !username || !password1 || !password2) errors.push('Tölts ki minden mezőt!');
   if (errors.length < 1) {
     const existEmail = await User.findOne({ where: { email } });
     const existUser = await User.findOne({ where: { nev: username } });
-    if (existEmail) errors.push('Már létezik ilyen e-mail cím');
-    if (existUser) errors.push('Már létezik ilyen felhasználó');
-    if (password1 != password2) errors.push('Jelszavak nem egyeznek');
+    if (existEmail) errors.push('Már létezik ilyen e-mail cím!');
+    if (existUser) errors.push('Már létezik ilyen felhasználó!');
+    if (password1 != password2) errors.push('Jelszavak nem egyeznek!');
+    
+    if (username == password1) errors.push('A felhasználónév nem egyezhet meg a jelszóval!');
+    if (email == password1) errors.push('Az email cím nem egyezhet meg a jelszóval!');
   }
 
   if (errors.length > 0) return res.send({ success: false, errors });
