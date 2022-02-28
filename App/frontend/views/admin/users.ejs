@@ -4,10 +4,13 @@
 
     <div class="content row m-0 p-3">
         <div class="gray row p-2">
-            
+            <h2 class="text-center">Adatok módosítása</h2>
+            <form method="post">
+
+            </form>
         </div>
         <div class="gray mt-3" id="tablazat" style="overflow-x:scroll">
-            <h2>Szia</h2>
+            <!-- Felhasználók táblája -->>
         </div>
             
     </div>
@@ -20,12 +23,15 @@
     {
         
     },
-        //TODO szedd ki a jelszó küldést backenden!!!
         function(data, status){
-            console.table(data.users)
+            const jog = {"0": "User", "1": "Moderator", "2":"Admin"};
             if(!data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
             users = data.users;
-            $("#tablazat").html(toTable(data.users, true, ["Id", "Név", "E-mail", "Jogok", "Token", "Magasság", "Súly", "Cél súly"]))
+            users.forEach(element => {
+                element['reg_token'] = (element['reg_token'] == "") ? "Igen" : "Nem";
+                element['jogosultsag'] = jog[`${element['jogosultsag']}`];
+            });
+            $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Aktív", "Magasság", "Súly", "Cél"]))
             
         }
     );

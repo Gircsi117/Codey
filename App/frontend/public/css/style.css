@@ -211,6 +211,11 @@ tfoot tr{
     display: none;
 }
 
+i::before{
+    width: 100%;
+    text-align: center;
+}
+
 @media only screen and (max-width: 405px) {
     .container {
         display: none;
