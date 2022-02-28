@@ -29,3 +29,25 @@ exports.postModifyPassword = async (req, res) => {
 
   res.send({ success: true });
 };
+
+exports.postSetGoal = async (req, res) => {
+  const { id, goalWeight } = req.body;
+
+  if (!goalWeight) res.send({ success: false, err: 'Töltsd ki a mezőt' });
+
+  const newGoal = await User.update({ cel_suly: goalWeight }, { where: { id: id } });
+  if (!newGoal) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
+
+  res.send({ success: true });
+};
+
+exports.postModifyWeight = async (req, res) => {
+  const { id, weight } = req.body;
+
+  if (!weight) res.send({ success: false, error: 'Töltsd ki a mezőt' });
+
+  const newWeight = await User.update({ suly: weight }, { where: { id: id } });
+  if (!newWeight) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
+
+  res.send({ success: true });
+};

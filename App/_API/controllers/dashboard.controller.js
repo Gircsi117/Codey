@@ -5,17 +5,20 @@ const Ingredients = require('../models/ingredient.model');
 const Sport = require('../models/sport.model');
 const Water = require('../models/water.model');
 
-exports.postGetFoodsByUser = async (req, res) => {
-  const { id } = req.body;
+exports.postGetFoodsByUserByDate = async (req, res) => {
+  const { id, showAll, filterByDate } = req.body;
 
-  const foods = await Food.findAll({ where: { felhasznalo_id: id } });
+  let query = { felhasznalo_id: id };
+  if (showAll == false) query.hozzadva = new Date();
+
+  const foods = await Food.findAll({ where: query });
 
   let foodsArray = [];
 
   for await (const food of foods) {
     const foodAssoc = await FoodXIngredient.findAll({ where: { etel_id: food.id } });
 
-    foodsArray.push({ id: food.id, name: food.nev, hozzavalok: [] });
+    foodsArray.push({ id: food.id, name: food.nev, hozzavalok: [], kcal: [], date: food.hozzadva });
 
     for await (const foodAssocDetail of foodAssoc) {
       const ing = await Ingredients.findOne({ where: { id: foodAssocDetail.hozzavalo_id } });
@@ -25,10 +28,31 @@ exports.postGetFoodsByUser = async (req, res) => {
       });
 
       foodsArray[foodIndex].hozzavalok.push(ing);
+      foodsArray[foodIndex].kcal.push({ kcal: ing.kcal, multiplier: foodAssocDetail.adag_szorzo });
     }
   }
 
-  return res.send({ success: true, foodArray: foodsArray });
+  let kcalData = { totalKcal: 0, foodsArray: [] };
+  for (let food of foodsArray) {
+    let foodKcal = 0;
+    for (const ingDetail of food.kcal) {
+      foodKcal += ingDetail.kcal * ingDetail.multiplier;
+    }
+    kcalData.foodsArray.push({ kcal: foodKcal, food: food });
+    kcalData.totalKcal += foodKcal;
+  }
+
+  let foodDate = {};
+  if (filterByDate) {
+    for (const food of kcalData.foodsArray) {
+      if (!foodDate.hasOwnProperty(food.food.date)) {
+        foodDate[food.food.date] = [];
+      }
+      foodDate[food.food.date].push({ foodsArray: food });
+    }
+    console.log(foodDate);
+  }
+  return res.send({ success: true, foodDate });
 };
 
 exports.postGetSportByUser = async (req, res) => {
@@ -84,9 +108,9 @@ exports.postSportByUser = async (req, res) => {
   return res.send({ success: true, item: item });
 };
 
+//TODO átnézni
 exports.postFoodByUser = async (req, res) => {
   const { id, food } = req.body;
-  console.log(food);
 
   const newFood = await Food.create({
     nev: food.name,
