@@ -1,16 +1,43 @@
 <%- include("../header") %>
-<div class="container mt-0 mt-sm-3">
+    <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+    <div class="container mt-0 mt-sm-3">
     <%- include("../menu") %>
 
     <div class="content row m-0 p-3">
         <div class="gray row p-2">
             <h2 class="text-center">Adatok módosítása</h2>
-            <form method="post">
-
-            </form>
+            <div class="user-form">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="name" placeholder="János" />
+                    <label for="name">Név</label>
+                </div>
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" />
+                    <label for="login-email">Email cím</label>
+                </div>
+                <select name="" id="jog" class="form-select">
+                    <option value="0">User</option>
+                    <option value="1">Moderátor</option>
+                    <option value="2">Admin</option>
+                </select>
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="magas" placeholder="0" min="1" />
+                    <label for="login-email">Magasság (cm)</label>
+                </div>
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="suly" placeholder="0" min="1" />
+                    <label for="login-email">Súly (kg)</label>
+                </div>
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="cel" placeholder="0" min="1" />
+                    <label for="login-email">Cél súly (kg)</label>
+                </div>
+                <button type="button" class="btn btn-warning">Módosítás</button>
+                <button type="button" class="btn btn-danger">Törlés</button>
+            </div>
         </div>
         <div class="gray mt-3" id="tablazat" style="overflow-x:scroll">
-            <!-- Felhasználók táblája -->>
+            <!-- Felhasználók táblája -->
         </div>
             
     </div>
@@ -19,25 +46,43 @@
 
 <script>
     let users = [];
-    $.post("./getAllUserData",
-    {
-        
-    },
-        function(data, status){
-            const jog = {"0": "User", "1": "Moderator", "2":"Admin"};
-            if(!data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
-            users = data.users;
-            users.forEach(element => {
-                element['reg_token'] = (element['reg_token'] == "") ? "Igen" : "Nem";
-                element['jogosultsag'] = jog[`${element['jogosultsag']}`];
-            });
-            $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Aktív", "Magasság", "Súly", "Cél"]))
-            
-        }
-    );
+    let jogok = ["User", "Moderator", "Admin"]
+    let select;
+    $.ajax({ method: 'post', url: './getAllUserData', data: { } })
+    .done((data) => {
+        if(!data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
+        users = data.users;
 
-    function edit(index) {
-        console.log(users[index]);        
+        let status = [];
+        for (let i = 0; i < users.length; i++) {
+            users[i]['jogosultsag'] = jogok[users[i]['jogosultsag']];
+            console.log(users[i]['jogosultsag']);
+            status.push(users[i].reg_token);
+            delete users[i]["reg_token"];
+        }
+
+        $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
+        szinez(status);
+      })
+    .fail((err) => {/*TODO error kiiratása*/})
+    .always(() => {});
+
+    function szinez(status){
+        let rows = document.getElementsByClassName('sor');
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].classList.add((status[i] == "") ? "green" : "red");
+        }
+    }
+
+    function edit_push(index) {
+        console.log(users[index]);
+        select = users[index];
+        $("#name").val(select.nev);
+        $("#email").val(select.email);
+        $("#jog").val(jogok.indexOf(select.jogosultsag));
+        $("#magas").val(select.magassag);
+        $("#suly").val(select.suly);
+        $("#cel").val(select.cel_suly);
     }
 </script>
 

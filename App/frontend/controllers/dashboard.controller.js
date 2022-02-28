@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 
 exports.getDashboardPage = (req, res) => {
-  res.render('dashboard/index');
+  res.render('dashboard/index', {cim:"Home", jog:req.session.user.jogosultsag});
 };
 
 exports.postGetDashboardData = (req, res)=>{

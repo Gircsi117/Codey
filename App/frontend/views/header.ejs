@@ -12,36 +12,4 @@
     <title>Codey Health</title>
   </head>
   <body>
-    <script>
-      const notify = (msg) => {
-        Toastify({
-          text: msg,
-        }).showToast();
-      };
-
-      function toTable(data, edit=false, header = []) {
-        const keys = Object.keys(data[0]);
-        let string = `<table class="table"><thead>`;
-        string += `<tr>` 
-        let th = (header.length == 0) ? keys : header
-        th.forEach(element => {
-          string += `<th>${element}</th>`;
-        });
-        if(edit) string+= "<th>Edit</th>";
-
-        string += `</tr></thead><tbody>`
-
-        for (let i = 0; i < data.length; i++) {
-          string += `<tr>`
-          keys.forEach(key => {
-            string += `<td>${(data[i][key] != null) ? data[i][key] : "-"}</td>`;
-          });
-          if(edit) string+= `<td style="cursor:pointer" class=""><i class="bi bi-gear" onclick="edit(${i})"></i></td>`;
-          string += `</tr>`
-          
-        }
-        string += `</tbody></table>`
-
-        return string;
-      }
-    </script>
+    <%- include("tools") %>
