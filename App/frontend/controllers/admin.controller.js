@@ -1,5 +1,17 @@
 const { default: axios } = require("axios");
 
+exports.getBlogsPage = (req, res)=>{
+    res.render('admin/blogs')
+}
+
+exports.getIngredientsPage = (req, res)=>{
+    res.render('admin/ingredients')
+}
+
+exports.getUsersPage = (req, res)=>{
+    res.render('admin/users')
+}
+
 exports.postGetAllUser = async (req, res)=>{
     const id = req.session.user.id;
 
@@ -42,6 +54,20 @@ exports.postSetUserData = async (req, res)=>{
         url: 'http://localhost:3001/admin/setUserData',
         headers: {apisecret: 123},
         data: {id, username, email, status, magassag, suly, cel}
+    })
+    .then((results)=>{
+        return res.send({data: results.data});
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+}
+
+exports.getAllIngredient = async (req, res)=>{
+    axios({
+        method: 'GET',
+        url: 'http://localhost:3001/admin/getAllIngredient',
+        headers: {apisecret: 123}
     })
     .then((results)=>{
         return res.send({data: results.data});
