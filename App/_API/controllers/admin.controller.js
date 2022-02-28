@@ -12,7 +12,7 @@ const { Op } = require('sequelize');
 exports.postGetAllUserData = async (req, res) => {
     const { id } = req.body;
 
-    const users = await User.findAll({ where: { id: { [Op.not]: id } } });
+    const users = await User.findAll({ where: { id: { [Op.not]: id } }, attributes: {exclude: ['password']}});
     return res.send({ success: true, users: users });
 };
 
