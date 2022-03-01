@@ -50,9 +50,9 @@ exports.postSetUserData = async (req, res) => {
             nev: username,
             email: email,
             jogosultsag: status,
-            magassag: magassag,
-            suly: suly,
-            cel_suly: cel,
+            magassag: (magassag == '' || magassag == null) ? null: magassag,
+            suly: (suly == '' || suly == null) ? null: suly,
+            cel_suly: (cel == '' || cel == null) ? null: cel,
         },
         { where: { id: id } }
     );
