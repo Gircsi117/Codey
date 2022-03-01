@@ -42,11 +42,11 @@ exports.postSetGoal = async (req, res) => {
 };
 
 exports.postModifyWeight = async (req, res) => {
-  const { id, weight } = req.body;
+  const { id, weight, date } = req.body;
 
   if (!weight) res.send({ success: false, error: 'Töltsd ki a mezőt' });
 
-  const newWeight = await User.update({ suly: weight }, { where: { id: id } });
+  const newWeight = await Weight.update({ suly: weight, datum: date }, { where: { id: id } });
   if (!newWeight) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
 
   res.send({ success: true });

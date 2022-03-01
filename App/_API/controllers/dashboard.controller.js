@@ -1,11 +1,10 @@
-const User = require('../models/user.model');
 const FoodXIngredient = require('../models/foodXingredient.model');
 const Food = require('../models/food.model');
 const Ingredients = require('../models/ingredient.model');
 const Sport = require('../models/sport.model');
 const Water = require('../models/water.model');
 
-exports.postGetFoodsByUserByDate = async (req, res) => {
+exports.postGetFoodsByUser = async (req, res) => {
   const { id, showAll, filterByDate } = req.body;
 
   let query = { felhasznalo_id: id };
@@ -108,7 +107,6 @@ exports.postSportByUser = async (req, res) => {
   return res.send({ success: true, item: item });
 };
 
-//TODO átnézni
 exports.postFoodByUser = async (req, res) => {
   const { id, food } = req.body;
 
