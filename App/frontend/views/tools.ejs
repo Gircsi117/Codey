@@ -20,7 +20,7 @@
       for (let i = 0; i < data.length; i++) {
         string += `<tr class="sor">`
         keys.forEach(key => {
-          string += `<td>${(data[i][key] != null) ? data[i][key] : "-"}</td>`;
+          string += `<td class="_${key}">${(data[i][key] != null) ? data[i][key] : "-"}</td>`;
         });
         if(edit) string+= `<td style="cursor:pointer" class=""><i class="bi bi-gear" onclick="edit_push(${i})"></i></td>`;
         string += `</tr>`

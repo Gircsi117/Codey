@@ -17,6 +17,7 @@
 
 <script>
     let blogs = [];
+    let statuses = [];
     let select;
     $.ajax({ method: 'get', url: './getAllBlog' })
     .done((data) => {
@@ -25,28 +26,38 @@
         blogs = data.blogs;
         console.table(blogs);
         
+        //Az adatok finomítása
+        blogs.forEach(element => {
+            statuses.push(element["status"]);
+            delete element["status"];
 
-        $("#tablazat").html(toTable(blogs, true, []));
-        //szinez(status);
+        });
+
+        $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
+        szinez(statuses);
       })
     .fail((err) => {/*TODO error kiiratása*/})
     .always(() => {});
 
     function szinez(status){
-        let rows = document.getElementsByClassName('sor');
+        let rows = $('.sor');
         for (let i = 0; i < rows.length; i++) {
-            rows[i].classList.add((status[i] == "") ? "green" : "red");
+            rows[i].classList.add((status[i] == 1) ? "green" : "red");
+        }
+        alakit();
+    }
+
+    function alakit() {
+        let items = document.getElementsByClassName("_tartalom");
+        for (let i = 0; i < items.length; i++) {
+            let tartalom = items[i].innerHTML;
+            items[i].innerHTML = tartalom.substring(0, 25)+"..."
         }
     }
 
     function edit_push(index) {
-        select = users[index];
-        $("#name").val(select.nev);
-        $("#email").val(select.email);
-        $("#jog").val(jogok.indexOf(select.jogosultsag));
-        $("#magas").val(select.magassag);
-        $("#suly").val(select.suly);
-        $("#cel").val(select.cel_suly);
+        select = blogs[index];
+        
     }
 
     function edit() {
@@ -79,21 +90,6 @@
         })
         .fail((err) => {return console.log("Sikertelen módosítás!!!" + err)})
         .always(() => {});
-    }
-
-    function delet(params) {
-        if(!confirm("Biztos törölni akarod a felhasználót?")) return;
-        $.ajax({method: "POST", url:"./deleteUser", data:{id: select.id}})
-        .done((results)=>{
-            if(!results.data.success) return console.log("Sikertelen törlés!!");
-            console.log("Sikeres törlés");
-            users.splice(users.indexOf(select), 1);
-            if(users.length == 0) return $("#tablazat").html("");
-            $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
-            szinez(status);
-        })
-        .fail((err)=>{return console.log(err)})
-        .always(()=>{});
     }
 </script>
 
