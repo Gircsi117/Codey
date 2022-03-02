@@ -103,16 +103,19 @@
     }
 
     function edit() {
-        
-        console.log($("#active").is(":checked"));
-        $.ajax({ method: 'post', url: './', data: {
+        let stat = ($("#active").is(":checked")) ? 1 : 0
+        $.ajax({ method: 'post', url: './setBlogStatus', data: {
             id: select.id,
-            status: ($("#active").is(":checked")) ? 1 : 0
+            status: stat
         } })
         .done((results) => {
+            console.log("sikeresen módosítva!");
+            statuses[blogs.indexOf(select)] = stat;
             
+            $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
+            szinez(statuses);
         })
-        .fail((err) => {return console.log("Sikertelen módosítás!!!" + err)})
+        .fail((err) => {return console.log("Sikertelen módosítás!!!")})
         .always(() => {});
     }
 </script>
