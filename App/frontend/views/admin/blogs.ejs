@@ -4,8 +4,33 @@
     <%- include("../menu") %>
 
     <div class="content row m-0 p-3">
-        <div class="gray row p-2">
-            
+        <div class="gray row p-2" id="preview">
+            <div class="col-8" style="margin: 0px auto; border: 1px solid white;">
+                <div class="row pt-3">
+                    <div class="col-12 col-md-8 p-0">
+                        <h1>Ez a cim</h1>
+                        <p>Dátum</p>
+                    </div>
+                    <div class="col-12 col-md-4 p-0 d-md-flex justify-content-md-end align-items-start">
+                        <div class="form-check form-switch p-0">
+                            <input class="form-check-input" type="checkbox" id="active" onclick="edit()" checked>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="" style="height: 400px; overflow-y: scroll;">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum suscipit tempora exercitationem alias? Et voluptas unde aliquam doloremque itaque quidem repellat. Fuga accusantium commodi eos esse? Maxime veritatis eligendi accusamus!
+                    Eveniet id repellendus minus sed facilis, eligendi sapiente exercitationem vel eos ipsam labore officiis expedita, ipsum impedit rem obcaecati delectus. Ex beatae possimus laboriosam, sapiente optio praesentium quisquam et ea!
+                    Et pariatur aut quae quo voluptatum, incidunt debitis, quia similique a doloremque rem culpa dolorem, neque possimus sequi error quam esse animi laboriosam laudantium necessitatibus minima? Voluptatibus, repellendus. Quisquam, totam?
+                    Beatae dolorum tenetur, reiciendis amet id magni. Totam saepe adipisci cumque? Odit pariatur temporibus libero similique animi quasi nemo eveniet maiores, ea soluta repudiandae ab sit rem vel est officiis!
+                    Corporis iusto blanditiis omnis illum, nobis possimus aut quod sapiente corrupti magni adipisci architecto voluptatum, aliquid sunt eaque? Voluptatem quos excepturi alias assumenda id velit. Iure dolorum debitis exercitationem aut!
+                    Fugit excepturi hic minima officiis dignissimos. Dignissimos reiciendis ipsum fugiat aliquam beatae, deserunt commodi cum corrupti quis ullam voluptas dolor in repudiandae fugit exercitationem eaque consequuntur omnis voluptatem expedita facere.
+                    Ea, labore esse. Dolorum sit iste facilis aut necessitatibus expedita quia. Doloribus esse, vero cupiditate eos cum id dolorem, atque aut, nesciunt unde quae. Officiis quibusdam laboriosam voluptatum delectus voluptate?
+                    Laboriosam voluptas id dicta tempore, porro possimus, numquam iusto natus optio excepturi quia ea fuga tenetur eaque beatae consectetur facilis voluptatem quisquam dignissimos atque? Repellendus labore suscipit sit quam ratione?
+                    Expedita iusto explicabo, labore ipsam, exercitationem eos aut illo nobis et earum ullam! Corrupti minus quia, pariatur quod, cupiditate eaque quaerat totam consectetur asperiores et, reiciendis rerum quibusdam. Optio, nemo.
+                    Exercitationem fugit, voluptas quidem aspernatur quos, esse dolorum sit officia dignissimos optio cupiditate. Officia incidunt eius facilis laboriosam aut quasi consectetur aspernatur quaerat porro sit quod excepturi molestias, eveniet nulla!
+                </div>
+            </div>
         </div>
         <div class="gray mt-3" id="tablazat" style="overflow-x:scroll">
             <!-- Felhasználók táblája -->
@@ -57,36 +82,35 @@
 
     function edit_push(index) {
         select = blogs[index];
-        
+        let html = `<div class="col-8" style="margin: 0px auto; border: 1px solid white;">
+                <div class="row pt-3">
+                    <div class="col-12 col-md-8 p-0">
+                        <h1>${select.cim}</h1>
+                        <p>${select.idopont}</p>
+                    </div>
+                    <div class="col-12 col-md-4 p-0 d-md-flex justify-content-md-end align-items-start">
+                        <div class="form-check form-switch p-0">
+                            <input class="form-check-input" type="checkbox" id="active" onclick="edit()" ${(statuses[index] == 1) ? "checked" : ""}>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="" style="height: 400px; overflow-y: scroll;">
+                    ${select.tartalom}
+                </div>
+            </div>`
+        $('#preview').html(html);
     }
 
     function edit() {
-        $.ajax({ method: 'post', url: './setUserData', data: {
+        
+        console.log($("#active").is(":checked"));
+        $.ajax({ method: 'post', url: './', data: {
             id: select.id,
-            username: $("#name").val(),
-            email: $("#email").val(),
-            status: $("#jog").val(),
-            magassag: ($("#magas").val() == 0) ? null : $("#magas").val(),
-            suly: ($("#suly").val() == 0) ? null : $("#suly").val(),
-            cel: ($("#cel").val() == 0) ? null : $("#cel").val()
+            status: ($("#active").is(":checked")) ? 1 : 0
         } })
         .done((results) => {
-            console.log(results.data);
-            if(!results.data.success) return console.log("Sikertelen módosítás!!!");
-            console.log("Sikeres módosítás!!!");
-            //A felhasználó adatainak átírása a táblázatban
-            users[users.indexOf(select)] = {
-                id: select.id,
-                nev: $("#name").val(),
-                email: $("#email").val(),
-                jogosultsag: jogok[Number($("#jog").val())],
-                magassag: ($("#magas").val() == 0) ? null : $("#magas").val(),
-                suly: ($("#suly").val() == 0) ? null : $("#suly").val(),
-                cel_suly: ($("#cel").val() == 0) ? null : $("#cel").val()
-            }
-            //Táblázat frissítése
-            $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
-            szinez(status);
+            
         })
         .fail((err) => {return console.log("Sikertelen módosítás!!!" + err)})
         .always(() => {});
