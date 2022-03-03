@@ -1,1 +1,79 @@
-<h1>Ez a hozzávalók</h1>
+<%- include("../header") %>
+    <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+    <div class="container mt-0 mt-sm-3">
+    <%- include("../menu") %>
+
+    <div class="content row m-0 p-3">
+        <div class="gray row p-2" id="preview">
+            
+        </div>
+        <div class="gray mt-3" id="tablazat" style="overflow-x:scroll">
+            <!-- Hozzávalók táblája -->
+        </div>
+            
+    </div>
+    <%- include('../foot') %>
+</div>
+
+<script>
+    let ingredients = [];
+    let statuses = [];
+    let select;
+    $.ajax({ method: 'get', url: './getAllBlog' })
+    .done((data) => {
+        /*if(!data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
+        if(data.blogs.length == 0) return;
+        blogs = data.blogs;
+        console.table(blogs);
+        
+        //Az adatok finomítása
+        blogs.forEach(element => {
+            statuses.push(element["status"]);
+            delete element["status"];
+
+        });
+
+        $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
+        szinez(statuses);*/
+      })
+    .fail((err) => {/*TODO error kiiratása*/})
+    .always(() => {});
+
+    function szinez(status){
+        let rows = $('.sor');
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].classList.add((status[i] == 1) ? "green" : "red");
+        }
+        alakit();
+    }
+
+    function alakit() {
+        let items = document.getElementsByClassName("_tartalom");
+        for (let i = 0; i < items.length; i++) {
+            let tartalom = items[i].innerHTML;
+            items[i].innerHTML = tartalom.substring(0, 25)+"..."
+        }
+    }
+
+    function edit_push(index) {
+        select = blogs[index];
+    }
+
+    function edit() {
+        /*$.ajax({ method: 'post', url: './setBlogStatus', data: {
+            id: select.id,
+            status: stat
+        } })
+        .done((results) => {
+            console.log("sikeresen módosítva!");
+            statuses[blogs.indexOf(select)] = stat;
+            
+            $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
+            szinez(statuses);
+        })
+        .fail((err) => {return console.log("Sikertelen módosítás!!!")})
+        .always(() => {});*/
+    }
+</script>
+
+<%- include("../footer") %>
