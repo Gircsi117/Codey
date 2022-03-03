@@ -47,7 +47,6 @@
 <script>
     let users = [];
     let jogok = ["User", "Moderator", "Admin"]
-    let status = [];
     let select;
     $.ajax({ method: 'post', url: './getAllUserData', data: { } })
     .done((data) => {
@@ -55,36 +54,30 @@
         if(data.users.length == 0) return;
         users = data.users;
 
-        for (let i = 0; i < users.length; i++) {
-            users[i]['jogosultsag'] = jogok[users[i]['jogosultsag']];
-            status.push(users[i].reg_token);
-            delete users[i]["reg_token"];
-        }
-
         $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
-        szinez(status);
+        tableColor(users, "reg_token", "");
+        tableHide("reg_token");
+        tableItemEdit("jogosultsag", "0", "'User'", "text");
+        tableItemEdit("jogosultsag", "1", "'Moderátor'", "text");
+        tableItemEdit("jogosultsag", "2", "'Admin'", "text");
       })
-    .fail((err) => {/*TODO error kiiratása*/})
+    .fail((err) => {notify("Adatbázis hiba");})
     .always(() => {});
-
-    function szinez(status){
-        let rows = document.getElementsByClassName('sor');
-        for (let i = 0; i < rows.length; i++) {
-            rows[i].classList.add((status[i] == "") ? "green" : "red");
-        }
-    }
 
     function edit_push(index) {
         select = users[index];
         $("#name").val(select.nev);
         $("#email").val(select.email);
-        $("#jog").val(jogok.indexOf(select.jogosultsag));
+        $("#jog").val(select.jogosultsag);
         $("#magas").val(select.magassag);
         $("#suly").val(select.suly);
         $("#cel").val(select.cel_suly);
     }
 
     function edit() {
+        if(select == null) return notify("Nincs kiválasztott felhasználó!");
+        if(!confirm("Biztos Módosítani akarod a felhasználó adatait?")) return;
+
         $.ajax({ method: 'post', url: './setUserData', data: {
             id: select.id,
             username: $("#name").val(),
@@ -103,21 +96,36 @@
                 id: select.id,
                 nev: $("#name").val(),
                 email: $("#email").val(),
-                jogosultsag: jogok[Number($("#jog").val())],
+                jogosultsag: $("#jog").val(),
+                reg_token: select.reg_token,
                 magassag: ($("#magas").val() == 0) ? null : $("#magas").val(),
                 suly: ($("#suly").val() == 0) ? null : $("#suly").val(),
                 cel_suly: ($("#cel").val() == 0) ? null : $("#cel").val()
             }
             //Táblázat frissítése
             $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
-            szinez(status);
+            tableColor(users, "reg_token", "");
+            tableHide("reg_token");
+            tableItemEdit("jogosultsag", "0", "'User'", "text");
+            tableItemEdit("jogosultsag", "1", "'Moderátor'", "text");
+            tableItemEdit("jogosultsag", "2", "'Admin'", "text");
+
+            $("#name").val("");
+            $("#email").val("");
+            $("#jog").val(0);
+            $("#magas").val("");
+            $("#suly").val("");
+            $("#cel").val("");
+            select = null;
         })
         .fail((err) => {return console.log("Sikertelen módosítás!!!" + err)})
         .always(() => {});
     }
 
     function delet(params) {
+        if(select == null) return notify("Nincs kiválasztott felhasználó!");
         if(!confirm("Biztos törölni akarod a felhasználót?")) return;
+        
         $.ajax({method: "POST", url:"./deleteUser", data:{id: select.id}})
         .done((results)=>{
             if(!results.data.success) return console.log("Sikertelen törlés!!");

@@ -1,63 +1,67 @@
 <script>
-    const notify = (msg) => {
-      Toastify({
-        text: msg,
-      }).showToast();
-    };
+  const notify = (msg, pos = "right", grav = "top", color = "red") => {
+    Toastify({
+      text: msg,
+      close: true,
+      position: pos,
+      graity: grav,
+      style:{
+        background: color
+      }
+    }).showToast();
+  };
 
-    //Tábla generálása
-    function toTable(data, edit=false, header = []) {
-      const keys = Object.keys(data[0]);
-      let string = `<table class="table"><thead>`;
-      string += `<tr>` 
-      let th = (header.length == 0) ? keys : header
-      th.forEach(element => {
-        string += `<th>${element}</th>`;
+  //Tábla generálása
+  function toTable(data, edit=false, header = []) {
+    const keys = Object.keys(data[0]);
+    let string = `<table class="table"><thead>`;
+    string += `<tr>` 
+    let th = (header.length == 0) ? keys : header
+    th.forEach(element => {
+      string += `<th>${element}</th>`;
+    });
+    if(edit) string+= `<th class="text-center">Edit</th>`;
+
+    string += `</tr></thead><tbody>`
+
+    for (let i = 0; i < data.length; i++) {
+      string += `<tr class="sor">`
+      keys.forEach(key => {
+        string += `<td class="_${key}">${(data[i][key] != null) ? data[i][key] : "-"}</td>`;
       });
-      if(edit) string+= `<th class="text-center">Edit</th>`;
-
-      string += `</tr></thead><tbody>`
-
-      for (let i = 0; i < data.length; i++) {
-        string += `<tr class="sor">`
-        keys.forEach(key => {
-          string += `<td class="_${key}">${(data[i][key] != null) ? data[i][key] : "-"}</td>`;
-        });
-        if(edit) string+= `<td style="cursor:pointer" class=""><i class="bi bi-gear" onclick="edit_push(${i})"></i></td>`;
-        string += `</tr>`
-        
-      }
-      string += `</tbody></table>`
-
-      return string;
+      if(edit) string+= `<td style="cursor:pointer" class=""><i class="bi bi-gear" onclick="edit_push(${i})"></i></td>`;
+      string += `</tr>`
+      
     }
+    string += `</tbody></table>`
 
-    //A táblázat oszlopait beszinezi egy megadott szempont alapján
-    function tableColor(items, item, param) {
-      let rows = $('.sor');
-        for (let i = 0; i < rows.length; i++) {
-          rows[i].classList.remove("green");
-          rows[i].classList.remove("red");
-          rows[i].classList.add((items[i][item] == param) ? "green" : "red");
-        }
+    return string;
+  }
+
+  //A táblázat sorait beszinezi egy megadott szempont alapján
+  function tableColor(items, item, param) {
+    for (let i = 0; i < $('.sor').length; i++) {
+      $('.sor').eq(i).removeClass("green").removeClass("red");
+      $('.sor').eq(i).addClass((items[i][item] == param) ? "green" : "red");
     }
+  }
 
-    //Elrejti a táblázat egy oszlopát
-    function tableHide(item) {
-      let items = document.getElementsByClassName(`_${item}`);
-      for (let i = 0; i < items.length; i++) {
-          items[i].classList.add("d-none");
-      }
+  //Elrejti a táblázat egy oszlopát
+  function tableHide(item) {
+    $(`._${item}`).hide();
+  }
+
+  //A táblázat egyes elemeit lehet szerkeszteni egy megadott szempont alapján
+  function tableItemEdit(item, param, result1, result2 = null) {
+    if(result2 == null) result2 = result1;
+
+    for (let i = 0; i < $(`._${item}`).length; i++) {
+      let text = $(`._${item}`).eq(i).html();
+      $(`._${item}`).eq(i).html((text == param) ? eval(result1) : eval(result2));
     }
+  }
 
-    //A táblázat egyes elemeit lehet szerkeszteni egy megadott szempont alapján
-    function tableItemEdit(item, param, result1, result2 = null) {
-      if(result2 == null) result2 = result1;
-
-      let items = document.getElementsByClassName(`_${item}`)
-      for (let i = 0; i < items.length; i++) {
-        let text = items[i].innerHTML;
-        items[i].innerHTML = (text == param) ? eval(result1) : eval(result2);
-      }
-    }
+  function tableFilter(items, item, param) {
+    
+  }
 </script>
