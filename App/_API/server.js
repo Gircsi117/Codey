@@ -1,8 +1,5 @@
 const express = require('express');
 const app = express();
-const sequelize = require('sequelize');
-const bcrypt = require('bcrypt');
-const nodemailer = require('nodemailer');
 
 const PORT = 3001 || process.env.PORT;
 

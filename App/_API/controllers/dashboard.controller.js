@@ -3,12 +3,13 @@ const Food = require('../models/food.model');
 const Ingredients = require('../models/ingredient.model');
 const Sport = require('../models/sport.model');
 const Water = require('../models/water.model');
+const Weight = require('../models/weight.model');
 
 exports.postGetFoodsByUser = async (req, res) => {
-  const { id, showAll, filterByDate } = req.body;
+  const { id, eatenToday } = req.body;
 
   let query = { felhasznalo_id: id };
-  if (showAll == false) query.hozzadva = new Date();
+  if (eatenToday != false) query = [{ felhasznalo_id: id }, { hozzadva: new Date() }];
 
   const foods = await Food.findAll({ where: query });
 
@@ -42,16 +43,14 @@ exports.postGetFoodsByUser = async (req, res) => {
   }
 
   let foodDate = {};
-  if (filterByDate) {
-    for (const food of kcalData.foodsArray) {
-      if (!foodDate.hasOwnProperty(food.food.date)) {
-        foodDate[food.food.date] = [];
-      }
-      foodDate[food.food.date].push({ foodsArray: food });
+  for (const food of kcalData.foodsArray) {
+    if (!foodDate.hasOwnProperty(food.food.date)) {
+      foodDate[food.food.date] = [];
     }
-    console.log(foodDate);
+    foodDate[food.food.date].push({ foodsArray: food });
   }
-  return res.send({ success: true, foodDate });
+
+  return res.send({ success: true, foodArray: eatenToday ? foodsArray : foodDate });
 };
 
 exports.postGetSportByUser = async (req, res) => {
@@ -66,7 +65,6 @@ exports.postGetWaterByUser = async (req, res) => {
   const { id, date } = req.body;
 
   const waters = await Water.findAll({ where: { felhasznalo_id: id, datum: date } });
-  //console.log(waters);
 
   return res.send({ success: true, waters: waters[0] });
 };
@@ -127,4 +125,22 @@ exports.postFoodByUser = async (req, res) => {
   });
 
   return res.send({ success: true });
+};
+
+exports.postGetWeights = async (req, res) => {
+  const { id } = req.body;
+
+  const allWeights = await Weight.findAll({ where: { felhasznalo_id: id } });
+  if (!allWeights) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
+
+  res.send({ success: true, allWeights });
+};
+
+exports.postGetLastWeight = async (req, res) => {
+  const { id } = req.body;
+
+  const lastWeights = await Weight.findAll({ limit: 1, where: { felhasznalo_id: id } });
+  if (!lastWeights) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
+
+  res.send({ success: true, lastWeights });
 };

@@ -8,5 +8,7 @@ router.post('/getWaterByUser', dashboardController.postGetWaterByUser);
 router.post('/postWaterByUser', dashboardController.postWaterByUser);
 router.post('/postSportByUser', dashboardController.postSportByUser);
 router.post('/postFoodByUser', dashboardController.postFoodByUser);
+router.post('/postGetWeights', dashboardController.postGetWeights);
+router.post('/postGetLastWeight', dashboardController.postGetLastWeight);
 
 module.exports = router;
