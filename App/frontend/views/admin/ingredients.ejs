@@ -17,46 +17,24 @@
 
 <script>
     let ingredients = [];
-    let statuses = [];
     let select;
-    $.ajax({ method: 'get', url: './getAllBlog' })
-    .done((data) => {
-        /*if(!data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
-        if(data.blogs.length == 0) return;
-        blogs = data.blogs;
-        console.table(blogs);
-        
-        //Az adatok finomítása
-        blogs.forEach(element => {
-            statuses.push(element["status"]);
-            delete element["status"];
+    
+    $.ajax({ method: 'get', url: './getAllIngredient' })
+    .done((res) => {
+        if(!res.data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
+        if(res.data.ingredients.length == 0) return;
 
-        });
+        ingredients = res.data.ingredients;
+        console.table(ingredients);
 
-        $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
-        szinez(statuses);*/
+        $("#tablazat").html(toTable(ingredients, true, ["ID", "Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír"]));
       })
     .fail((err) => {/*TODO error kiiratása*/})
     .always(() => {});
 
-    function szinez(status){
-        let rows = $('.sor');
-        for (let i = 0; i < rows.length; i++) {
-            rows[i].classList.add((status[i] == 1) ? "green" : "red");
-        }
-        alakit();
-    }
-
-    function alakit() {
-        let items = document.getElementsByClassName("_tartalom");
-        for (let i = 0; i < items.length; i++) {
-            let tartalom = items[i].innerHTML;
-            items[i].innerHTML = tartalom.substring(0, 25)+"..."
-        }
-    }
-
     function edit_push(index) {
-        select = blogs[index];
+        select = ingredients[index];
+        console.log(select);
     }
 
     function edit() {

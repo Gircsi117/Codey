@@ -112,7 +112,7 @@ exports.postSetIngredient = async (req, res) => {
 };
 
 exports.getAllIngredient = async (req, res)=>{
-    const ingredients = Ingredients.findAll();
+    const ingredients = await Ingredients.findAll();
     if(!ingredients) return res.send({ success: false});
 
     return res.send({ success: true, ingredients: ingredients});

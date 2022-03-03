@@ -17,7 +17,6 @@
 
 <script>
     let blogs = [];
-    let statuses = [];
     let select;
     $.ajax({ method: 'get', url: './getAllBlog' })
     .done((data) => {
@@ -27,33 +26,21 @@
         console.table(blogs);
         
         //Az adatok finomítása
-        blogs.forEach(element => {
+        /*blogs.forEach(element => {
             statuses.push(element["status"]);
             delete element["status"];
             element.idopont = element.idopont.replace('T', ' ').substring(0, 19);
-        });
+        });*/
 
         $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
-        szinez(statuses);
+
+        tableColor(blogs, "status", 1);
+        tableHide("status");
+        tableItemEdit("idopont", "", "text.replace('T', ' ').substring(0, 19)")
+        tableItemEdit("tartalom", "", "text.substring(0, 25) + '...'")
       })
     .fail((err) => {/*TODO error kiiratása*/})
     .always(() => {});
-
-    function szinez(status){
-        let rows = $('.sor');
-        for (let i = 0; i < rows.length; i++) {
-            rows[i].classList.add((status[i] == 1) ? "green" : "red");
-        }
-        alakit();
-    }
-
-    function alakit() {
-        let items = document.getElementsByClassName("_tartalom");
-        for (let i = 0; i < items.length; i++) {
-            let tartalom = items[i].innerHTML;
-            items[i].innerHTML = tartalom.substring(0, 25)+"..."
-        }
-    }
 
     function edit_push(index) {
         select = blogs[index];
@@ -65,7 +52,7 @@
                     </div>
                     <div class="col-12 col-md-4 p-0 d-md-flex justify-content-md-end align-items-start">
                         <div class="form-check form-switch p-0">
-                            <input class="form-check-input" type="checkbox" id="active" onclick="edit()" ${(statuses[index] == 1) ? "checked" : ""}>
+                            <input class="form-check-input" type="checkbox" id="active" onclick="edit()" ${(select.status == 1) ? "checked" : ""}>
                         </div>
                     </div>
                 </div>
@@ -85,10 +72,9 @@
         } })
         .done((results) => {
             console.log("sikeresen módosítva!");
-            statuses[blogs.indexOf(select)] = stat;
+            blogs[blogs.indexOf(select)].status = stat;
             
-            $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
-            szinez(statuses);
+            tableColor(blogs, "status", 1);
         })
         .fail((err) => {return console.log("Sikertelen módosítás!!!")})
         .always(() => {});
