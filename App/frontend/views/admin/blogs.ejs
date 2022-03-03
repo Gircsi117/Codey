@@ -30,7 +30,7 @@
         blogs.forEach(element => {
             statuses.push(element["status"]);
             delete element["status"];
-
+            element.idopont = element.idopont.replace('T', ' ').substring(0, 19);
         });
 
         $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
