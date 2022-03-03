@@ -1,0 +1,171 @@
+﻿==========================================================Backend
+localhost:3000/admin/getAllUserData
+
+localhost:3000/admin/deleteUser
+{
+    "id":4
+}
+
+localhost:3000/admin/setUserData
+{
+    "id": 3,
+    "username": "teszt3@teszt.hu",
+    "email": "teszt3@teszt.hu",
+    "status": "0",
+    "magassag": 170,
+    "suly": 60,
+    "cel": 50
+}
+
+localhost:3000/admin/newIngredient
+{
+    "nev": "Bab",
+    "kcal": 555,
+    "feherje": 555,
+    "szenhidrat": 555,
+    "zsir": 555,
+    "ehetoe_magaban": 0
+}
+
+localhost:3000/admin/setIngredient
+{
+    "id":5,
+    "nev": "Bab",
+    "kcal": 100,
+    "feherje": 100,
+    "szenhidrat": 100,
+    "zsir": 100,
+    "ehetoe_magaban": 0
+}
+
+localhost:3000/admin/deleteIngredient
+{
+    "id":3
+}
+
+localhost:3000/admin/setBlogStatus
+{
+    "id":1,
+    "status": 1
+}
+
+localhost:3000/admin/getAllBlog
+
+localhost:3000/postWater
+{
+    "mennyiseg":45,
+    "date": "2022-02-16"
+}
+
+localhost:3000/postFood
+{
+    "food": {
+        "name": "Bableves",
+        "date": "2022-02-16",
+        "hozzavalok": [
+            {"hozzavalo_id": 2, "szorzo": 0.1},
+            {"hozzavalo_id": 3, "szorzo": 1.5}
+        ]
+    }
+} 
+
+localhost:3000
+{
+    "date":"2022-02-14"
+}
+
+localhost:3000/auth/login
+{
+    "email": "gilianerik1107@gmail.com",
+    "password": "gilianerik1107@gmail.com"
+}
+
+
+==========================================================Backend
+localhost:3001/admin/deleteIngredient
+{
+     "id":3
+}
+
+localhost:3001/admin/newIngredient
+{
+    "nev": "Bab",
+    "kcal": 555,
+    "feherje": 555,
+    "szenhidrat": 555,
+    "zsir": 555,
+    "ehetoe_magaban": 0
+}
+
+localhost:3001/admin/deleteUser
+{
+    "id":3
+}
+
+localhost:3001/admin/getAllUserData
+{
+    "id":1
+}
+
+localhost:3001/admin/setIngredient
+{
+    "id":5,
+    "nev": "Bab",
+    "kcal": 100,
+    "feherje": 100,
+    "szenhidrat": 100,
+    "zsir": 100,
+    "ehetoe_magaban": 0
+}
+
+localhost:3001/admin/setBlogStatus
+{
+    "id":1,
+    "status": 0
+}
+
+localhost:3001/admin/setUserData
+{
+    "id": 4,
+    "username": "teszt3@teszt.hu",
+    "email": "teszt3@teszt.hu",
+    "status": "1",
+    "magassag": 170,
+    "suly": 60,
+    "cel": 50
+}
+
+localhost:3001/admin/getAllBlogData
+
+localhost:3001/postFoodByUser
+{
+    "id": 1,
+    "food": {
+        "name": "Bableves",
+        "date": "2022-02-16",
+        "hozzavalok": [
+            {"hozzavalo_id": 2, "szorzo": 0.1},
+            {"hozzavalo_id": 3, "szorzo": 1.5}
+        ]
+    }
+} 
+
+localhost:3001/auth/register
+{
+    "email":"admin1@admin.hu",
+    "username":"admin@admin.hu",
+    "password1":"admin@admin.hu",
+    "password2":"admin@admin.hu"
+}
+
+localhost:3001/tools/postModifyWeight
+{
+    "id": 1,
+    "weight": 120
+}
+
+localhost:3001/tools/postSetGoal
+{
+    "id": 1,
+    "weight": 90
+}

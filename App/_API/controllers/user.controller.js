@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+
 const bcrypt = require('bcrypt');
 
 exports.postModifyUsername = async (req, res) => {
@@ -26,6 +27,28 @@ exports.postModifyPassword = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password1, 10);
   const newPassword = await User.update({ password: hashedPassword }, { where: { id: id } });
   if (!newPassword) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
+
+  res.send({ success: true });
+};
+
+exports.postSetGoal = async (req, res) => {
+  const { id, goalWeight } = req.body;
+
+  if (!goalWeight) res.send({ success: false, err: 'Töltsd ki a mezőt' });
+
+  const newGoal = await User.update({ cel_suly: goalWeight }, { where: { id: id } });
+  if (!newGoal) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
+
+  res.send({ success: true });
+};
+
+exports.postModifyWeight = async (req, res) => {
+  const { id, weight, date } = req.body;
+
+  if (!weight) res.send({ success: false, error: 'Töltsd ki a mezőt' });
+
+  const newWeight = await Weight.update({ suly: weight, datum: date }, { where: { id: id } });
+  if (!newWeight) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
 
   res.send({ success: true });
 };

@@ -1,21 +1,24 @@
-const User = require('../models/user.model');
 const FoodXIngredient = require('../models/foodXingredient.model');
 const Food = require('../models/food.model');
 const Ingredients = require('../models/ingredient.model');
 const Sport = require('../models/sport.model');
 const Water = require('../models/water.model');
+const Weight = require('../models/weight.model');
 
 exports.postGetFoodsByUser = async (req, res) => {
-  const { id } = req.body;
+  const { id, eatenToday } = req.body;
 
-  const foods = await Food.findAll({ where: { felhasznalo_id: id } });
+  let query = { felhasznalo_id: id };
+  if (eatenToday != false) query = [{ felhasznalo_id: id }, { hozzadva: new Date() }];
+
+  const foods = await Food.findAll({ where: query });
 
   let foodsArray = [];
 
   for await (const food of foods) {
     const foodAssoc = await FoodXIngredient.findAll({ where: { etel_id: food.id } });
 
-    foodsArray.push({ id: food.id, name: food.nev, hozzavalok: [] });
+    foodsArray.push({ id: food.id, name: food.nev, hozzavalok: [], kcal: [], date: food.hozzadva });
 
     for await (const foodAssocDetail of foodAssoc) {
       const ing = await Ingredients.findOne({ where: { id: foodAssocDetail.hozzavalo_id } });
@@ -25,10 +28,29 @@ exports.postGetFoodsByUser = async (req, res) => {
       });
 
       foodsArray[foodIndex].hozzavalok.push(ing);
+      foodsArray[foodIndex].kcal.push({ kcal: ing.kcal, multiplier: foodAssocDetail.adag_szorzo });
     }
   }
 
-  return res.send({ success: true, foodArray: foodsArray });
+  let kcalData = { totalKcal: 0, foodsArray: [] };
+  for (let food of foodsArray) {
+    let foodKcal = 0;
+    for (const ingDetail of food.kcal) {
+      foodKcal += ingDetail.kcal * ingDetail.multiplier;
+    }
+    kcalData.foodsArray.push({ kcal: foodKcal, food: food });
+    kcalData.totalKcal += foodKcal;
+  }
+
+  let foodDate = {};
+  for (const food of kcalData.foodsArray) {
+    if (!foodDate.hasOwnProperty(food.food.date)) {
+      foodDate[food.food.date] = [];
+    }
+    foodDate[food.food.date].push({ foodsArray: food });
+  }
+
+  return res.send({ success: true, foodArray: eatenToday ? foodsArray : foodDate });
 };
 
 exports.postGetSportByUser = async (req, res) => {
@@ -43,7 +65,6 @@ exports.postGetWaterByUser = async (req, res) => {
   const { id, date } = req.body;
 
   const waters = await Water.findAll({ where: { felhasznalo_id: id, datum: date } });
-  //console.log(waters);
 
   return res.send({ success: true, waters: waters[0] });
 };
@@ -86,7 +107,6 @@ exports.postSportByUser = async (req, res) => {
 
 exports.postFoodByUser = async (req, res) => {
   const { id, food } = req.body;
-  console.log(food);
 
   const newFood = await Food.create({
     nev: food.name,
@@ -105,4 +125,22 @@ exports.postFoodByUser = async (req, res) => {
   });
 
   return res.send({ success: true });
+};
+
+exports.postGetWeights = async (req, res) => {
+  const { id } = req.body;
+
+  const allWeights = await Weight.findAll({ where: { felhasznalo_id: id } });
+  if (!allWeights) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
+
+  res.send({ success: true, allWeights });
+};
+
+exports.postGetLastWeight = async (req, res) => {
+  const { id } = req.body;
+
+  const lastWeights = await Weight.findAll({ limit: 1, where: { felhasznalo_id: id } });
+  if (!lastWeights) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
+
+  res.send({ success: true, lastWeights });
 };
