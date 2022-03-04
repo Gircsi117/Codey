@@ -1,1 +1,78 @@
-<h1>Ez a blogok</h1>
+<%- include("../header") %>
+    <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+    <div class="container mt-0 mt-sm-3">
+    <%- include("../menu") %>
+
+    <div class="content row m-0 p-3">
+        <div class="gray row p-2" id="preview">
+            
+        </div>
+        <div class="gray mt-3" id="tablazat" style="overflow-x:scroll">
+            <!-- Blogok táblája -->
+        </div>
+            
+    </div>
+    <%- include('../foot') %>
+</div>
+
+<script>
+    let blogs = [];
+    let select;
+    $.ajax({ method: 'get', url: './getAllBlog' })
+    .done((data) => {
+        if(!data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
+        if(data.blogs.length == 0) return;
+        blogs = data.blogs;
+
+        $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
+
+        tableColor(blogs, "status", 1);
+        tableHide("status");
+        tableItemEdit("idopont", "", "text.replace('T', ' ').substring(0, 19)")
+        tableItemEdit("tartalom", "", "text.substring(0, 25) + '...'")
+      })
+    .fail((err) => {notify("Adatbázis hiba");})
+    .always(() => {});
+
+    function edit_push(index) {
+        select = blogs[index];
+        let html = `<div class="col-8" style="margin: 0px auto; border: 1px solid white;">
+                <div class="row pt-3">
+                    <div class="col-12 col-md-8 p-0">
+                        <h1>${select.cim}</h1>
+                        <p>${select.idopont}</p>
+                    </div>
+                    <div class="col-12 col-md-4 p-0 d-md-flex justify-content-md-end align-items-start">
+                        <div class="form-check form-switch p-0">
+                            <input class="form-check-input" type="checkbox" id="active" onclick="edit()" ${(select.status == 1) ? "checked" : ""}>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="" style="height: 400px; overflow-y: scroll;">
+                    ${select.tartalom}
+                </div>
+            </div>`
+        $('#preview').html(html);
+    }
+
+    function edit() {
+        if(select == null) return notify("Nincs kiválasztott felhasználó!");
+        let stat = ($("#active").is(":checked")) ? 1 : 0
+        $.ajax({ method: 'post', url: './setBlogStatus', data: {
+            id: select.id,
+            status: stat
+        } })
+        .done((results) => {
+            console.log("sikeresen módosítva!");
+            blogs[blogs.indexOf(select)].status = stat;
+            
+            tableColor(blogs, "status", 1);
+        })
+        .fail((err) => {return console.log("Sikertelen módosítás!!!")})
+        .always(() => {});
+    }
+</script>
+
+<%- include("../footer") %>
+

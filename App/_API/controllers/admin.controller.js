@@ -12,7 +12,7 @@ const { Op } = require('sequelize');
 exports.postGetAllUserData = async (req, res) => {
     const { id } = req.body;
 
-    const users = await User.findAll({ where: { id: { [Op.not]: id } } });
+    const users = await User.findAll({ where: { id: { [Op.not]: id } }, attributes: {exclude: ['password']}});
     return res.send({ success: true, users: users });
 };
 
@@ -50,9 +50,9 @@ exports.postSetUserData = async (req, res) => {
             nev: username,
             email: email,
             jogosultsag: status,
-            magassag: magassag,
-            suly: suly,
-            cel_suly: cel,
+            magassag: (magassag == '' || magassag == null) ? null: magassag,
+            suly: (suly == '' || suly == null) ? null: suly,
+            cel_suly: (cel == '' || cel == null) ? null: cel,
         },
         { where: { id: id } }
     );
@@ -73,10 +73,10 @@ exports.postNewIngredients = async (req, res) => {
         zsir: zsir,
         ehetoe_magaban: ehetoe_magaban,
     });
-
+    console.log(newIngredients);
     if (!newIngredients) return res.send({ success: false, err: 'Sikertelen felvétel!' });
 
-    return res.send({ success: true });
+    return res.send({ success: true, ing: newIngredients });
 };
 
 exports.postDeleteIngredient = async (req, res) => {
@@ -112,7 +112,7 @@ exports.postSetIngredient = async (req, res) => {
 };
 
 exports.getAllIngredient = async (req, res)=>{
-    const ingredients = Ingredients.findAll();
+    const ingredients = await Ingredients.findAll();
     if(!ingredients) return res.send({ success: false});
 
     return res.send({ success: true, ingredients: ingredients});

@@ -29,7 +29,7 @@ body{
 }
 
 header{
-    background-image: url('../Img/header.jpg');
+    background-image: url('/Img/header.jpg');
     background-position: center;
     background-repeat: no-repeat;
     height: 200px;
@@ -56,7 +56,7 @@ header h1{
     color: black;
 }
 
-.user-form input{
+.user-form input, select{
     margin-bottom: 10px;
 }
 
@@ -142,15 +142,11 @@ input[type=submit]:hover{
 }
 
 .red{
-    background-color: red;
-    color: white;
-    border: 1px solid black;
+    background-color: rgba(255, 0, 0, 0.265);
 }
 
 .green{
-    background-color: green;
-    color: white;
-    border: 1px solid black;
+    background-color: rgba(0, 128, 0, 0.265);
 }
 
 .blog-content{
@@ -209,6 +205,11 @@ tfoot tr{
 
 .error{
     display: none;
+}
+
+i::before{
+    width: 100%;
+    text-align: center;
 }
 
 @media only screen and (max-width: 405px) {

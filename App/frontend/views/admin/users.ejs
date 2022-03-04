@@ -1,1 +1,144 @@
-<h1>Ez a felhasználók</h1>
+<%- include("../header") %>
+    <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+    <div class="container mt-0 mt-sm-3">
+    <%- include("../menu") %>
+
+    <div class="content row m-0 p-3">
+        <div class="gray row p-2">
+            <h2 class="text-center">Adatok módosítása</h2>
+            <div class="user-form">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="name" placeholder="János" />
+                    <label for="name">Név</label>
+                </div>
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" />
+                    <label for="login-email">Email cím</label>
+                </div>
+                <select name="" id="jog" class="form-select">
+                    <option value="0">User</option>
+                    <option value="1">Moderátor</option>
+                    <option value="2">Admin</option>
+                </select>
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="magas" placeholder="null" min="1" />
+                    <label for="login-email">Magasság (cm)</label>
+                </div>
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="suly" placeholder="null" min="1" />
+                    <label for="login-email">Súly (kg)</label>
+                </div>
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="cel" placeholder="null" min="1" />
+                    <label for="login-email">Cél súly (kg)</label>
+                </div>
+                <button type="button" class="btn btn-warning" onclick="edit()">Módosítás</button>
+                <button type="button" class="btn btn-danger" onclick="delete_data()">Törlés</button>
+            </div>
+        </div>
+        <div class="gray mt-3" id="tablazat" style="overflow-x:scroll">
+            <!-- Felhasználók táblája -->
+        </div>
+            
+    </div>
+    <%- include('../foot') %>
+</div>
+
+<script>
+    let users = [];
+    let jogok = ["User", "Moderator", "Admin"]
+    let select;
+    $.ajax({ method: 'post', url: './getAllUserData', data: { } })
+    .done((data) => {
+        if(!data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
+        if(data.users.length == 0) return;
+        users = data.users;
+
+        $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
+        tableColor(users, "reg_token", "");
+        tableHide("reg_token");
+        tableItemEdit("jogosultsag", "0", "'User'", "text");
+        tableItemEdit("jogosultsag", "1", "'Moderátor'", "text");
+        tableItemEdit("jogosultsag", "2", "'Admin'", "text");
+      })
+    .fail((err) => {notify("Adatbázis hiba");})
+    .always(() => {});
+
+    function edit_push(index) {
+        select = users[index];
+        $("#name").val(select.nev);
+        $("#email").val(select.email);
+        $("#jog").val(select.jogosultsag);
+        $("#magas").val(select.magassag);
+        $("#suly").val(select.suly);
+        $("#cel").val(select.cel_suly);
+    }
+
+    function edit() {
+        if(select == null) return notify("Nincs kiválasztott felhasználó!");
+        if(!confirm("Biztos Módosítani akarod a felhasználó adatait?")) return;
+
+        $.ajax({ method: 'post', url: './setUserData', data: {
+            id: select.id,
+            username: $("#name").val(),
+            email: $("#email").val(),
+            status: $("#jog").val(),
+            magassag: ($("#magas").val() == 0) ? null : $("#magas").val(),
+            suly: ($("#suly").val() == 0) ? null : $("#suly").val(),
+            cel: ($("#cel").val() == 0) ? null : $("#cel").val()
+        } })
+        .done((results) => {
+            console.log(results.data);
+            if(!results.data.success) return console.log("Sikertelen módosítás!!!");
+            console.log("Sikeres módosítás!!!");
+            //A felhasználó adatainak átírása a táblázatban
+            users[users.indexOf(select)] = {
+                id: select.id,
+                nev: $("#name").val(),
+                email: $("#email").val(),
+                jogosultsag: $("#jog").val(),
+                reg_token: select.reg_token,
+                magassag: ($("#magas").val() == 0) ? null : $("#magas").val(),
+                suly: ($("#suly").val() == 0) ? null : $("#suly").val(),
+                cel_suly: ($("#cel").val() == 0) ? null : $("#cel").val()
+            }
+            //Táblázat frissítése
+            $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
+            tableColor(users, "reg_token", "");
+            tableHide("reg_token");
+            tableItemEdit("jogosultsag", "0", "'User'", "text");
+            tableItemEdit("jogosultsag", "1", "'Moderátor'", "text");
+            tableItemEdit("jogosultsag", "2", "'Admin'", "text");
+
+            $("#name").val("");
+            $("#email").val("");
+            $("#jog").val(0);
+            $("#magas").val("");
+            $("#suly").val("");
+            $("#cel").val("");
+            select = null;
+        })
+        .fail((err) => {return console.log("Sikertelen módosítás!!!" + err)})
+        .always(() => {});
+    }
+
+    function delete_data(params) {
+        if(select == null) return notify("Nincs kiválasztott felhasználó!");
+        if(!confirm("Biztos törölni akarod a felhasználót?")) return;
+        
+        $.ajax({method: "POST", url:"./deleteUser", data:{id: select.id}})
+        .done((results)=>{
+            if(!results.data.success) return console.log("Sikertelen törlés!!");
+            console.log("Sikeres törlés");
+            users.splice(users.indexOf(select), 1);
+            if(users.length == 0) return $("#tablazat").html("");
+            $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
+            szinez(status);
+        })
+        .fail((err)=>{return console.log(err)})
+        .always(()=>{});
+    }
+</script>
+
+<%- include("../footer") %>
+

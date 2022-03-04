@@ -1,15 +1,15 @@
 const { default: axios } = require("axios");
 
 exports.getBlogsPage = (req, res)=>{
-    res.render('admin/blogs')
+    res.render('admin/blogs', {cim: "Blogok", jog: req.session.user.jogosultsag});
 }
 
 exports.getIngredientsPage = (req, res)=>{
-    res.render('admin/ingredients')
+    res.render('admin/ingredients', {cim: "Hozzávalók", jog: req.session.user.jogosultsag});
 }
 
 exports.getUsersPage = (req, res)=>{
-    res.render('admin/users')
+    res.render('admin/users', {cim: "Felhasználók", jog: req.session.user.jogosultsag});
 }
 
 exports.postGetAllUser = async (req, res)=>{
