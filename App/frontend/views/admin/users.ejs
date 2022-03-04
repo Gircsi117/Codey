@@ -33,7 +33,7 @@
                     <label for="login-email">Cél súly (kg)</label>
                 </div>
                 <button type="button" class="btn btn-warning" onclick="edit()">Módosítás</button>
-                <button type="button" class="btn btn-danger" onclick="delet()">Törlés</button>
+                <button type="button" class="btn btn-danger" onclick="delete_data()">Törlés</button>
             </div>
         </div>
         <div class="gray mt-3" id="tablazat" style="overflow-x:scroll">
@@ -122,7 +122,7 @@
         .always(() => {});
     }
 
-    function delet(params) {
+    function delete_data(params) {
         if(select == null) return notify("Nincs kiválasztott felhasználó!");
         if(!confirm("Biztos törölni akarod a felhasználót?")) return;
         
