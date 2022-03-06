@@ -1,4 +1,4 @@
-﻿==========================================================Backend
+﻿==========================================================Frontend
 localhost:3000/admin/getAllUserData
 
 localhost:3000/admin/deleteUser
@@ -137,7 +137,7 @@ localhost:3001/admin/setUserData
 
 localhost:3001/admin/getAllBlogData
 
-localhost:3001/postFoodByUser
+localhost:3001/kcal/postFoodByUser
 {
     "id": 1,
     "food": {
@@ -158,14 +158,22 @@ localhost:3001/auth/register
     "password2":"admin@admin.hu"
 }
 
-localhost:3001/tools/postModifyWeight
+localhost:3001/weight/postModifyWeight
 {
     "id": 1,
     "weight": 120
 }
 
-localhost:3001/tools/postSetGoal
+localhost:3001/weight/postSetGoal
 {
-    "id": 1,
-    "weight": 90
+    "weight": 100,
+    "date": "2022-03-06",
+    "id": 1
 }
+
+localhost:3001/weight/postGetLastWeight
+{
+    "id": 1
+}
+
+localhost:3001/weight/postGetWeights
