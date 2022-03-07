@@ -1,19 +1,19 @@
 const { default: axios } = require("axios");
 
 exports.getBlogPage = async (req, res)=>{
-    res.render('info/blogok');
+    res.render('info/blogok', {cim:"Blogok", jog:req.session.user.jogosultsag});
 }
 
 exports.getGyakoriPage = async (req, res)=>{
-    res.render('info/gyik');
+    res.render('info/gyik', {cim:"GYIK", jog:req.session.user.jogosultsag});
 }
 
 exports.getKaloriarolPage = async (req, res)=>{
-    res.render('info/kaloriarol');
+    res.render('info/kaloriarol', {cim:"Kalóriaszámításról", jog:req.session.user.jogosultsag});
 }
 
 exports.getRolunkPage = async (req, res)=>{
-    res.render('info/rolunk');
+    res.render('info/rolunk', {cim:"Rólunk", jog:req.session.user.jogosultsag});
 }
 
 exports.postBlog = async (req, res)=>{
@@ -22,7 +22,7 @@ exports.postBlog = async (req, res)=>{
 
     axios({
         method:'POST',
-        url:"http://localhost:3001/info/postBlog",
+        url:"http://localhost:3001/blog/postBlog",
         headers: {apisecret: 123},
         data:{
             felhasznalo_id,
@@ -42,7 +42,7 @@ exports.postBlog = async (req, res)=>{
 exports.getAllActiveBlog = async (req, res)=>{
     axios({
         method:'GET',
-        url:"http://localhost:3001/info/getAllActiveBlog",
+        url:"http://localhost:3001/blog/getAllActiveBlog",
         headers: {apisecret: 123}
     })
     .then((response)=>{

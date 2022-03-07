@@ -9,7 +9,7 @@ exports.postSetGoal = (req, res) => {
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/user/postSetGoal',
+    url: 'http://localhost:3001/weight/postSetGoal',
     headers: { apisecret: 123 },
     data: { id, goalWeight },
   })
@@ -26,7 +26,7 @@ exports.postModifyWeight = (req, res) => {
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/user/postModifyWeight',
+    url: 'http://localhost:3001/weight/postModifyWeight',
     headers: { apisecret: 123 },
     data: { id, weight },
   })

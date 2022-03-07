@@ -47,13 +47,13 @@ exports.postDeleteUser = async (req, res)=>{
 }
 
 exports.postSetUserData = async (req, res)=>{
-    const { id, username, email, status, magassag, suly, cel } = req.body;
+    const { id, username, email, status, magassag, cel } = req.body;
 
     axios({
         method: 'POST',
         url: 'http://localhost:3001/admin/setUserData',
         headers: {apisecret: 123},
-        data: {id, username, email, status, magassag, suly, cel}
+        data: {id, username, email, status, magassag, cel}
     })
     .then((results)=>{
         return res.send({data: results.data});
