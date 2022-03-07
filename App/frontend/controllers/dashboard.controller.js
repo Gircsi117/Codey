@@ -11,21 +11,21 @@ exports.postGetDashboardData = (req, res)=>{
   axios.all([
     axios({
       method: 'POST',
-      url: 'http://localhost:3001/kcal/getWaterByUser',
+      url: 'http://localhost:3001/getWaterByUser',
       headers: {apisecret: 123},
       data: {id, date}
     }),
   
     axios({
       method: 'POST',
-      url: 'http://localhost:3001/kcal/getSportByUser',
+      url: 'http://localhost:3001/getSportByUser',
       headers: {apisecret: 123},
       data: {id, date}
     }),
   
     axios({
       method: 'POST',
-      url: 'http://localhost:3001/kcal/getFoodsByUser',
+      url: 'http://localhost:3001/getFoodsByUser',
       headers: {apisecret: 123},
       data: {id}
     })
@@ -43,7 +43,7 @@ exports.postWater = (req, res)=>{
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/kcal/postWaterByUser',
+    url: 'http://localhost:3001/postWaterByUser',
     headers: {apisecret: 123},
     data: {id, mennyiseg, date}
   })
@@ -60,7 +60,7 @@ exports.postSport = (req, res)=>{
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/kcal/postSportByUser',
+    url: 'http://localhost:3001/postSportByUser',
     headers: {apisecret: 123},
     data: {id, mennyiseg, date}
   })
@@ -77,7 +77,7 @@ exports.postFood = (req, res)=>{
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/kcal/postFoodByUser',
+    url: 'http://localhost:3001/postFoodByUser',
     headers: {apisecret: 123},
     data: {id, food}
   })

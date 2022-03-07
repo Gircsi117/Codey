@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 exports.getSettingsPage = (req, res) => {
-  res.render('tools/settings', {cim:"Home", jog:req.session.user.jogosultsag});
+  res.render('tools/settings');
 };
 
 exports.postModifyUsername = (req, res) => {
