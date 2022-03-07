@@ -22,7 +22,7 @@ exports.postBlog = async (req, res)=>{
 
     axios({
         method:'POST',
-        url:"http://localhost:3001/info/postBlog",
+        url:"http://localhost:3001/blog/postBlog",
         headers: {apisecret: 123},
         data:{
             felhasznalo_id,
@@ -42,7 +42,7 @@ exports.postBlog = async (req, res)=>{
 exports.getAllActiveBlog = async (req, res)=>{
     axios({
         method:'GET',
-        url:"http://localhost:3001/info/getAllActiveBlog",
+        url:"http://localhost:3001/blog/getAllActiveBlog",
         headers: {apisecret: 123}
     })
     .then((response)=>{
