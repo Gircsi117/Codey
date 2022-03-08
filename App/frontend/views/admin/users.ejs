@@ -20,13 +20,14 @@
                     <option value="1">Moderátor</option>
                     <option value="2">Admin</option>
                 </select>
+                <select name="" id="nem" class="form-select">
+                    <option value="">-</option>
+                    <option value="0">Nő</option>
+                    <option value="1">Férfi</option>
+                </select>
                 <div class="form-floating">
                     <input type="number" class="form-control" id="magas" placeholder="null" min="1" />
                     <label for="login-email">Magasság (cm)</label>
-                </div>
-                <div class="form-floating">
-                    <input type="number" class="form-control" id="suly" placeholder="null" min="1" />
-                    <label for="login-email">Súly (kg)</label>
                 </div>
                 <div class="form-floating">
                     <input type="number" class="form-control" id="cel" placeholder="null" min="1" />
@@ -54,12 +55,17 @@
         if(data.users.length == 0) return;
         users = data.users;
 
-        $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
+        $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Nem", "Jogok", "Magasság", "Cél"]));
         tableColor(users, "reg_token", "");
         tableHide("reg_token");
+
         tableItemEdit("jogosultsag", "0", "'User'", "text");
         tableItemEdit("jogosultsag", "1", "'Moderátor'", "text");
         tableItemEdit("jogosultsag", "2", "'Admin'", "text");
+
+        tableItemEdit("nem", "0", "'Nő'", "text");
+        tableItemEdit("nem", "1", "'Férfi'", "text");
+
       })
     .fail((err) => {notify("Adatbázis hiba");})
     .always(() => {});
@@ -70,7 +76,7 @@
         $("#email").val(select.email);
         $("#jog").val(select.jogosultsag);
         $("#magas").val(select.magassag);
-        $("#suly").val(select.suly);
+        $("#nem").val(select.nem);
         $("#cel").val(select.cel_suly);
     }
 
@@ -82,9 +88,9 @@
             id: select.id,
             username: $("#name").val(),
             email: $("#email").val(),
+            nem: ($("#nem").val() == "") ? null : $("#nem").val(),
             status: $("#jog").val(),
             magassag: ($("#magas").val() == 0) ? null : $("#magas").val(),
-            suly: ($("#suly").val() == 0) ? null : $("#suly").val(),
             cel: ($("#cel").val() == 0) ? null : $("#cel").val()
         } })
         .done((results) => {
@@ -96,27 +102,32 @@
                 id: select.id,
                 nev: $("#name").val(),
                 email: $("#email").val(),
+                nem: ($("#nem").val() == "") ? null : $("#nem").val(),
                 jogosultsag: $("#jog").val(),
                 reg_token: select.reg_token,
                 magassag: ($("#magas").val() == 0) ? null : $("#magas").val(),
-                suly: ($("#suly").val() == 0) ? null : $("#suly").val(),
                 cel_suly: ($("#cel").val() == 0) ? null : $("#cel").val()
             }
             //Táblázat frissítése
-            $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
+            $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Nem", "Jogok", "Magasság", "Cél"]));
             tableColor(users, "reg_token", "");
             tableHide("reg_token");
+
             tableItemEdit("jogosultsag", "0", "'User'", "text");
             tableItemEdit("jogosultsag", "1", "'Moderátor'", "text");
             tableItemEdit("jogosultsag", "2", "'Admin'", "text");
+
+            tableItemEdit("nem", "0", "'Nő'", "text");
+            tableItemEdit("nem", "1", "'Férfi'", "text");
 
             $("#name").val("");
             $("#email").val("");
             $("#jog").val(0);
             $("#magas").val("");
-            $("#suly").val("");
+            $("#nem").val("");
             $("#cel").val("");
             select = null;
+            notify("Adatok sikeresen módosítva!", "green")
         })
         .fail((err) => {return console.log("Sikertelen módosítás!!!" + err)})
         .always(() => {});
@@ -132,10 +143,28 @@
             console.log("Sikeres törlés");
             users.splice(users.indexOf(select), 1);
             if(users.length == 0) return $("#tablazat").html("");
-            $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Jogok", "Magasság", "Súly", "Cél"]));
-            szinez(status);
+            $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Nem", "Jogok", "Magasság", "Cél"]));
+            tableColor(users, "reg_token", "");
+            tableHide("reg_token");
+
+            tableItemEdit("jogosultsag", "0", "'User'", "text");
+            tableItemEdit("jogosultsag", "1", "'Moderátor'", "text");
+            tableItemEdit("jogosultsag", "2", "'Admin'", "text");
+
+            tableItemEdit("nem", "0", "'Nő'", "text");
+            tableItemEdit("nem", "1", "'Férfi'", "text");
+
+            $("#name").val("");
+            $("#email").val("");
+            $("#jog").val(0);
+            $("#magas").val("");
+            $("#nem").val("");
+            $("#cel").val("");
+            select = null;
+
+            notify("Sikeresen törölted a felhasználót", "green")
         })
-        .fail((err)=>{return console.log(err)})
+        .fail((err)=>{return notify("Hiba a törlés közben")})
         .always(()=>{});
     }
 </script>

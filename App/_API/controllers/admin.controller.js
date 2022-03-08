@@ -33,7 +33,7 @@ exports.postDeleteUser = async (req, res) => {
 
 exports.postSetUserData = async (req, res) => {
   try {
-    const { id, username, email, status, magassag, suly, cel } = req.body;
+    const { id, username, email, nem, status, magassag, cel } = req.body;
 
     let errors = [];
 
@@ -54,8 +54,8 @@ exports.postSetUserData = async (req, res) => {
         nev: username,
         email: email,
         jogosultsag: status,
+        nem: nem == '' || nem == null ? null : nem,
         magassag: magassag == '' || magassag == null ? null : magassag,
-        suly: suly == '' || suly == null ? null : suly,
         cel_suly: cel == '' || cel == null ? null : cel,
       },
       { where: { id: id } }
