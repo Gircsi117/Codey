@@ -12,6 +12,7 @@ User.init(
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     nev: DataTypes.STRING,
     email: DataTypes.STRING,
+    nem: DataTypes.TINYINT,
     password: DataTypes.STRING,
     jogosultsag: DataTypes.TINYINT,
     reg_token: DataTypes.STRING,
