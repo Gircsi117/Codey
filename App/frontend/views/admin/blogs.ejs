@@ -64,12 +64,12 @@
             status: stat
         } })
         .done((results) => {
-            console.log("sikeresen módosítva!");
+            notify("Sikere adatmódosítás", "green")
             blogs[blogs.indexOf(select)].status = stat;
             
             tableColor(blogs, "status", 1);
         })
-        .fail((err) => {return console.log("Sikertelen módosítás!!!")})
+        .fail((err) => {return notify("Sikertelen módosítás!!!")})
         .always(() => {});
     }
 </script>
