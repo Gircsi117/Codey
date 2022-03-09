@@ -7,7 +7,6 @@ const Water = require('../models/water.model');
 exports.postGetFoodsByUser = async (req, res) => {
   try {
     const { id, eatenToday } = req.body;
-
     let query = { felhasznalo_id: id };
     if (eatenToday != false) query = [{ felhasznalo_id: id }, { hozzadva: new Date() }];
 
@@ -58,9 +57,10 @@ exports.postGetFoodsByUser = async (req, res) => {
 
 exports.postGetSportByUser = async (req, res) => {
   try {
-    const { id, date } = req.body;
-
-    const sports = await Sport.findAll({ where: { felhasznalo_id: id, datum: date } });
+    const { id, useToday } = req.body;
+    let query = { felhasznalo_id: id };
+    if (useToday != false) query = [{ felhasznalo_id: id, datum: new Date() }];
+    const sports = await Sport.findAll({ where: query });
 
     return res.send({ success: true, sports: sports });
   } catch (error) {
@@ -70,11 +70,13 @@ exports.postGetSportByUser = async (req, res) => {
 
 exports.postGetWaterByUser = async (req, res) => {
   try {
-    const { id, date } = req.body;
+    const { id, drinkToday } = req.body;
+    let query = { felhasznalo_id: id };
+    if (drinkToday != false) query = [{ felhasznalo_id: id }, { datum: new Date() }];
+    const waters = await Water.findAll({ where: query });
+    console.log(query);
 
-    const waters = await Water.findAll({ where: { felhasznalo_id: id, datum: date } });
-
-    return res.send({ success: true, waters: waters[0] });
+    return res.send({ success: true, waters: waters });
   } catch (error) {
     console.log(error);
   }
