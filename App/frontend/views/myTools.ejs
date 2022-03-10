@@ -61,7 +61,13 @@
     }
   }
 
-  function tableFilter(items, item, param) {
+  //A megadott paraméter szerint elrejti vagy mejeleníti a sorokat 
+  function tableFilter(table, item, param) {
+    $(`#${table} .sor`).show();
     
+    for (let i = 0; i < $(`#${table} ._${item}`).length; i++) {
+      let text = $(`#${table} ._${item}`).eq(i).html();
+      if(!eval(param)) $(`#${table} .sor`).eq(i).hide();
+    }
   }
 </script>

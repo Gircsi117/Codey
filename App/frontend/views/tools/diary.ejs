@@ -1,9 +1,16 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
     <div class="container mt-0 mt-sm-3">
-
         <%- include("../menu") %>
         <div class="content row m-0 p-3">
+            <div class="user-form mb-3">
+                
+                <input type="date" name="" id="alma">
+                <input type="date" name="" id="korte">
+                <button type="button" class="btn btn-success" onclick="szures()">Szűrés</button>
+                <button type="button" class="btn btn-warning" onclick="reset()">Reset</button>
+            </div>
+
             <div id="accordion" class="p-3" style="background-color: var(--div);">
                 <h3>Étkezési napló</h3>
                 <div id="etkezes" class="p-3" style="overflow-x: scroll;">
@@ -78,6 +85,35 @@
 
     })
     .always(()=>{})
+
+    function szures() {
+        tableFilter(
+            "etelekTable",
+            "date",
+            "Date.parse(text) >= Date.parse($('#alma').val()) && Date.parse(text) <= Date.parse($('#korte').val())"
+        );
+        tableFilter(
+            "folyadekTable",
+            "datum",
+            "Date.parse(text) >= Date.parse($('#alma').val()) && Date.parse(text) <= Date.parse($('#korte').val())"
+        );
+        tableFilter(
+            "mozgasTable",
+            "datum",
+            "Date.parse(text) >= Date.parse($('#alma').val()) && Date.parse(text) <= Date.parse($('#korte').val())"
+        );
+        tableFilter(
+            "sulyTable",
+            "datum",
+            "Date.parse(text) >= Date.parse($('#alma').val()) && Date.parse(text) <= Date.parse($('#korte').val())"
+        );
+    }
+    function reset() {
+        tableFilter("etelekTable", "date", "true");
+        tableFilter("folyadekTable", "datum", "true");
+        tableFilter("mozgasTable", "datum", "true");
+        tableFilter("sulyTable","datum","true");
+    }
 </script>
 
 <%- include("../footer") %>
