@@ -12,9 +12,9 @@
   };
 
   //Tábla generálása
-  function toTable(data, edit=false, header = []) {
+  function toTable(data, edit=false, header = [], tableID = "table") {
     const keys = Object.keys(data[0]);
-    let string = `<table class="table"><thead>`;
+    let string = `<table class="table" id="${tableID}"><thead>`;
     string += `<tr>` 
     let th = (header.length == 0) ? keys : header
     th.forEach(element => {
@@ -39,25 +39,25 @@
   }
 
   //A táblázat sorait beszinezi egy megadott szempont alapján
-  function tableColor(items, item, param) {
-    for (let i = 0; i < $('.sor').length; i++) {
-      $('.sor').eq(i).removeClass("green").removeClass("red");
-      $('.sor').eq(i).addClass((items[i][item] == param) ? "green" : "red");
+  function tableColor(table, items, item, param) {
+    for (let i = 0; i < $(`#${table} .sor`).length; i++) {
+      $(`#${table} .sor`).eq(i).removeClass("green").removeClass("red");
+      $(`#${table} .sor`).eq(i).addClass((items[i][item] == param) ? "green" : "red");
     }
   }
 
   //Elrejti a táblázat egy oszlopát
-  function tableHide(item) {
-    $(`._${item}`).hide();
+  function tableHide(table, item) {
+    $(`#${table} ._${item}`).hide();
   }
 
   //A táblázat egyes elemeit lehet szerkeszteni egy megadott szempont alapján
-  function tableItemEdit(item, param, result1, result2 = null) {
+  function tableItemEdit(table, item, param, result1, result2 = null) {
     if(result2 == null) result2 = result1;
 
-    for (let i = 0; i < $(`._${item}`).length; i++) {
-      let text = $(`._${item}`).eq(i).html();
-      $(`._${item}`).eq(i).html((text == param) ? eval(result1) : eval(result2));
+    for (let i = 0; i < $(`#${table} ._${item}`).length; i++) {
+      let text = $(`#${table} ._${item}`).eq(i).html();
+      $(`#${table} ._${item}`).eq(i).html((text == param) ? eval(result1) : eval(result2));
     }
   }
 

@@ -212,6 +212,10 @@ i::before{
     text-align: center;
 }
 
+#accordion{
+    color: var(--text);
+}
+
 @media only screen and (max-width: 405px) {
     .container {
         display: none;

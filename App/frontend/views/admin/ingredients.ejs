@@ -57,8 +57,8 @@
         ingredients = res.data.ingredients;
 
         $("#tablazat").html(toTable(ingredients, true, ["ID", "Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír"]));
-        tableColor(ingredients, "ehetoe_magaban", 1)
-        tableHide("ehetoe_magaban")
+        tableColor("table", ingredients, "ehetoe_magaban", 1)
+        tableHide("table", "ehetoe_magaban")
       })
     .fail((err) => {notify("Adatbázis hiba");})
     .always(() => {});
@@ -106,8 +106,8 @@
             ingredients[index].ehetoe_magaban = $("#eheto").val(),
 
             $("#tablazat").html(toTable(ingredients, true, ["ID", "Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír"]));
-            tableColor(ingredients, "ehetoe_magaban", 1)
-            tableHide("ehetoe_magaban")
+            tableColor("table", ingredients, "ehetoe_magaban", 1)
+            tableHide("table", "ehetoe_magaban")
             back();
         })
         .fail((err) => {return console.log("Sikertelen módosítás!!!")})
@@ -127,8 +127,8 @@
             ingredients.splice(ingredients.indexOf(select), 1)
 
             $("#tablazat").html(toTable(ingredients, true, ["ID", "Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír"]));
-            tableColor(ingredients, "ehetoe_magaban", 1)
-            tableHide("ehetoe_magaban")
+            tableColor("table", ingredients, "ehetoe_magaban", 1)
+            tableHide("table", "ehetoe_magaban")
             back();
         })
         .fail((err)=>{notify(err)})
@@ -164,8 +164,8 @@
             })
             console.log(ingredients);
             $("#tablazat").html(toTable(ingredients, true, ["ID", "Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír"]));
-            tableColor(ingredients, "ehetoe_magaban", 1);
-            tableHide("ehetoe_magaban");
+            tableColor("table", ingredients, "ehetoe_magaban", 1);
+            tableHide("table", "ehetoe_magaban");
         })
         .fail((err)=>{notify(err)})
         .always(()=>{});

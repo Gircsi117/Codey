@@ -3,21 +3,60 @@
     <div class="container mt-0 mt-sm-3">
 
         <%- include("../menu") %>
-        <div class="content row m-0 p-0">
-            
+        <div class="content row m-0 p-3">
+            <div id="accordion" class="p-3" style="background-color: var(--div);">
+                <h3>Étkezési napló</h3>
+                <div id="etkezes">
+                  
+                </div>
+                <h3>Testmozgási napló</h3>
+                <div id="testmozgas">
+                  
+                </div>
+                <h3>Folyadék napló</h3>
+                <div id="folyadek">
+                  
+                </div>
+            </div>
         </div>
         
         <%- include("../foot") %>
     </div>
 
+    <script>
+        $( function() {
+          $( "#accordion" ).accordion({
+            heightStyle: "content"
+          });
+        } );
+    </script>
+
 <script>
     $.ajax({method:"POST", url:"/", data:{
-        drinkToday:false,
-        useToday:false,
-        eatenToday:false
+        drinkToday:0,
+        useToday:0,
+        eatenToday:0
     }})
     .done((res)=>{
         console.log(res);
+        $("#testmozgas").html(toTable(res.sports, false, ["ID", "Dátum", "Mennyiség (kcal)"], "mozgasTable"))
+        tableHide("mozgasTable", "felhasznalo_id");
+
+        $("#folyadek").html(toTable(res.waters, false, ["ID", "Mennyiség(dl)", "Dátum"], "folyadekTable"))
+        tableHide("folyadekTable", "felhasznalo_id");
+
+        let foodTableData = [];
+
+        res.foods.forEach(food => {
+            let kcal = 0;
+            food.kcal.forEach(element => {
+                kcal += element.kcal * element.multiplier
+            });
+            foodTableData.push({id: food.id, name: food.name, kcal: kcal, date: food.date})
+        });
+
+        $("#etkezes").html(toTable(foodTableData, true, ["ID", "Név", "Mennyiség (kcal)", "Dátum"], "etelekTable"))
+        tableHide("etelekTable", "hozzavalok");
     })
     .fail((err)=>{
 

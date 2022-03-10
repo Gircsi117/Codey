@@ -56,15 +56,15 @@
         users = data.users;
 
         $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Nem", "Jogok", "Magasság", "Cél"]));
-        tableColor(users, "reg_token", "");
-        tableHide("reg_token");
+        tableColor("table", users, "reg_token", "");
+        tableHide("table", "reg_token");
 
-        tableItemEdit("jogosultsag", "0", "'User'", "text");
-        tableItemEdit("jogosultsag", "1", "'Moderátor'", "text");
-        tableItemEdit("jogosultsag", "2", "'Admin'", "text");
+        tableItemEdit("table", "jogosultsag", "0", "'User'", "text");
+        tableItemEdit("table", "jogosultsag", "1", "'Moderátor'", "text");
+        tableItemEdit("table", "jogosultsag", "2", "'Admin'", "text");
 
-        tableItemEdit("nem", "0", "'Nő'", "text");
-        tableItemEdit("nem", "1", "'Férfi'", "text");
+        tableItemEdit("table", "nem", "0", "'Nő'", "text");
+        tableItemEdit("table", "nem", "1", "'Férfi'", "text");
 
       })
     .fail((err) => {notify("Adatbázis hiba");})
@@ -110,15 +110,15 @@
             }
             //Táblázat frissítése
             $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Nem", "Jogok", "Magasság", "Cél"]));
-            tableColor(users, "reg_token", "");
-            tableHide("reg_token");
+            tableColor("table", users, "reg_token", "");
+            tableHide("table", "reg_token");
 
-            tableItemEdit("jogosultsag", "0", "'User'", "text");
-            tableItemEdit("jogosultsag", "1", "'Moderátor'", "text");
-            tableItemEdit("jogosultsag", "2", "'Admin'", "text");
+            tableItemEdit("table", "jogosultsag", "0", "'User'", "text");
+            tableItemEdit("table", "jogosultsag", "1", "'Moderátor'", "text");
+            tableItemEdit("table", "jogosultsag", "2", "'Admin'", "text");
 
-            tableItemEdit("nem", "0", "'Nő'", "text");
-            tableItemEdit("nem", "1", "'Férfi'", "text");
+            tableItemEdit("table", "nem", "0", "'Nő'", "text");
+            tableItemEdit("table", "nem", "1", "'Férfi'", "text");
 
             $("#name").val("");
             $("#email").val("");
@@ -144,15 +144,15 @@
             users.splice(users.indexOf(select), 1);
             if(users.length == 0) return $("#tablazat").html("");
             $("#tablazat").html(toTable(users, true, ["ID", "Név", "E-mail", "Nem", "Jogok", "Magasság", "Cél"]));
-            tableColor(users, "reg_token", "");
-            tableHide("reg_token");
+            tableColor("table", users, "reg_token", "");
+            tableHide("table", "reg_token");
 
-            tableItemEdit("jogosultsag", "0", "'User'", "text");
-            tableItemEdit("jogosultsag", "1", "'Moderátor'", "text");
-            tableItemEdit("jogosultsag", "2", "'Admin'", "text");
+            tableItemEdit("table", "jogosultsag", "0", "'User'", "text");
+            tableItemEdit("table", "jogosultsag", "1", "'Moderátor'", "text");
+            tableItemEdit("table", "jogosultsag", "2", "'Admin'", "text");
 
-            tableItemEdit("nem", "0", "'Nő'", "text");
-            tableItemEdit("nem", "1", "'Férfi'", "text");
+            tableItemEdit("table", "nem", "0", "'Nő'", "text");
+            tableItemEdit("table", "nem", "1", "'Férfi'", "text");
 
             $("#name").val("");
             $("#email").val("");

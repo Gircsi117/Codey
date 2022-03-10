@@ -26,10 +26,10 @@
 
         $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
 
-        tableColor(blogs, "status", 1);
-        tableHide("status");
-        tableItemEdit("idopont", "", "text.replace('T', ' ').substring(0, 19)")
-        tableItemEdit("tartalom", "", "text.substring(0, 25) + '...'")
+        tableColor("table", blogs, "status", 1);
+        tableHide("table", "status");
+        tableItemEdit("table", "idopont", "", "text.replace('T', ' ').substring(0, 19)")
+        tableItemEdit("table", "tartalom", "", "text.substring(0, 25) + '...'")
       })
     .fail((err) => {notify("Adatbázis hiba");})
     .always(() => {});
@@ -67,7 +67,7 @@
             notify("Sikere adatmódosítás", "green")
             blogs[blogs.indexOf(select)].status = stat;
             
-            tableColor(blogs, "status", 1);
+            tableColor("table", blogs, "status", 1);
         })
         .fail((err) => {return notify("Sikertelen módosítás!!!")})
         .always(() => {});
