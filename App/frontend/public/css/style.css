@@ -216,6 +216,29 @@ i::before{
     color: var(--text);
 }
 
+/*Scrollbar*/
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--div); 
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: var(--body);
+    border-radius: 5px;
+  }
+
+  /*Body scrollbar*/
+  body::-webkit-scrollbar-track {
+    background: var(--body); 
+  }
+  body::-webkit-scrollbar-thumb {
+    background: var(--div); 
+  }
+
 @media only screen and (max-width: 405px) {
     .container {
         display: none;

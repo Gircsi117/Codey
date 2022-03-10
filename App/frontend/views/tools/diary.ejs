@@ -6,15 +6,19 @@
         <div class="content row m-0 p-3">
             <div id="accordion" class="p-3" style="background-color: var(--div);">
                 <h3>Étkezési napló</h3>
-                <div id="etkezes">
+                <div id="etkezes" class="p-3" style="overflow-x: scroll;">
                   
                 </div>
                 <h3>Testmozgási napló</h3>
-                <div id="testmozgas">
+                <div id="testmozgas" class="p-3" style="overflow-x: scroll;">
                   
                 </div>
                 <h3>Folyadék napló</h3>
-                <div id="folyadek">
+                <div id="folyadek" class="p-3" style="overflow-x: scroll;">
+                  
+                </div>
+                <h3>Súly alakulás</h3>
+                <div id="suly" class="p-3" style="overflow-x: scroll;">
                   
                 </div>
             </div>
@@ -32,6 +36,7 @@
     </script>
 
 <script>
+    //----------------------------------------------------
     $.ajax({method:"POST", url:"/", data:{
         drinkToday:0,
         useToday:0,
@@ -57,6 +62,17 @@
 
         $("#etkezes").html(toTable(foodTableData, true, ["ID", "Név", "Mennyiség (kcal)", "Dátum"], "etelekTable"))
         tableHide("etelekTable", "hozzavalok");
+    })
+    .fail((err)=>{
+
+    })
+    .always(()=>{})
+    //----------------------------------------------------------
+    $.ajax({method:"GET", url:"./getWeights"})
+    .done((res)=>{
+        console.log(res.data.allWeights);
+        $("#suly").html(toTable(res.data.allWeights, false, ["ID", "Súly", "Dátum"], "sulyTable"))
+        tableHide("sulyTable", "felhasznalo_id");
     })
     .fail((err)=>{
 

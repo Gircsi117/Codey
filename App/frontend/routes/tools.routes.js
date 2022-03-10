@@ -14,15 +14,12 @@ router.post('/modifyPassword', require('../middleware/auth.middleware'), userCon
 
 //Grafikonok lekérései
 router.get("/graphs", require('../middleware/auth.middleware'), graphsController.getGraphsPage);
-/*
-    postGetDashboardData segítségével lekérhető az összes szükséges adat 
-*/
+
 
 //Étkezési napló lekérései
 router.get("/diary", require('../middleware/auth.middleware'), diaryController.getDiaryPage);
-/*
-    postGetDashboardData segítségével lekérhető az összes szükséges adat
-*/
+router.get("/getWeights", require('../middleware/auth.middleware'), diaryController.getWeights);
+
 
 //Cél meghatározása lekérései
 router.get("/goal", require('../middleware/auth.middleware'), toolsController.getGoalPage);
