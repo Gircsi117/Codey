@@ -151,3 +151,14 @@ exports.postFoodByUser = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.getIngredients = async (req, res) => {
+  try {
+    console.log("Kecskebéka");
+    const ingredients = await Ingredients.findAll();
+
+    return res.send({ success: true, ingredients });
+  } catch (error) {
+    console.log(error);
+  }
+};

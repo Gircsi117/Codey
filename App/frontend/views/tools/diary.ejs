@@ -5,8 +5,8 @@
         <div class="content row m-0 p-3">
             <div class="user-form mb-3">
                 
-                <input type="date" name="" id="alma">
-                <input type="date" name="" id="korte">
+                <input type="date" name="" id="tolDate">
+                <input type="date" name="" id="igDate">
                 <button type="button" class="btn btn-success" onclick="szures()">Szűrés</button>
                 <button type="button" class="btn btn-warning" onclick="reset()">Reset</button>
             </div>
@@ -90,22 +90,22 @@
         tableFilter(
             "etelekTable",
             "date",
-            "Date.parse(text) >= Date.parse($('#alma').val()) && Date.parse(text) <= Date.parse($('#korte').val())"
+            "Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
         );
         tableFilter(
             "folyadekTable",
             "datum",
-            "Date.parse(text) >= Date.parse($('#alma').val()) && Date.parse(text) <= Date.parse($('#korte').val())"
+            "Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
         );
         tableFilter(
             "mozgasTable",
             "datum",
-            "Date.parse(text) >= Date.parse($('#alma').val()) && Date.parse(text) <= Date.parse($('#korte').val())"
+            "Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
         );
         tableFilter(
             "sulyTable",
             "datum",
-            "Date.parse(text) >= Date.parse($('#alma').val()) && Date.parse(text) <= Date.parse($('#korte').val())"
+            "Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
         );
     }
     function reset() {

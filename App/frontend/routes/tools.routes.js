@@ -30,6 +30,7 @@ router.post("/postSetGender", require('../middleware/auth.middleware'), toolsCon
 
 //Kalória táblázat lekérései
 router.get("/kcalTable", require('../middleware/auth.middleware'), caloriesController.getCaloriesPage);
+router.get("/getIngredients", require('../middleware/auth.middleware'), caloriesController.getIngredients);
 
 
 module.exports = router;

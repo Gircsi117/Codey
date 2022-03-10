@@ -25,7 +25,7 @@
     string += `</tr></thead><tbody>`
 
     for (let i = 0; i < data.length; i++) {
-      string += `<tr class="sor">`
+      string += `<tr class="sor"><td class="_index d-none">${i}</td>`
       keys.forEach(key => {
         string += `<td class="_${key}">${(data[i][key] != null) ? data[i][key] : "-"}</td>`;
       });
