@@ -1,0 +1,40 @@
+<%- include("../header") %>
+<h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+    <div class="container mt-0 mt-sm-3">
+
+        <%- include("../menu") %>
+        <div class="content row m-0 p-3">
+            <div class="row gray">
+                <h1 class="text-center">Optimális súly kiszámítása</h1>
+                <div class="col-6 p-3">
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" id="magassag" placeholder="null" min="0" value="<%= magas %>" />
+                        <label for="login-email">Magasság (cm)</label>
+                    </div>
+                    <select name="" id="nem" class="form-select">
+                        <option value="">-</option>
+                        <option value="0" <% if(nem == 0){ %> selected <% }%> >Nő</option>
+                        <option value="1" <% if(nem == 1){ %> selected <% }%> >Férfi</option>
+                    </select>
+                    <button type="button" class="btn btn-success col-12">Számítás</button>
+                </div>
+                <div class="col-6 p-3">
+                    
+                </div>
+            </div>
+        </div>
+        
+        <%- include("../foot") %>
+    </div>
+<script>
+    function calcOtimal() {
+        var magas = $("#magassag").val();
+        var nem = $("#nem").val();
+
+        //normál BMI 18.5 - 25
+    }
+</script>
+
+<%- include("../footer") %>
+
+

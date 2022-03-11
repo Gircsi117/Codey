@@ -1,7 +1,13 @@
 const axios = require('axios');
 
 exports.getGoalPage = (req, res) => {
-  res.render('tools/goal');
+  res.render('tools/goal', {
+    cim: "Cél meghatározása",
+    jog: req.session.user.jogosultsag,
+    cel:req.session.user.cel_suly,
+    nem:req.session.user.nem,
+    magas:req.session.user.magassag
+  });
 };
 
 exports.postSetGoal = (req, res) => {
