@@ -13,9 +13,7 @@
                     <a class="nav-link ps-2 p-lg-2" href="/">Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle ps-2 p-lg-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Eszközök
-                    </a>
+                    <a class="nav-link dropdown-toggle ps-2 p-lg-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Eszközök </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Cél meghatározása</a></li>
                         <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Étkezési napló</a></li>
@@ -26,29 +24,25 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle ps-2 p-lg-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Információ
-                    </a>
+                    <a class="nav-link dropdown-toggle ps-2 p-lg-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Információ </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Blog</a></li>
-                        <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="#">GYIK</a></li>
+                        <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="info/gyakori">GYIK</a></li>
                         <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Kalóriaszámlálásról</a></li>
                         <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Rólunk</a></li>
                     </ul>
                 </li>
                 <% if (jog != 0) { %>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle ps-2 p-lg-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Admin
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <% if (jog == 2) { %>
-                                <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="/admin/users">Felhasználók</a></li>
-                                <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="/admin/ingredients">Hozzávalók</a></li>
-                            <% } %>
-                            <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="/admin/blogs">Blogok</a></li>
-                        </ul>
-                    </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ps-2 p-lg-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Admin </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <% if (jog == 2) { %>
+                        <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="/admin/users">Felhasználók</a></li>
+                        <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="/admin/ingredients">Hozzávalók</a></li>
+                        <% } %>
+                        <li ng-repeat="item in info" class="ng-scope"><a class="dropdown-item ng-binding" href="/admin/blogs">Blogok</a></li>
+                    </ul>
+                </li>
                 <% } %>
                 <li class="nav-item log-out">
                     <a class="nav-link ps-2 p-lg-2" href="#">Log out</a>

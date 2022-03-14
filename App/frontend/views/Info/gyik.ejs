@@ -1,1 +1,173 @@
-<h1>Gyakori kérdések</h1>
+<%- include("../header") %>
+<h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+<div class="container mt-0 mt-sm-3">
+    <%- include("../menu") %>
+    <div class="content row m-0 p-0">
+        <div class="content-wrapper">
+            <div class="gyik-item">
+                <h3>Mi a Codey?</h3>
+                <p>
+                    Az ingyenesen használható Codey a fogyni vágyóknak kíván segíteni. Legfőbb célkitűzése a gyors és egyszerű kezelhetőség. A kalóriák és tápanyagok nyilvántartását átfogó étel, ital
+                    és sport adatbázissal támogatja, melyet a felhasználók maguk is bővíthetnek. A fogyasztott ételek és elvégzett testmozgások elmenthetők, ezáltal a kalóriák útja nyomon követhető. A
+                    Codey célbeállítási kalkulátora segítségével a felhasználók maguk állíthatják be fogyási tervüket. Ennek kivitelezését az oldal napról napra grafikonokkal, diagramokkal segíti.
+                </p>
+            </div>
+
+            <div class="gyik-item">
+                <h3>Milyen eszközökkel segíti a Kalóriabázis a sikeres fogyást?</h3>
+                <ul>
+                    <li>Kalória és tápanyag adatbázisa</li>
+                    <li>Saját menük összeállítása, tápanyagtartalom kiszámítása</li>
+                    <li>Személyre szabott fogyási cél beállítása</li>
+                    <li>Étkezések, testmozgások rögzítése, ezekről statisztika</li>
+                    <li>Napi kalória keret és tápanyagok nyomon követése</li>
+                    <li>Napi súlyod rögzítése, fogyási grafikonok készítése</li>
+                    <li>Blogok, információ</li>
+                </ul>
+            </div>
+
+            <div class="gyik-item">
+                <h3>Mi alapján számol az oldal?</h3>
+                <p><!-- TODO bef. ha meglesznek a számolások --></p>
+            </div>
+
+            <div class="gyik-item">
+                <h3>Fogalomzavar! Kalória? Kcal? Kilokalória?</h3>
+                <p>
+                    Egy kalória az az energiamennyiség, mely 1 gramm víz hőmérsékletét 1 °C-kal növeli. <br />1000 kalória = 1 kcal (kilokalória) Tehát a kalória nem ugyanaz mint a kcal, bár a
+                    köznyelvben tévesen ezzel azonosítják. <br />Ezen a kis hibán mi sem óhajtunk szigorkodni, a honlapon leegyszerűsítve mi is kalóriának hívunk egy kcalt.
+                </p>
+            </div>
+
+            <div class="gyik-item">
+                <h3>Mit csináljak, ha nem találok egy ételt az adatbázisban?</h3>
+                <p>Biztos hogy eleinte ez többször elő fog fordulni. Tippünk ilyen esetekre: <br /></p>
+                <ul>
+                    <li>Próbáld meg a keresést változtatni, azaz csak a legfontosabb kulcsszót beírni (pl.: "rántott csirkemell" helyett keress először arra, hogy "csirkemell").</li>
+                    <li>Javasoljuk a google használatát, idézőjel használatával és a kcal beírásával (pl.: "rántott csirkemell" kcal)</li>
+                    <li>
+                        Ha tudsz angolul, akkor a legmegbízhatóbb forrás az USA kormánya által összeállított, <a href="https://fdc.nal.usda.gov/fdc-app.html#/" target="_blank">ingyenes adatbázis</a>.
+                    </li>
+                    <li>Tedd fel kérdésedet a fórum "Ez hány kalória?" topikjában.</li>
+                    <li>Keress egy hasonló ételt (pl "pálinka").</li>
+                    <li>Ha egyszer valamit megtalálsz, azt elmentheted Új ételként és így idővel alig lesz olyan étel amit ne találnál meg.</li>
+                </ul>
+            </div>
+
+            <div class="gyik-item">
+                <h3>Honnan tudhatom, hogy hány gramm amit megeszek?</h3>
+                <p>
+                    A legtöbb megvásárolható terméken fel vannak tüntetve a pontos adatok. Azonban gyakran olyan étel kerülhet elénk, aminek nem tudjuk kapásból a súlyát. Mivel egy darab, szelet,
+                    tányér, stb... mindenkinek mást jelenthet ezeket mértékegységeket nem használtuk fel. Így ezek hosszútávú alkalmazása nem célravezető. Előbb vagy utóbb a fogyókúrázó elkezd
+                    "csalni", a szelet kenyér egyre vastagabb lesz, a darab sütemény egyre nagyobb. A hosszútávú eredmény érdekében ajánlott beszerezni egy digitális konyhamérleget, ami pontosan tud
+                    grammot mérni. Ekkor már nincs lehetőség csalásra, az egy szelet kenyér pontosan annyi lesz, amennyi valójában. Ez elsőre macerásnak tűnhet, ugyanakkor megadja az embernek azt a
+                    kellemes érzést, hogy pontosan nyilvántart mindent, nem enged plussz kalóriákat becsusszanni. Ezért ajánljuk, hogy ha komolyan gondolod a fogyókúrát, szánj egy digitális
+                    konyhamérlegre.
+                </p>
+            </div>
+
+            <div class="gyik-item">
+                <h3>Hány kilót fogyhatok a kalóriaszámlálással? Heti hány kilót és mekkora Napi keretet állítsak be?</h3>
+                <p>
+                    Saját érdekedben ajánljuk, hogy a beállított fogyás ne legyen több, mint heti fél kg, de maximum heti 1 kg (általánosságban a testsúlyod 0.5-1%-a). Arra is figyelj, hogy legalább
+                    napi 1000-1200 kalóriát be kell vinned ahhoz, hogy a szervezeted ne kapcsoljon "éhező-üzemmódba", ami a fogyást és hangulatodat is tönkreteszi! A plusz kilók sem két hét alatt
+                    kúsztak fel, a tartós fogyás érdekében türelmesnek kell lenned. Tudjuk, elkeserítően hangzik a fogyókúrás reklámok heti 2-3 kg-os ígéreteihez képest, de még mindig jobb, mint
+                    ezekből a "csodaszerekből” újra és újra kiábrándulni. <br />
+                    Fontos, hogy tudd, hogy a gyors fogyást ígérő diétáknak komoly hátulütői vannak: <br />
+                </p>
+                <ul>
+                    <li>Testileg és szellemileg megterhel, rosszabb közérzeted lesz, fáradékonyabbnak, betegebbnek érzed magad.</li>
+                    <li>
+                        A kezdeti sikerek után a fogyás legtöbbször nagy mértékben lelassul vagy megáll, ilyenkor könnyen elveszítheted a motivációdat, elkezdesz "csalni" és oda az egész erőfeszítés.
+                    </li>
+                    <li>Amikor gyorsan fogysz sokat, akkor valójában testzsír helyett főként vizet és izmot veszítesz</li>
+                    <li>A jojó-effektust ilyenkor érvényesül a legjobban</li>
+                </ul>
+                <p>
+                    A honlap célja az, hogy a tartós fogyáshoz nyújtson segítséget úgy, hogy mindig tudd, hogy hol tartassz. Napi használata által motiváljon és betartasson egy fenntartható
+                    egészségesebb étrendet, miközben folyamatosan nyomon követheted amint lassan, de biztosan közeledsz célod eléréséhez.
+                </p>
+            </div>
+
+            <div class="gyik-item">
+                <h3>Hogyan tudok egy általam felvitt ételt, receptet utólag módosítani?</h3>
+                <p>Ugyan ott ahol saját ételeidet létrehoztad</p>
+            </div>
+
+            <div class="gyik-item">
+                <h3>A tápanyagok - milyen tápanyagok vannak és mi ezek funkciója?</h3>
+                <p>
+                    A fő tápanyagok az étrend azon részei, melyek „táplálják” a szervezetet, és hozzájárulnak annak növekedéséhez, fejlődéséhez. Fő tápanyag lehet: fehérje, szénhidrát, zsír. A rostok
+                    ugyan nem játszanak közre közvetlenül a fejlődésben és a növekedésben, ugyanakkor elengedhetetlen részesei a helyes emésztésnek, így általánosan a tápanyagok közé sorolhatók.
+                    <br /><br />
+                    A <strong>rostok</strong> segítik az emésztést, növelik a telítettség-érzetet. A rostok forrása: a gabonafélék, kenyerek, péksütemények, zöldségek, hüvelyesek és a gyümölcsök.
+                    <br /><br />
+                    A <strong>fehérjék</strong> aminosavakból állnak, és elengedhetetlenek a növekedés és a szövetek megújulása szempontjából. A fehérjék forrásai: húsok, hústermékek, halak, tojás,
+                    tejtermékek, hüvelyesek és gabonafélék. <br />
+                    <br />
+                    A <strong>szénhidrátok</strong> látják el agyunkat és testünket napi teendőinkhez szükséges "üzemanyaggal". Keményítőkből és cukrokból állnak. A keményítőket megtaláljuk:
+                    kenyérben, burgonyában, gabonából készült termékekben, rizsben és tésztafélékben. A cukor forrása a gyümölcs, a zöldség és általánosan a cukrozott termékek. <br /><br />
+                    A <strong>zsírok</strong> a forrásai az energiának és az esszenciális zsírsavaknak. Ugyanakkor hordozói a zsírban oldódó vitaminoknak, és elengedhetetlenek a sejtfunkciók
+                    szempontjából. A zsírok kiemelik az ételek ízét (a zsír sajnos finom... nem véletlenül ízesebb egy olajban sült krumpli, mint egy sütőben sült). A zsírok túlzott fogyasztása nem
+                    ajánlott. Összetevői: zsírsavak (telített, monotelítetlen, politelítetlen), melyek kémiai szerkezetük alapján vannak elnevezve. Az Omega-3 és Omega-6 zsírsavak a telítetlenek.
+                </p>
+            </div>
+
+            <div class="gyik-item">
+                <h3>Tápanyagok aránya?</h3>
+                <p>
+                    A kiegyensúlyozott étrend nem érhető el egyetlen étel elfogyasztásával - mindezt napi, heti szinten lehet egyensúlyban tartani, a változatos étrend segítségével. Ez azt jelenti,
+                    hogy bármilyen étel része lehet az egészséges táplálkozásnak, s így bátran örömünket lelhetjük az ételekben. Táplálkozási szakemberek javaslata alapján a változatos étrendnek a
+                    következőképp kellene összeállnia:
+                </p>
+                <ul>
+                    <li>10-15 % -a az energiának fehérje</li>
+                    <li>50-55 % -a az energiának szénhidrát (cukrokat is beleértve)</li>
+                    <li>30-35 % -a az energiának zsír (telített zsírsavakkal együtt)</li>
+                </ul>
+                <p>
+                    Általában fehérjéből minimális szintet szoktak előírni (tehát az a jó ha kimeríted a keretet), szénhidrátból és zsírból pedig maximumot (a kereten belül ajánlott maradni), ezért a
+                    honlapon is ez alapján követheted nyomon a változást. Példaként említve, egy átlagos fizikai aktivitást végző nőnek, napi 2000 kcal energiaszükséglettel minimum 50-75 g fehérjét,
+                    maximum 250-275 g szénhidrátot és maximum 65-75 g zsírt kellene fogyasztania.
+                </p>
+                <p>A tápanyagok energiatartalma:</p>
+                <ul>
+                    <li>1 g fehérje = 4 kcal</li>
+                    <li>1 g szénhidrát = 4 kcal</li>
+                    <li>1 g zsír = 9 kcal</li>
+                </ul>
+            </div>
+
+            <div class="gyik-item">
+                <h3>A főzés közben bizonyos ételek súlya megváltozik. Hogyan lehet ezt rendesen receptfelvitelkor rögzíteni?</h3>
+                <p>
+                    A legtöbb ételnél nem sok vizet zavar az ételek víztartalmának elpárolgása. Pl. egy körözöttnek nem csökken a súlya azáltal, hogy összekeverjük a hozzávalókat. Vegyünk viszont egy
+                    főzeléket, vagy egy szaftos húst, amit vízzel felengedünk és lesütünk zsírjára. Ha ahhoz a húshoz is felvisszük hozzávalóként az összes beleöntött vízmennyiséget (aminek a fele
+                    elpárolog), akkor a súlya nem fog stimmelni, ezáltal a 100 grammra vetített kalóriaérték sem. A probléma megoldásaként azt ajánlom, hogy mérjétek le az egész étel súlyát elkészítés
+                    előtt és után. Tehát ha pl 2 kg a sütés előtti súlya valaminek (nullázós mérleg nem árt), a sütés utáni pedig 1.5 kg, akkor az azt jelenti, hogy a kalória maradt ugyanannyi,
+                    viszont a súly csökkent fél kilóval.
+                </p>
+            </div>
+
+            <div class="gyik-item">
+                <h3>Hány kalóriára van szükségem naponta?</h3>
+                <p>
+                    A napi kalóriaszükséglet egyénenként nagyon változó. Használd kalkulátorunkat (Eszközök menü/Cél beállítása), hogy kiszámold hány kalóriára van Neked szükséged egy nap ahhoz hogy
+                    adott kg-ot lefogyj, esetleg hízz, vagy fenntartsd jelenlegi súlyodat. Emellett ajánljuk, hogy vedd figyelembe az Európai Élelmiszeripari Konföderáció által meghatározott irányadó
+                    értékeket: az energiabeviteli követelmény gyermekeknél 1500-2000 kcal, felnőtt fériaknál 2200-2700 kcal, míg nők esetében 1800-2200 kcal naponta.
+                </p>
+            </div>
+
+            <div class="gyik-item">
+                <h3>Hogyan számolja az oldal a kalóriaégetést?</h3>
+                <p><!-- TODO bef. ha meglesznek a számolások --></p>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../foot") %>
+</div>
+
+<script></script>
+
+<%- include("../footer") %>
