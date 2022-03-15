@@ -18,10 +18,10 @@ exports.postGetLastWeight = async (req, res) => {
   try {
     const { id } = req.body;
 
-    const lastWeight = await Weight.findAll({ order: ['datum'], limit: 1, where: { felhasznalo_id: id } });
-    if (!lastWeight) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
+    const lastWeight = await Weight.findAll({ order: ['datum'], where: { felhasznalo_id: id } });
+    if (!lastWeight) return res.send({ success: false, error: 'Sikertelen adatlekérés' });
 
-    res.send({ success: true, lastWeight });
+    res.send({ success: true, lastWeight: lastWeight[lastWeight.length-1] });
   } catch (error) {
     console.log(error);
   }
