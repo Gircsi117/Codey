@@ -1,93 +1,158 @@
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-  const notify = (msg, color = "red", pos = "right", grav = "top") => {
-    Toastify({
-      text: msg,
-      close: true,
-      position: pos,
-      graity: grav,
-      style:{
-        background: color
-      }
-    }).showToast();
-  };
+    const notify = (msg, color = 'red', pos = 'right', grav = 'top') => {
+        Toastify({
+            text: msg,
+            close: true,
+            position: pos,
+            graity: grav,
+            style: {
+                background: color,
+            },
+        }).showToast();
+    };
 
-  //Tábla generálása
-  function toTable(data/*, edit=false, header = [], tableID = "table"*/) {
-    const keys = Object.keys(data.datas[0]);
-    let string = `<table class="table" id="${(!data.tableID ? "" : data.tableID)}"><thead>`;
-    string += `<tr>` 
-    let th = (!data.headers) ? keys : data.headers
-    th.forEach(element => {
-      string += `<th>${element}</th>`;
-    });
-    if(!(!data.isFunc)) string+= `<th class="text-center">Edit</th>`;
+    //Tábla generálása
+    function toTable(data /*, edit=false, header = [], tableID = "table"*/) {
+        const keys = Object.keys(data.datas[0]);
+        let string = `<table class="table" id="${!data.tableID ? '' : data.tableID}"><thead>`;
+        string += `<tr>`;
+        let th = !data.headers ? keys : data.headers;
+        th.forEach((element) => {
+            string += `<th>${element}</th>`;
+        });
+        if (!!data.isFunc) string += `<th class="text-center">Edit</th>`;
 
-    string += `</tr></thead><tbody>`
+        string += `</tr></thead><tbody>`;
 
-    for (let i = 0; i < data.datas.length; i++) {
-      string += `<tr class="sor"><td class="_index d-none">${i}</td>`
-      keys.forEach(key => {
-        string += `<td class="_${key}">${(data.datas[i][key] != null) ? data.datas[i][key] : "-"}</td>`;
-      });
-      if(!(!data.isFunc)) string+= `<td style="cursor:pointer" id="isFuncBTN" data-value="${i}"><i class="bi bi-gear"></i></td>`;
-      string += `</tr>`
-      
+        for (let i = 0; i < data.datas.length; i++) {
+            string += `<tr class="sor"><td class="_index d-none">${i}</td>`;
+            keys.forEach((key) => {
+                string += `<td class="_${key}">${data.datas[i][key] != null ? data.datas[i][key] : '-'}</td>`;
+            });
+            if (!!data.isFunc) string += `<td style="cursor:pointer" id="isFuncBTN" data-value="${i}"><i class="bi bi-gear"></i></td>`;
+            string += `</tr>`;
+        }
+        string += `</tbody></table>`;
+
+        return string;
     }
-    string += `</tbody></table>`
 
-    return string;
-  }
-
-  //A táblázat sorait beszinezi egy megadott szempont alapján
-  function tableColor(data) {
-    for (let i = 0; i < $(`#${data.table} .sor`).length; i++) {
-      $(`#${data.table} .sor`).eq(i).removeClass("green").removeClass("red");
-      $(`#${data.table} .sor`).eq(i).addClass(($(`#${data.table} .sor ._${data.item}`).eq(i).html() == data.param) ? "green" : "red");
+    //A táblázat sorait beszinezi egy megadott szempont alapján
+    function tableColor(data) {
+        for (let i = 0; i < $(`#${data.table} .sor`).length; i++) {
+            $(`#${data.table} .sor`).eq(i).removeClass('green').removeClass('red');
+            $(`#${data.table} .sor`)
+                .eq(i)
+                .addClass($(`#${data.table} .sor ._${data.item}`).eq(i).html() == data.param ? 'green' : 'red');
+        }
     }
-  }
 
-  //Elrejti a táblázat egy oszlopát
-  function tableHide(data) {
-    $(`#${data.table} ._${data.item}`).hide();
-  }
-
-  //A táblázat egyes elemeit lehet szerkeszteni egy megadott szempont alapján
-  function tableItemEdit(data) {
-    if(!data.result2) data.result2 = data.result1;
-
-    for (let i = 0; i < $(`#${data.table} ._${data.item}`).length; i++) {
-      let text = $(`#${data.table} ._${data.item}`).eq(i).html();
-      $(`#${data.table} ._${data.item}`).eq(i).html((text == data.param) ? eval(data.result1) : eval(data.result2));
+    //Elrejti a táblázat egy oszlopát
+    function tableHide(data) {
+        $(`#${data.table} ._${data.item}`).hide();
     }
-  }
 
-  //A megadott paraméter szerint elrejti vagy mejeleníti a sorokat 
-  function tableFilter(data/*table, item, param*/) {
-    $(`#${data.table} .sor`).show();
-    
-    for (let i = 0; i < $(`#${data.table} ._${data.item}`).length; i++) {
-      let text = $(`#${data.table} ._${data.item}`).eq(i).html();
-      if(!eval(param)) $(`#${data.table} .sor`).eq(i).hide();
+    //A táblázat egyes elemeit lehet szerkeszteni egy megadott szempont alapján
+    function tableItemEdit(data) {
+        if (!data.result2) data.result2 = data.result1;
+
+        for (let i = 0; i < $(`#${data.table} ._${data.item}`).length; i++) {
+            let text = $(`#${data.table} ._${data.item}`).eq(i).html();
+            $(`#${data.table} ._${data.item}`)
+                .eq(i)
+                .html(text == data.param ? eval(data.result1) : eval(data.result2));
+        }
     }
-  }
 
-  //Modal ablak létrehozása
-  function setModal(modalID, modalData) {
-    $(`#${modalID}`).addClass("myModal d-none")
-    let head = `<h2 class="text-center">${modalData.cim}</h2>`
-    let foot = "";
+    //A megadott paraméter szerint elrejti vagy mejeleníti a sorokat
+    function tableFilter(data /*table, item, param*/) {
+        $(`#${data.table} .sor`).show();
 
-    modalData.buttons.forEach(element => {
-      foot += `<button type="button" class="btn btn-${element.type}" id="${element.id}">${element.text}</button>`
-    });
+        for (let i = 0; i < $(`#${data.table} ._${data.item}`).length; i++) {
+            let text = $(`#${data.table} ._${data.item}`).eq(i).html();
+            if (!eval(param)) $(`#${data.table} .sor`).eq(i).hide();
+        }
+    }
 
-    $(`#${modalID}`).html(`
+    //Modal ablak létrehozása
+    function setModal(modalID, modalData) {
+        $(`#${modalID}`).addClass('myModal d-none');
+        let head = `<h2 class="text-center">${modalData.cim}</h2>`;
+        let foot = '';
+
+        modalData.buttons.forEach((element) => {
+            foot += `<button type="button" class="btn btn-${element.type}" id="${element.id}">${element.text}</button>`;
+        });
+
+        $(`#${modalID}`).html(`
       <div class=" gray col-12 col-sm-10 col-md-8" id="${modalID}Form">
         ${head}<hr>
         ${$(`#${modalID}`).html()}
         <hr>
         ${foot}
     </div>
-    `)
-  }
+    `);
+    }
+
+    //készít egy grafikont
+    function createGraphs(data) {
+        let content = []
+
+        data.results.forEach(element => {
+            content.push({
+                type: 'line',
+                showInLegend: true,
+                name: element.name,
+                markerType: 'square',
+                xValueFormatString: 'DD MMM, YYYY',
+                color: element.color,
+                dataPoints: element.datas,
+            })
+        });
+      
+
+        var chart = new CanvasJS.Chart(`${data.id}`, {
+            animationEnabled: true,
+            theme: 'light2',
+            title: {
+                text: data.mainTitle,
+            },
+            axisX: {
+                valueFormatString: 'MMM DD',
+                crosshair: {
+                    enabled: true,
+                    snapToDataPoint: true,
+                },
+            },
+            axisY: {
+                title: data.yTitle,
+                includeZero: true,
+                crosshair: {
+                    enabled: true,
+                },
+            },
+            toolTip: {
+                shared: true,
+            },
+            legend: {
+                cursor: 'pointer',
+                verticalAlign: 'bottom',
+                horizontalAlign: 'left',
+                dockInsidePlotArea: true,
+                itemclick: toogleDataSeries,
+            },
+            data: content,
+        });
+        chart.render();
+
+        function toogleDataSeries(e) {
+            if (typeof e.dataSeries.visible === 'undefined' || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
+        }
+    }
 </script>
