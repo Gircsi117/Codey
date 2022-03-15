@@ -131,11 +131,10 @@ input[type='submit']:hover {
 }
 
 .content-wrapper {
-    margin: 1.5rem 0;
+    background-color: var(--div);
 }
 
 .gyik-item {
-    background-color: var(--div);
     padding: 2rem;
 }
 
