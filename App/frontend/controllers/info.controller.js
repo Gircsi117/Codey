@@ -13,7 +13,7 @@ exports.getKaloriarolPage = async (req, res) => {
 };
 
 exports.getRolunkPage = async (req, res) => {
-    res.render('info/rolunk');
+    res.render('info/rolunk', { cim: 'Rólunk', jog: req.session.user.jogosultsag });
 };
 
 exports.postBlog = async (req, res) => {
