@@ -216,6 +216,18 @@ i::before{
     color: var(--text);
 }
 
+.myModal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100hv;
+    height: 100vh;
+    background-color: #0000009c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /*Scrollbar*/
 ::-webkit-scrollbar {
     width: 7px;

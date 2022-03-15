@@ -25,8 +25,8 @@ router.get("/getWeights", require('../middleware/auth.middleware'), diaryControl
 router.get("/goal", require('../middleware/auth.middleware'), toolsController.getGoalPage);
 router.post("/postSetGoal", require('../middleware/auth.middleware'), toolsController.postSetGoal);
 router.post("/postModifyWeight", require('../middleware/auth.middleware'), toolsController.postModifyWeight);
-router.post("/postSetHeight", require('../middleware/auth.middleware'), toolsController.postSetHeight);
-router.post("/postSetGender", require('../middleware/auth.middleware'), toolsController.postSetGender);
+router.post("/setBodyData", require('../middleware/auth.middleware'), toolsController.setBodyData);
+router.get("/getLastWeight", require('../middleware/auth.middleware'), toolsController.getLastWeight);
 
 //Kalória táblázat lekérései
 router.get("/kcalTable", require('../middleware/auth.middleware'), caloriesController.getCaloriesPage);

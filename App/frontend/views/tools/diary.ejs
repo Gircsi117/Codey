@@ -51,11 +51,11 @@
     }})
     .done((res)=>{
         console.log(res);
-        $("#testmozgas").html(toTable(res.sports, false, ["ID", "Dátum", "Mennyiség (kcal)"], "mozgasTable"))
-        tableHide("mozgasTable", "felhasznalo_id");
+        $("#testmozgas").html(toTable({datas:res.sports, headers: ["ID", "Dátum", "Mennyiség (kcal)"], tableID:"mozgasTable"}))
+        tableHide({table:"mozgasTable", item:"felhasznalo_id"});
 
-        $("#folyadek").html(toTable(res.waters, false, ["ID", "Mennyiség(dl)", "Dátum"], "folyadekTable"))
-        tableHide("folyadekTable", "felhasznalo_id");
+        $("#folyadek").html(toTable({datas: res.waters, headers:["ID", "Mennyiség(dl)", "Dátum"], tableID:"folyadekTable"}))
+        tableHide({table:"folyadekTable", item:"felhasznalo_id"});
 
         let foodTableData = [];
 
@@ -67,8 +67,8 @@
             foodTableData.push({id: food.id, name: food.name, kcal: kcal, date: food.date})
         });
 
-        $("#etkezes").html(toTable(foodTableData, true, ["ID", "Név", "Mennyiség (kcal)", "Dátum"], "etelekTable"))
-        tableHide("etelekTable", "hozzavalok");
+        $("#etkezes").html(toTable({datas: foodTableData, isFunc:true, headers:["ID", "Név", "Mennyiség (kcal)", "Dátum"], tableID:"etelekTable"}))
+        tableHide({table:"etelekTable", item:"hozzavalok"});
     })
     .fail((err)=>{
 
@@ -78,8 +78,8 @@
     $.ajax({method:"GET", url:"./getWeights"})
     .done((res)=>{
         console.log(res.data.allWeights);
-        $("#suly").html(toTable(res.data.allWeights, false, ["ID", "Súly", "Dátum"], "sulyTable"))
-        tableHide("sulyTable", "felhasznalo_id");
+        $("#suly").html(toTable({datas: res.data.allWeights, headers:["ID", "Súly", "Dátum"], tableID:"sulyTable"}))
+        tableHide({table:"sulyTable", item:"felhasznalo_id"});
     })
     .fail((err)=>{
 
@@ -88,31 +88,31 @@
 
     function szures() {
         tableFilter(
-            "etelekTable",
-            "date",
-            "Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
-        );
-        tableFilter(
-            "folyadekTable",
-            "datum",
-            "Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
-        );
-        tableFilter(
-            "mozgasTable",
-            "datum",
-            "Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
-        );
-        tableFilter(
-            "sulyTable",
-            "datum",
-            "Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
-        );
+            {table:"etelekTable",
+            item:"date",
+            param:"Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
+        });
+        tableFilter({
+            table:"folyadekTable",
+            item:"datum",
+            param:"Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
+        });
+        tableFilter({
+            table:"mozgasTable",
+            item:"datum",
+            param:"Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
+        });
+        tableFilter({
+            table:"sulyTable",
+            item:"datum",
+            param:"Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
+        });
     }
     function reset() {
-        tableFilter("etelekTable", "date", "true");
-        tableFilter("folyadekTable", "datum", "true");
-        tableFilter("mozgasTable", "datum", "true");
-        tableFilter("sulyTable","datum","true");
+        tableFilter({table:"etelekTable", item:"date", param:"true"});
+        tableFilter({table:"folyadekTable", item:"datum", param:"true"});
+        tableFilter({table:"mozgasTable", item:"datum", param:"true"});
+        tableFilter({table:"sulyTable", item:"datum", param:"true"});
     }
 </script>
 

@@ -15,8 +15,12 @@
     $.ajax({method:"GET", url:"./getIngredients"})
     .done((res)=>{
         console.log(res.data);
-        $("#ingredients").html(toTable(res.data.ingredients, false, ["ID", "Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír", "Ehető-e magában"], "ingredientsTable"));
-        tableItemEdit("ingredientsTable", "ehetoe_magaban", "1", "'Igen'", "'Nem'");
+        $("#ingredients").html(toTable({
+            datas:res.data.ingredients,
+            headers: ["ID", "Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír", "Ehető-e magában"], 
+            tableID:"ingredientsTable"
+        }));
+        tableItemEdit({table:"ingredientsTable", item:"ehetoe_magaban",  param:"1", result1:"'Igen'", result2:"'Nem'"});
     })
     .fail((err)=>{
 

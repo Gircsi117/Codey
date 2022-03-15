@@ -12,24 +12,24 @@
   };
 
   //Tábla generálása
-  function toTable(data, edit=false, header = [], tableID = "table") {
-    const keys = Object.keys(data[0]);
-    let string = `<table class="table" id="${tableID}"><thead>`;
+  function toTable(data/*, edit=false, header = [], tableID = "table"*/) {
+    const keys = Object.keys(data.datas[0]);
+    let string = `<table class="table" id="${(!data.tableID ? "" : data.tableID)}"><thead>`;
     string += `<tr>` 
-    let th = (header.length == 0) ? keys : header
+    let th = (!data.headers) ? keys : data.headers
     th.forEach(element => {
       string += `<th>${element}</th>`;
     });
-    if(edit) string+= `<th class="text-center">Edit</th>`;
+    if(!(!data.isFunc)) string+= `<th class="text-center">Edit</th>`;
 
     string += `</tr></thead><tbody>`
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.datas.length; i++) {
       string += `<tr class="sor"><td class="_index d-none">${i}</td>`
       keys.forEach(key => {
-        string += `<td class="_${key}">${(data[i][key] != null) ? data[i][key] : "-"}</td>`;
+        string += `<td class="_${key}">${(data.datas[i][key] != null) ? data.datas[i][key] : "-"}</td>`;
       });
-      if(edit) string+= `<td style="cursor:pointer" class=""><i class="bi bi-gear" onclick="edit_push(${i})"></i></td>`;
+      if(!(!data.isFunc)) string+= `<td style="cursor:pointer" id="isFuncBTN" data-value="${i}"><i class="bi bi-gear"></i></td>`;
       string += `</tr>`
       
     }
@@ -39,35 +39,55 @@
   }
 
   //A táblázat sorait beszinezi egy megadott szempont alapján
-  function tableColor(table, items, item, param) {
-    for (let i = 0; i < $(`#${table} .sor`).length; i++) {
-      $(`#${table} .sor`).eq(i).removeClass("green").removeClass("red");
-      $(`#${table} .sor`).eq(i).addClass((items[i][item] == param) ? "green" : "red");
+  function tableColor(data) {
+    for (let i = 0; i < $(`#${data.table} .sor`).length; i++) {
+      $(`#${data.table} .sor`).eq(i).removeClass("green").removeClass("red");
+      $(`#${data.table} .sor`).eq(i).addClass(($(`#${data.table} .sor ._${data.item}`).eq(i).html() == data.param) ? "green" : "red");
     }
   }
 
   //Elrejti a táblázat egy oszlopát
-  function tableHide(table, item) {
-    $(`#${table} ._${item}`).hide();
+  function tableHide(data) {
+    $(`#${data.table} ._${data.item}`).hide();
   }
 
   //A táblázat egyes elemeit lehet szerkeszteni egy megadott szempont alapján
-  function tableItemEdit(table, item, param, result1, result2 = null) {
-    if(result2 == null) result2 = result1;
+  function tableItemEdit(data) {
+    if(!data.result2) data.result2 = data.result1;
 
-    for (let i = 0; i < $(`#${table} ._${item}`).length; i++) {
-      let text = $(`#${table} ._${item}`).eq(i).html();
-      $(`#${table} ._${item}`).eq(i).html((text == param) ? eval(result1) : eval(result2));
+    for (let i = 0; i < $(`#${data.table} ._${data.item}`).length; i++) {
+      let text = $(`#${data.table} ._${data.item}`).eq(i).html();
+      $(`#${data.table} ._${data.item}`).eq(i).html((text == data.param) ? eval(data.result1) : eval(data.result2));
     }
   }
 
   //A megadott paraméter szerint elrejti vagy mejeleníti a sorokat 
-  function tableFilter(table, item, param) {
-    $(`#${table} .sor`).show();
+  function tableFilter(data/*table, item, param*/) {
+    $(`#${data.table} .sor`).show();
     
-    for (let i = 0; i < $(`#${table} ._${item}`).length; i++) {
-      let text = $(`#${table} ._${item}`).eq(i).html();
-      if(!eval(param)) $(`#${table} .sor`).eq(i).hide();
+    for (let i = 0; i < $(`#${data.table} ._${data.item}`).length; i++) {
+      let text = $(`#${data.table} ._${data.item}`).eq(i).html();
+      if(!eval(param)) $(`#${data.table} .sor`).eq(i).hide();
     }
+  }
+
+  //Modal ablak létrehozása
+  function setModal(modalID, modalData) {
+    $(`#${modalID}`).addClass("myModal d-none")
+    let head = `<h2 class="text-center">${modalData.cim}</h2>`
+    let foot = "";
+
+    modalData.buttons.forEach(element => {
+      foot += `<button type="button" class="btn btn-${element.type}" id="${element.id}">${element.text}</button>`
+    });
+
+    $(`#${modalID}`).html(`
+      <div class=" gray col-12 col-sm-10 col-md-8" id="${modalID}Form">
+        ${head}<hr>
+        ${$(`#${modalID}`).html()}
+        <hr>
+        ${foot}
+    </div>
+    `)
   }
 </script>
