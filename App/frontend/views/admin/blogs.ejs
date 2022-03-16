@@ -40,56 +40,62 @@
         buttons:[{type: "secondary", id:"back", text:"Vissza"}]
     });
 
+    function saveTable() {
+        $("#tablazat").html(toTable({datas:blogs, isFunc:true, headers:["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"], tableID:"blogTable"}));
+        tableColor({table:"blogTable", item:"status", param:1});
+        tableHide({table:"blogTable", item:"status"});
+        tableItemEdit({table:"blogTable", item:"idopont", param:"", result1:"text.replace('T', ' ').substring(0, 19)"});
+        tableItemEdit({table:"blogTable", item:"tartalom", param:"", result1:"text.substring(0, 25) + '...'"});
+
+        $("document").ready(()=>{
+            $("#blogTable #isFuncBTN").on("click", (event)=>{
+                const index = $(event.currentTarget).data("value");
+                select = blogs[index];
+
+                console.log(select);
+                $("#cim").html(select.cim);
+                $("#idopont").html(select.idopont.replace('T', ' ').substring(0, 19));
+                $("#tartalom").html(select.tartalom);
+                $("#active").prop( "checked", (select.status == 1) ? true : false );
+                $("#blogModal").removeClass("d-none");
+            })  
+
+            $("#blogModal #back").on("click", ()=>{
+                $("#blogModal").addClass("d-none")
+            })
+
+            $("#active").on("click", ()=>{
+                if(select == null) return notify("Nincs kiválasztott felhasználó!");
+                let stat = ($("#active").is(":checked")) ? 1 : 0
+                $.ajax({ method: 'post', url: './setBlogStatus', data: {
+                    id: select.id,
+                    status: stat
+                } })
+                .done((results) => {
+                    notify("Sikeres adatmódosítás", "green")
+                    blogs[blogs.indexOf(select)].status = stat;
+                    $("#blogTable ._status").eq(blogs.indexOf(select)).html(stat);
+                    tableColor({table:"blogTable", item:"status", param:1});
+                })
+                .fail((err) => {return notify("Sikertelen módosítás!!!")})
+                .always(() => {});
+            })
+        })
+    }
+
     $.ajax({ method: 'get', url: './getAllBlog' })
     .done((data) => {
         if(!data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
         if(data.blogs.length == 0) return;
         blogs = data.blogs;
-        $("#tablazat").html(toTable({datas:blogs, isFunc:true, headers:["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"], tableID:"blogTable"}));
 
-        tableColor({table:"blogTable", item:"status", param:1});
-        tableHide({table:"blogTable", item:"status"});
-        tableItemEdit({table:"blogTable", item:"idopont", param:"", result1:"text.replace('T', ' ').substring(0, 19)"});
-        tableItemEdit({table:"blogTable", item:"tartalom", param:"", result1:"text.substring(0, 25) + '...'"});
+        saveTable();
       })
     .fail((err) => {notify("Adatbázis hiba");})
     .always(() => {});
 
     //Gomb kattintások érzékelése
-    $("document").ready(()=>{
-        $("#blogTable #isFuncBTN").on("click", (event)=>{
-            const index = $(event.currentTarget).data("value");
-            select = blogs[index];
-
-            console.log(select);
-            $("#cim").html(select.cim);
-            $("#idopont").html(select.idopont.replace('T', ' ').substring(0, 19));
-            $("#tartalom").html(select.tartalom);
-            $("#active").prop( "checked", (select.status == 1) ? true : false );
-            $("#blogModal").removeClass("d-none");
-        })  
-
-        $("#blogModal #back").on("click", ()=>{
-            $("#blogModal").addClass("d-none")
-        })
-
-        $("#active").on("click", ()=>{
-            if(select == null) return notify("Nincs kiválasztott felhasználó!");
-            let stat = ($("#active").is(":checked")) ? 1 : 0
-            $.ajax({ method: 'post', url: './setBlogStatus', data: {
-                id: select.id,
-                status: stat
-            } })
-            .done((results) => {
-                notify("Sikere adatmódosítás", "green")
-                blogs[blogs.indexOf(select)].status = stat;
-                $("#blogTable ._status").eq(blogs.indexOf(select)).html(stat);
-                tableColor({table:"blogTable", item:"status", param:1});
-            })
-            .fail((err) => {return notify("Sikertelen módosítás!!!")})
-            .always(() => {});
-        })
-    })
+    
 </script>
 
 <%- include("../footer") %>
