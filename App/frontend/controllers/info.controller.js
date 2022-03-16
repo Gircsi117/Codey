@@ -1,7 +1,7 @@
 const { default: axios } = require('axios');
 
 exports.getBlogPage = async (req, res) => {
-    res.render('info/blogok');
+    res.render('info/blogok', { cim: 'Blog', jog: req.session.user.jogosultsag });
 };
 
 exports.getGyakoriPage = async (req, res) => {

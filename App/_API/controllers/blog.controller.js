@@ -15,7 +15,7 @@ exports.getAllActiveBlog = async (req, res) => {
         id: blog.id,
         cim: blog.cim,
         tartalom: blog.tartalom,
-        felhazsnalo: user.nev,
+        felhasznalo: user.nev,
         idopont: blog.idopont,
       });
     }

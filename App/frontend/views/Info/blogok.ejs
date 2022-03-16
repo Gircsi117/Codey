@@ -1,1 +1,61 @@
-<h1>Blogok</h1>
+<%- include("../header") %>
+<h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+<div class="container mt-0 mt-sm-3">
+    <%- include("../menu") %>
+    <div class="content row m-0 p-3 justify-content-around" id="content">
+        <div class="mt-3 col-12 col-lg-6">
+            <div class="m-1 p-4 gray">
+                <h2 class="d-block p-0" style="width: calc(100% - 100px)">{{ cim }}</h2>
+                <h6>Készítette: {{ szerkeszto }}</h6>
+                <hr />
+                <div class="blog-content">
+                    <p>{{ tartalom }}</p>
+                </div>
+                <h6 class="col-12 text-end">{{ datum }}</h6>
+            </div>
+        </div>
+        <div class="mt-3 col-12 col-lg-6">
+            <div class="m-1 p-4 gray">
+                <h2 class="d-block p-0" style="width: calc(100% - 100px)">{{ cim }}</h2>
+                <h6>Készítette: {{ szerkeszto }}</h6>
+                <hr />
+                <div class="blog-content">
+                    <p>{{ tartalom }}</p>
+                </div>
+                <h6 class="col-12 text-end">{{ datum }}</h6>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../foot") %>
+</div>
+
+<script>
+    let blogs = [];
+
+    $.ajax({ method: 'get', url: './getAllActiveBlog' })
+        .done((data) => {
+            let str = '';
+
+            data.data.blogs.forEach((element) => {
+                str += `<div class="mt-3 col-12 col-lg-6">
+            <div class="m-1 p-4 gray">
+                <h2 class="d-block p-0" style="width: calc(100% - 100px)">${element.cim}</h2>
+                <h6>Készítette: ${element.felhasznalo}</h6>
+                <hr />
+                <div class="blog-content">
+                    <p>${element.tartalom}</p>
+                </div>
+                <h6 class="col-12 text-end">${moment(element.idopont).format('YYYY MM D, h:mm:ss')}</h6>
+            </div>
+            </div>`;
+            });
+            $('#content').html(str);
+        })
+        .fail((err) => {
+            notify('Adatbázis hiba');
+        })
+        .always(() => {});
+</script>
+
+<%- include("../footer") %>
