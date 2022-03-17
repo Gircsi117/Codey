@@ -4,10 +4,26 @@
     <%- include("../menu") %>
 
     <div class="content row m-0 p-3">
-        <div class="gray row p-2" id="preview">
-            
+        <div id="blogModal">
+            <div>
+                <div class="row pt-3">
+                    <div class="col-12 col-md-8 p-0">
+                        <h1 id="cim"></h1>
+                        <p id="idopont"></p>
+                    </div>
+                    <div class="col-12 col-md-4 p-0 d-md-flex justify-content-md-end align-items-start">
+                        <div class="form-check form-switch p-0">
+                            <input class="form-check-input" type="checkbox" id="active">
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="" style="height: 400px; overflow-y: scroll;" id="tartalom">
+                    
+                </div>
+            </div>
         </div>
-        <div class="gray mt-3" id="tablazat" style="overflow-x:scroll">
+        <div class="gray" id="tablazat" style="overflow-x:scroll">
             <!-- Blogok táblája -->
         </div>
             
@@ -18,60 +34,68 @@
 <script>
     let blogs = [];
     let select;
+
+    setModal("blogModal", {
+        cim:"Státusz edit",
+        buttons:[{type: "secondary", id:"back", text:"Vissza"}]
+    });
+
+    function saveTable() {
+        $("#tablazat").html(toTable({datas:blogs, isFunc:true, headers:["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"], tableID:"blogTable"}));
+        tableColor({table:"blogTable", item:"status", param:1});
+        tableHide({table:"blogTable", item:"status"});
+        tableItemEdit({table:"blogTable", item:"idopont", param:"", result1:"text.replace('T', ' ').substring(0, 19)"});
+        tableItemEdit({table:"blogTable", item:"tartalom", param:"", result1:"text.substring(0, 25) + '...'"});
+
+        $("document").ready(()=>{
+            $("#blogTable #isFuncBTN").on("click", (event)=>{
+                const index = $(event.currentTarget).data("value");
+                select = blogs[index];
+
+                console.log(select);
+                $("#cim").html(select.cim);
+                $("#idopont").html(select.idopont.replace('T', ' ').substring(0, 19));
+                $("#tartalom").html(select.tartalom);
+                $("#active").prop( "checked", (select.status == 1) ? true : false );
+                $("#blogModal").removeClass("d-none");
+            })  
+
+            $("#blogModal #back").on("click", ()=>{
+                $("#blogModal").addClass("d-none")
+            })
+
+            $("#active").on("click", ()=>{
+                if(select == null) return notify("Nincs kiválasztott felhasználó!");
+                let stat = ($("#active").is(":checked")) ? 1 : 0
+                $.ajax({ method: 'post', url: './setBlogStatus', data: {
+                    id: select.id,
+                    status: stat
+                } })
+                .done((results) => {
+                    notify("Sikeres adatmódosítás", "green")
+                    blogs[blogs.indexOf(select)].status = stat;
+                    $("#blogTable ._status").eq(blogs.indexOf(select)).html(stat);
+                    tableColor({table:"blogTable", item:"status", param:1});
+                })
+                .fail((err) => {return notify("Sikertelen módosítás!!!")})
+                .always(() => {});
+            })
+        })
+    }
+
     $.ajax({ method: 'get', url: './getAllBlog' })
     .done((data) => {
         if(!data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
         if(data.blogs.length == 0) return;
         blogs = data.blogs;
 
-        $("#tablazat").html(toTable(blogs, true, ["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"]));
-
-        tableColor(blogs, "status", 1);
-        tableHide("status");
-        tableItemEdit("idopont", "", "text.replace('T', ' ').substring(0, 19)")
-        tableItemEdit("tartalom", "", "text.substring(0, 25) + '...'")
+        saveTable();
       })
     .fail((err) => {notify("Adatbázis hiba");})
     .always(() => {});
 
-    function edit_push(index) {
-        select = blogs[index];
-        let html = `<div class="col-8" style="margin: 0px auto; border: 1px solid white;">
-                <div class="row pt-3">
-                    <div class="col-12 col-md-8 p-0">
-                        <h1>${select.cim}</h1>
-                        <p>${select.idopont}</p>
-                    </div>
-                    <div class="col-12 col-md-4 p-0 d-md-flex justify-content-md-end align-items-start">
-                        <div class="form-check form-switch p-0">
-                            <input class="form-check-input" type="checkbox" id="active" onclick="edit()" ${(select.status == 1) ? "checked" : ""}>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="" style="height: 400px; overflow-y: scroll;">
-                    ${select.tartalom}
-                </div>
-            </div>`
-        $('#preview').html(html);
-    }
-
-    function edit() {
-        if(select == null) return notify("Nincs kiválasztott felhasználó!");
-        let stat = ($("#active").is(":checked")) ? 1 : 0
-        $.ajax({ method: 'post', url: './setBlogStatus', data: {
-            id: select.id,
-            status: stat
-        } })
-        .done((results) => {
-            notify("Sikere adatmódosítás", "green")
-            blogs[blogs.indexOf(select)].status = stat;
-            
-            tableColor(blogs, "status", 1);
-        })
-        .fail((err) => {return notify("Sikertelen módosítás!!!")})
-        .always(() => {});
-    }
+    //Gomb kattintások érzékelése
+    
 </script>
 
 <%- include("../footer") %>

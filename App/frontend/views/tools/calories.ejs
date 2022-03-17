@@ -1,0 +1,31 @@
+<%- include("../header") %>
+<h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+<div class="container mt-0 mt-sm-3">
+    <%- include("../menu") %>
+    <div class="content row m-0 p-3">
+        <div class="gray" id="ingredients" style="overflow-x: scroll;">
+
+        </div>
+    </div>
+
+    <%- include("../foot") %>
+</div>
+
+<script>
+    $.ajax({method:"GET", url:"./getIngredients"})
+    .done((res)=>{
+        console.log(res.data);
+        $("#ingredients").html(toTable({
+            datas:res.data.ingredients,
+            headers: ["ID", "Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír", "Ehető-e magában"], 
+            tableID:"ingredientsTable"
+        }));
+        tableItemEdit({table:"ingredientsTable", item:"ehetoe_magaban",  param:"1", result1:"'Igen'", result2:"'Nem'"});
+    })
+    .fail((err)=>{
+
+    })
+    .always(()=>{})
+</script>
+
+<%- include("../footer") %>

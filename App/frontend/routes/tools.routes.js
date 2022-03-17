@@ -14,25 +14,23 @@ router.post('/modifyPassword', require('../middleware/auth.middleware'), userCon
 
 //Grafikonok lekérései
 router.get("/graphs", require('../middleware/auth.middleware'), graphsController.getGraphsPage);
-/*
-    postGetDashboardData segítségével lekérhető az összes szükséges adat 
-*/
+
 
 //Étkezési napló lekérései
 router.get("/diary", require('../middleware/auth.middleware'), diaryController.getDiaryPage);
-/*
-    postGetDashboardData segítségével lekérhető az összes szükséges adat
-*/
+router.get("/getWeights", require('../middleware/auth.middleware'), diaryController.getWeights);
+
 
 //Cél meghatározása lekérései
 router.get("/goal", require('../middleware/auth.middleware'), toolsController.getGoalPage);
 router.post("/postSetGoal", require('../middleware/auth.middleware'), toolsController.postSetGoal);
 router.post("/postModifyWeight", require('../middleware/auth.middleware'), toolsController.postModifyWeight);
-router.post("/postSetHeight", require('../middleware/auth.middleware'), toolsController.postSetHeight);
-router.post("/postSetGender", require('../middleware/auth.middleware'), toolsController.postSetGender);
+router.post("/setBodyData", require('../middleware/auth.middleware'), toolsController.setBodyData);
+router.get("/getLastWeight", require('../middleware/auth.middleware'), toolsController.getLastWeight);
 
 //Kalória táblázat lekérései
 router.get("/kcalTable", require('../middleware/auth.middleware'), caloriesController.getCaloriesPage);
+router.get("/getIngredients", require('../middleware/auth.middleware'), caloriesController.getIngredients);
 
 
 module.exports = router;

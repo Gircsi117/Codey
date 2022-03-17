@@ -17,12 +17,12 @@
                     Eszközök
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Cél meghatározása</a></li>
-                        <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Étkezési napló</a></li>
-                        <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Grafikonok</a></li>
-                        <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Kalória táblázat</a></li>
+                        <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="/tools/goal">Cél meghatározása</a></li>
+                        <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="/tools/diary">Étkezési napló</a></li>
+                        <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="/tools/graphs">Grafikonok</a></li>
+                        <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="/tools/kcalTable">Kalória táblázat</a></li>
                         <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Saját ételek</a></li>
-                        <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="#">Beállítások</a></li>
+                        <li ng-repeat="item in eszkozok" class="ng-scope"><a class="dropdown-item ng-binding" href="/tools/settings">Beállítások</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -51,7 +51,7 @@
                     </li>
                 <% } %>
                 <li class="nav-item log-out">
-                    <a class="nav-link ps-2 p-lg-2" href="#">Log out</a>
+                    <a class="nav-link ps-2 p-lg-2" href="/auth/logout">Log out</a>
                 </li>
             </ul>
         </div>
