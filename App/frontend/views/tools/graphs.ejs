@@ -3,11 +3,17 @@
     <div class="container mt-0 mt-sm-3">
 
         <%- include("../menu") %>
-        <div class="content row m-0 p-0">
-            <div class="gray">
+        <div class="content row m-0 p-3">
+            <div class="user-form mb-3 gray">
+                <input type="date" name="" id="tolDate">
+                <input type="date" name="" id="igDate">
+                <button type="button" class="btn btn-success" id="filter">Szűrés</button>
+                <button type="button" class="btn btn-warning" id="reset">Reset</button>
+            </div>
+            <div class="gray mb-3">
                 <div id="chartContainerFS" style="height: 370px; width: 100%; padding: 0; margin: 0;"></div>
             </div>
-            <div class="gray">
+            <div class="gray mb-3">
                 <div id="chartContainerWater" style="height: 370px; width: 100%; padding: 0; margin: 0;"></div>
             </div>
             <div class="gray">
@@ -19,6 +25,11 @@
     </div>
 
 <script>
+    let food = [];
+    let sport = [];
+    let water = [];
+    let weight = [];
+
     $.ajax({method:"POST", url:"/", data:{
         drinkToday:0,
         useToday:0,
@@ -26,14 +37,11 @@
     }})
     .done((res)=>{
         console.log(res);
-        let food = [];
-        let sport = [];
-        let water = [];
 
         for (let i = 0; i < res.foods.length; i++) {
             let kcal = 0
             res.foods[i].kcal.forEach(item => {
-                kcal += item.kcal * item.multiplier
+                kcal += Math.round(item.kcal * item.multiplier)
             });
 
             let item = {x: new Date(res.foods[i].date), y: kcal}
@@ -55,37 +63,9 @@
             water.push({ x: new Date(element.datum), y: element.mennyiseg });
         }); 
 
-        createGraphs({
-            id:"chartContainerFS",
-            mainTitle: 'Étkezés / Testmozgás',
-            yTitle: "Kcal",
-            results:[
-                {
-                    name: 'Étkezés',
-                    datas: food,
-                    color:"red"
-                },
-                {
-                    name: 'Sport',
-                    datas: sport,
-                    color:"green"
-                },
-            ]
-        })
+        if(sport.length != 0 && food.length != 0 && water.length != 0 && weight.length != 0) createAllGraphs({water, sport, food, weight})
 
-        createGraphs({
-            id:"chartContainerWater",
-            mainTitle: 'Folyadék bevitel',
-            yTitle: "dl",
-            results:[
-                {
-                    name: 'Folyadék',
-                    datas: water,
-                    color:"blue"
-                },
-            ]
-        })
-
+        
     })
     .fail((err)=>{
         console.log(err);
@@ -94,7 +74,6 @@
 
     $.ajax({method:"GET", url:"./getWeights"})
     .done((res)=>{
-        let weight = [];
         //console.log(res.data.allWeights);
         let weightData = res.data.allWeights
 
@@ -109,6 +88,45 @@
             }
         }
 
+        if(sport.length != 0 && food.length != 0 && water.length != 0 && weight.length != 0) createAllGraphs({water:water, sport:sport, food:food, weight:weight});
+    })
+    .fail((err)=>{
+        console.log(err);
+    })
+    .always(()=>{ })
+
+    function createAllGraphs(data) {
+        createGraphs({
+            id:"chartContainerFS",
+            mainTitle: 'Étkezés / Testmozgás',
+            yTitle: "Kcal",
+            results:[
+                {
+                    name: 'Étkezés',
+                    datas: data.food,
+                    color:"red"
+                },
+                {
+                    name: 'Sport',
+                    datas: data.sport,
+                    color:"green"
+                },
+            ]
+        })
+
+        createGraphs({
+            id:"chartContainerWater",
+            mainTitle: 'Folyadék bevitel',
+            yTitle: "dl",
+            results:[
+                {
+                    name: 'Folyadék',
+                    datas: data.water,
+                    color:"blue"
+                },
+            ]
+        })
+
         createGraphs({
             id:"chartContainerWeight",
             mainTitle: 'Súly alakulás',
@@ -116,16 +134,28 @@
             results:[
                 {
                     name: 'Súly',
-                    datas: weight,
+                    datas: data.weight,
                     color:"black"
                 },
             ]
         })
+    }
+
+    $("#filter").on("click", ()=>{
+        if($("#tolDate").val() == "" || $("#igDate").val() == "") return notify("Nem adtál meg intervallumot!")
+        if(new Date($("#tolDate").val()).getTime() > new Date($("#igDate").val()).getTime()) return notify("A kezdet nem lehet nagyobb mit a vég!")
+        
+        createAllGraphs({
+            water:water.filter(x=> x.x.getTime() >= new Date($("#tolDate").val()).getTime() && x.x.getTime() <= new Date($("#igDate").val()).getTime()),
+            sport:sport.filter(x=> x.x.getTime() >= new Date($("#tolDate").val()).getTime() && x.x.getTime() <= new Date($("#igDate").val()).getTime()),
+            food:food.filter(x=> x.x.getTime() >= new Date($("#tolDate").val()).getTime() && x.x.getTime() <= new Date($("#igDate").val()).getTime()),
+            weight:weight.filter(x=> x.x.getTime() >= new Date($("#tolDate").val()).getTime() && x.x.getTime() <= new Date($("#igDate").val()).getTime())
+        });
     })
-    .fail((err)=>{
-        console.log(err);
+
+    $("#reset").on("click", ()=>{
+        createAllGraphs({water:water, sport:sport, food:food, weight:weight});
     })
-    .always(()=>{ })
 </script>
 
 <%- include("../footer") %>

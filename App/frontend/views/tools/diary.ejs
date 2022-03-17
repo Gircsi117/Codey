@@ -49,13 +49,16 @@
         useToday:0,
         eatenToday:0
     }})
+
     .done((res)=>{
         console.log(res);
-        $("#testmozgas").html(toTable({datas:res.sports, headers: ["ID", "Dátum", "Mennyiség (kcal)"], tableID:"mozgasTable"}))
+        $("#testmozgas").html(toTable({datas:res.sports, headers: [ "Dátum", "Mennyiség (kcal)"], tableID:"mozgasTable"}))
         tableHide({table:"mozgasTable", item:"felhasznalo_id"});
+        tableHide({table:"mozgasTable", item:"id"});
 
-        $("#folyadek").html(toTable({datas: res.waters, headers:["ID", "Mennyiség(dl)", "Dátum"], tableID:"folyadekTable"}))
+        $("#folyadek").html(toTable({datas: res.waters, headers:[ "Mennyiség(dl)", "Dátum"], tableID:"folyadekTable"}))
         tableHide({table:"folyadekTable", item:"felhasznalo_id"});
+        tableHide({table:"folyadekTable", item:"id"});
 
         let foodTableData = [];
 
@@ -67,8 +70,9 @@
             foodTableData.push({id: food.id, name: food.name, kcal: kcal, date: food.date})
         });
 
-        $("#etkezes").html(toTable({datas: foodTableData, isFunc:true, headers:["ID", "Név", "Mennyiség (kcal)", "Dátum"], tableID:"etelekTable"}))
+        $("#etkezes").html(toTable({datas: foodTableData, isFunc: false, headers:["Név", "Mennyiség (kcal)", "Dátum"], tableID:"etelekTable"}))
         tableHide({table:"etelekTable", item:"hozzavalok"});
+        tableHide({table:"etelekTable", item:"id"});
     })
     .fail((err)=>{
 
@@ -78,8 +82,9 @@
     $.ajax({method:"GET", url:"./getWeights"})
     .done((res)=>{
         console.log(res.data.allWeights);
-        $("#suly").html(toTable({datas: res.data.allWeights, headers:["ID", "Súly", "Dátum"], tableID:"sulyTable"}))
+        $("#suly").html(toTable({datas: res.data.allWeights, headers:[ "Súly", "Dátum"], tableID:"sulyTable"}))
         tableHide({table:"sulyTable", item:"felhasznalo_id"});
+        tableHide({table:"sulyTable", item:"id"});
     })
     .fail((err)=>{
 
