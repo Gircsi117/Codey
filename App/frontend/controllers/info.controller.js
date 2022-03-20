@@ -52,3 +52,22 @@ exports.getAllActiveBlog = async (req, res) => {
             console.log(err);
         });
 };
+
+exports.getBlogByUser = async (req, res) => {
+    const felhasznalo_id = req.session.user.id;
+
+    axios({
+        method: 'POST',
+        url: 'http://localhost:3001/blog/postGetBlogByUser',
+        headers: { apisecret: 123 },
+        data: {
+            felhasznalo_id,
+        },
+    })
+        .then((response) => {
+            res.send({ data: response.data });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
