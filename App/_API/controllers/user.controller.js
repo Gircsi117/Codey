@@ -39,32 +39,32 @@ exports.postModifyPassword = async (req, res) => {
   }
 };
 
-exports.postSetHeight = async (req, res)=>{
+exports.postSetHeight = async (req, res) => {
   try {
     const { id, userHeight } = req.body;
     console.log(req.body);
     if (!userHeight) res.send({ success: false, error: 'Töltsd ki a mezőt' });
-    const user = await User.update({magassag: userHeight}, {where: {id: id}});
+    const user = await User.update({ magassag: userHeight }, { where: { id: id } });
 
-    if(!user) return res.send({success: false, error: "Magasság felvétele sikertelen"})
+    if (!user) return res.send({ success: false, error: 'Magasság felvétele sikertelen' });
 
     res.send({ success: true });
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-exports.postSetGender = async (req, res)=>{
+exports.postSetGender = async (req, res) => {
   try {
     const { id, userGender } = req.body;
 
     if (!userGender) res.send({ success: false, error: 'Töltsd ki a mezőt' });
-    const user = await User.update({nem: userGender}, {where: {id: id}});
+    const user = await User.update({ nem: userGender }, { where: { id: id } });
 
-    if(!user) return res.send({success: false, error: "Nem felvétele sikertelen"})
+    if (!user) return res.send({ success: false, error: 'Nem felvétele sikertelen' });
 
     res.send({ success: true });
   } catch (error) {
     console.log(error);
   }
-}
+};
