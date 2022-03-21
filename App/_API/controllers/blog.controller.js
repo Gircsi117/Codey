@@ -9,7 +9,20 @@ exports.postGetBlogByUser = async (req, res) => {
 
         if (!blogs) return res.send({ success: false });
 
-        return res.send({ success: true, blogs });
+        let userBlogs = [];
+
+        for await (const blog of blogs) {
+            const user = await User.findOne({ where: { id: blog.felhasznalo_id } });
+            userBlogs.push({
+                id: blog.id,
+                cim: blog.cim,
+                tartalom: blog.tartalom,
+                felhasznalo: user.nev,
+                idopont: blog.idopont,
+            });
+        }
+
+        return res.send({ success: true, blogs: userBlogs });
     } catch (error) {
         console.log(error);
     }
