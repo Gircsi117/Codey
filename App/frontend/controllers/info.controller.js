@@ -54,14 +54,14 @@ exports.getAllActiveBlog = async (req, res) => {
 };
 
 exports.getBlogByUser = async (req, res) => {
-    const felhasznalo_id = req.session.user.id;
+    const id = req.session.user.id;
 
     axios({
         method: 'POST',
         url: 'http://localhost:3001/blog/postGetBlogByUser',
         headers: { apisecret: 123 },
         data: {
-            felhasznalo_id,
+            id,
         },
     })
         .then((response) => {
