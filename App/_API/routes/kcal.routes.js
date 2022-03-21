@@ -8,5 +8,6 @@ router.post('/getWaterByUser', kcalController.postGetWaterByUser);
 router.post('/postWaterByUser', kcalController.postWaterByUser);
 router.post('/postSportByUser', kcalController.postSportByUser);
 router.post('/postFoodByUser', kcalController.postFoodByUser);
+router.get('/getIngredients', kcalController.getIngredients);
 
 module.exports = router;

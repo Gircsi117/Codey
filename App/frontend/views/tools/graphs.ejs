@@ -1,0 +1,163 @@
+<%- include("../header") %>
+<h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+    <div class="container mt-0 mt-sm-3">
+
+        <%- include("../menu") %>
+        <div class="content row m-0 p-3">
+            <div class="user-form mb-3 gray">
+                <input type="date" name="" id="tolDate">
+                <input type="date" name="" id="igDate">
+                <button type="button" class="btn btn-success" id="filter">Szűrés</button>
+                <button type="button" class="btn btn-warning" id="reset">Reset</button>
+            </div>
+            <div class="gray mb-3">
+                <div id="chartContainerFS" style="height: 370px; width: 100%; padding: 0; margin: 0;"></div>
+            </div>
+            <div class="gray mb-3">
+                <div id="chartContainerWater" style="height: 370px; width: 100%; padding: 0; margin: 0;"></div>
+            </div>
+            <div class="gray">
+                <div id="chartContainerWeight" style="height: 370px; width: 100%; padding: 0; margin: 0;"></div>
+            </div>
+        </div>
+        
+        <%- include("../foot") %>
+    </div>
+
+<script>
+    let food = [];
+    let sport = [];
+    let water = [];
+    let weight = [];
+
+    $.ajax({method:"POST", url:"/", data:{
+        drinkToday:0,
+        useToday:0,
+        eatenToday:0
+    }})
+    .done((res)=>{
+        console.log(res);
+
+        for (let i = 0; i < res.foods.length; i++) {
+            let kcal = 0
+            res.foods[i].kcal.forEach(item => {
+                kcal += Math.round(item.kcal * item.multiplier)
+            });
+
+            let item = {x: new Date(res.foods[i].date), y: kcal}
+
+            if (food.length > 0 && food[food.length-1].x.getTime() == item.x.getTime()) {
+                console.log("-");
+                food[food.length-1].y += kcal;
+            }
+            else{
+                food.push(item);
+            }
+        }
+
+        res.sports.forEach(element => {
+            sport.push({ x: new Date(element.datum), y: element.mennyiseg });
+        });
+
+        res.waters.forEach(element => {
+            water.push({ x: new Date(element.datum), y: element.mennyiseg });
+        }); 
+
+        if(sport.length != 0 && food.length != 0 && water.length != 0 && weight.length != 0) createAllGraphs({water, sport, food, weight})
+
+        
+    })
+    .fail((err)=>{
+        console.log(err);
+    })
+    .always(()=>{})
+
+    $.ajax({method:"GET", url:"./getWeights"})
+    .done((res)=>{
+        //console.log(res.data.allWeights);
+        let weightData = res.data.allWeights
+
+        for (let i = 0; i < weightData.length; i++) {
+            let item = { x: new Date(weightData[i].datum), y: weightData[i].suly }
+            
+            if (weight.length > 0 && weight[weight.length-1].x.getTime() == item.x.getTime()) {
+                weight[weight.length-1].y += kcal;
+            }
+            else{
+                weight.push(item);
+            }
+        }
+
+        if(sport.length != 0 && food.length != 0 && water.length != 0 && weight.length != 0) createAllGraphs({water:water, sport:sport, food:food, weight:weight});
+    })
+    .fail((err)=>{
+        console.log(err);
+    })
+    .always(()=>{ })
+
+    function createAllGraphs(data) {
+        createGraphs({
+            id:"chartContainerFS",
+            mainTitle: 'Étkezés / Testmozgás',
+            yTitle: "Kcal",
+            results:[
+                {
+                    name: 'Étkezés',
+                    datas: data.food,
+                    color:"red"
+                },
+                {
+                    name: 'Sport',
+                    datas: data.sport,
+                    color:"green"
+                },
+            ]
+        })
+
+        createGraphs({
+            id:"chartContainerWater",
+            mainTitle: 'Folyadék bevitel',
+            yTitle: "dl",
+            results:[
+                {
+                    name: 'Folyadék',
+                    datas: data.water,
+                    color:"blue"
+                },
+            ]
+        })
+
+        createGraphs({
+            id:"chartContainerWeight",
+            mainTitle: 'Súly alakulás',
+            yTitle: "Kg",
+            results:[
+                {
+                    name: 'Súly',
+                    datas: data.weight,
+                    color:"black"
+                },
+            ]
+        })
+    }
+
+    $("#filter").on("click", ()=>{
+        if($("#tolDate").val() == "" || $("#igDate").val() == "") return notify("Nem adtál meg intervallumot!")
+        if(new Date($("#tolDate").val()).getTime() > new Date($("#igDate").val()).getTime()) return notify("A kezdet nem lehet nagyobb mit a vég!")
+        
+        createAllGraphs({
+            water:water.filter(x=> x.x.getTime() >= new Date($("#tolDate").val()).getTime() && x.x.getTime() <= new Date($("#igDate").val()).getTime()),
+            sport:sport.filter(x=> x.x.getTime() >= new Date($("#tolDate").val()).getTime() && x.x.getTime() <= new Date($("#igDate").val()).getTime()),
+            food:food.filter(x=> x.x.getTime() >= new Date($("#tolDate").val()).getTime() && x.x.getTime() <= new Date($("#igDate").val()).getTime()),
+            weight:weight.filter(x=> x.x.getTime() >= new Date($("#tolDate").val()).getTime() && x.x.getTime() <= new Date($("#igDate").val()).getTime())
+        });
+    })
+
+    $("#reset").on("click", ()=>{
+        createAllGraphs({water:water, sport:sport, food:food, weight:weight});
+    })
+</script>
+
+<%- include("../footer") %>
+
+

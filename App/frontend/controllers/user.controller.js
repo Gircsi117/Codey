@@ -1,7 +1,11 @@
 const axios = require('axios');
 
 exports.getSettingsPage = (req, res) => {
-  res.render('tools/settings');
+  res.render('tools/settings', {
+    cim: "Beállítások",
+    jog: req.session.user.jogosultsag,
+    user: req.session.user
+  });
 };
 
 exports.postModifyUsername = (req, res) => {
@@ -14,7 +18,11 @@ exports.postModifyUsername = (req, res) => {
     data: { id, username },
   })
     .then((results) => {
-      return res.send({ success: true });
+      if(results.data.success){
+        req.session.user.nev = username;
+        req.session.save();
+      }
+      return res.send({ data: results.data });
     })
     .catch((err) => {
       console.log(err);
@@ -31,7 +39,7 @@ exports.postModifyPassword = (req, res) => {
     data: { id, oldpassword, password1, password2 },
   })
     .then((results) => {
-      return res.send({ success: true });
+      return res.send({ data: results.data });
     })
     .catch((err) => {
       console.log(err);
