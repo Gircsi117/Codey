@@ -1,0 +1,190 @@
+<%- include("../header") %>
+<h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+    <div class="container mt-0 mt-sm-3">
+
+        <%- include("../menu") %>
+        <div class="content row m-0 p-3">
+            <div class="gray mb-3">
+                <h4 class="p-0 text-center">Felhívjuk a kedves látogatóink figyelmét, hogy az itt található adatok kizárólag tájékozató jellegűek, ezek használata csak saját felelősségre. <span style="font-weight: bold;">Mi szóltunk!</span></h4>
+            </div>
+            <div class="row gray">
+                <h1 class="text-center pt-3">Optimális súly kiszámítása</h1>
+                <div class="col-6 p-3">
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" id="magassag" placeholder="null" min="0" value="<%= magas %>" />
+                        <label for="login-email">Magasság (cm)</label>
+                    </div>
+                    <select name="" id="nem" class="form-select">
+                        <option value="">-</option>
+                        <option value="0" <% if(nem == 0){ %> selected <% }%> >Nő</option>
+                        <option value="1" <% if(nem == 1){ %> selected <% }%> >Férfi</option>
+                    </select>
+                    <button type="button" class="btn btn-success col-12" id="saveBody">Számítás és mentés</button>
+                </div>
+                <div class="col-6 p-3 d-flex align-items-center" id="idealis">
+                    <!--Ideális testi adatok-->
+                </div>
+            </div>
+            <div class="row gray mt-3" id="bmi">
+                <h1 class="text-center pt-3">Kalóriaszükséglet kiszámítása</h1>
+                <div class="col-6 p-3">
+                    <div class="form-floating mb-2">
+                        <input type="number" class="form-control" id="suly" placeholder="null" min="0" value="" />
+                        <label for="login-email">Testsúly (kg)</label>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Életmód</th>
+                                <th>Alap kalória</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ülő életmód</td>
+                                <td>1732 kcal</td>
+                            </tr>
+                            <tr>
+                                <td>Általános aktivitású munka</td>
+                                <td>1484 kcal</td>
+                            </tr>
+                            <tr>
+                                <td>Könnyű fizikai munka</td>
+                                <td>2237 kcal</td>
+                            </tr>
+                            <tr>
+                                <td>Nehéz fizikai munka</td>
+                                <td>2489 kcal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-success col-12" id="calcBMI">Számítás</button>
+                </div>
+                <div class="col-6 p-3 d-flex align-items-center" id="bmiAdatok">
+                    <!--BMI táblázat-->
+                </div>
+            </div>
+            <div class="gray mt-3" id="setCel">
+                <h1 class="text-center pt-3">Cél meghatározása</h1>
+                <div class="form-floating mb-2">
+                    <input type="number" class="form-control" id="goalWeight" placeholder="null" min="0" value="<%= cel %>" />
+                    <label for="login-email">Cél testsúly (kg)</label>
+                </div>
+                <button type="button" class="btn btn-success col-12" id="editGoal">Mentés</button>
+            </div>
+        </div>
+        
+        <%- include("../foot") %>
+    </div>
+<script>
+    $("#bmi").hide();
+    $("#setCel").hide();
+    let felvisz = false;
+    let kezdes = false;
+
+    calcOtimal();
+
+    function calcOtimal() {
+        if ($("#magassag").val() == "" || $("#nem").val() == "") return
+        let magassag = $("#magassag").val();
+        let nem = $("#nem").val();
+
+        let suly = (magassag - 100) * (nem == 1 ? 1 : 0.9);
+        
+        $("#idealis").html(toTable({
+            datas:[{suly: `${suly} kg`, tartomany:`${suly * 0.95} - ${suly * 1.05}`}],
+            headers: ["Ideális súly", "Optimális tartomány"]
+        }))
+        $("#bmi").show();
+
+        //Magasság és nem beállítása
+
+        if (kezdes) {
+            $.ajax({ method: "post", url:"./setBodyData", data:{userHeight: magassag, userGender: nem}})
+            .done((res)=>{
+                notify("Adatok sikeresen mentve!", "green");
+            })
+            .fail((err)=>{
+                console.log(err);
+            })
+        .always(()=>{})
+        }
+
+        //Kekéri az utolsó súlyát a felhasználónak
+        $.ajax({method:"GET", url:"./getLastWeight"})
+        .done((res)=>{
+            if(res.data.lastWeight == null) return felvisz = true;
+            $("#suly").val(res.data.lastWeight.suly);
+        })
+        .fail((err)=>{
+            console.log(err);
+            notify("Adatok mentése sikertelen!");
+        })
+        .always(()=>{calcBMI()})
+    }
+
+    function calcBMI() {
+        if ($("#magassag").val() == "" || $("#suly").val() == "" || $("#nem").val() == "") return;
+
+        let suly = $("#suly").val();
+        let magassag = $("#magassag").val();
+        let nem = $("#nem").val();
+
+        let bmi = (suly / Math.pow((magassag / 100), 2)).toFixed(2);
+        let allapot = "";
+
+        if(bmi < 16) allapot = "Súlyos soványság";
+        else if(bmi >= 16 && bmi < 17) allapot = "Mérsékelt soványságság";
+        else if(bmi >= 17 && bmi < 18.5) allapot = "Enyhe soványság";
+        else if(bmi >= 18.5 && bmi < 25) allapot = "Normál testsúly";
+        else if(bmi >= 25 && bmi < 30) allapot = "Túlsúlyos";
+        else if(bmi >= 30 && bmi < 35) allapot = "I. fokú elhízás";
+        else if(bmi >= 35 && bmi < 40) allapot = "II. fokú elhízás";
+        else if(bmi >= 40) allapot = "III. fokú elhízás";
+
+        let data = [{bmi, allapot}];
+        $("#bmiAdatok").html(toTable({datas: data, headers: ["BMI", "Egészségi állapot"]}));
+        
+        if (felvisz) {
+            $.ajax({method:"POST", url:"./postModifyWeight", data:{weight: suly, date: new Date()}})
+            .done((res)=>{
+                console.log(res);
+                notify("Sikeres adat felvétel", "green")
+            })
+            .fail((err)=>{
+                console.log(err);
+                notify("Sikertelen adatfelvétel");
+            })
+            .always(()=>{ })
+        }
+
+        $("#setCel").show();
+    }
+
+    $("document").ready(()=>{
+        $("#editGoal").on("click", ()=>{
+            $.ajax({method:"POST", url:"./postSetGoal", data:{ goalWeight: $("#goalWeight").val() }})
+            .done((res)=>{
+                notify("Sikeres cél mentés", "green");
+            })
+            .fail((err)=>{
+                notify("Sikertelen mentés");
+            })
+            .always(()=>{ });
+        })
+
+        $("#saveBody").on("click", ()=>{
+            kezdes = true;
+            calcOtimal();
+            kezdes = false;
+        })
+
+        $("#calcBMI").on("click", ()=>{
+            calcBMI();
+        })
+    })
+</script>
+
+<%- include("../footer") %>
+
+

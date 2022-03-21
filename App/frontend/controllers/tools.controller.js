@@ -1,7 +1,13 @@
 const axios = require('axios');
 
 exports.getGoalPage = (req, res) => {
-  res.render('tools/goal');
+  res.render('tools/goal', {
+    cim: "Cél meghatározása",
+    jog: req.session.user.jogosultsag,
+    cel:req.session.user.cel_suly,
+    nem:req.session.user.nem,
+    magas:req.session.user.magassag
+  });
 };
 
 exports.postSetGoal = (req, res) => {
@@ -14,6 +20,8 @@ exports.postSetGoal = (req, res) => {
     data: { id, goalWeight },
   })
     .then((results) => {
+      req.session.user.cel_suly = goalWeight;
+      req.session.save();
       return res.send({ data: results.data });
     })
     .catch((err) => {
@@ -22,13 +30,13 @@ exports.postSetGoal = (req, res) => {
 };
 
 exports.postModifyWeight = (req, res) => {
-  const { weight } = req.body;
+  const { weight, date } = req.body;
   const id = req.session.user.id;
   axios({
     method: 'POST',
     url: 'http://localhost:3001/weight/postModifyWeight',
     headers: { apisecret: 123 },
-    data: { id, weight },
+    data: { id, weight, date },
   })
     .then((results) => {
       return res.send({ data: results.data });
@@ -38,14 +46,13 @@ exports.postModifyWeight = (req, res) => {
     });
 };
 
-exports.postSetHeight = (req, res) => {
-  const { userHeight } = req.body;
+exports.getLastWeight = (req, res)=>{
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/user/postSetHeight',
+    url: 'http://localhost:3001/weight/postGetLastWeight',
     headers: { apisecret: 123 },
-    data: { id, userHeight },
+    data: { id },
   })
     .then((results) => {
       return res.send({ data: results.data });
@@ -53,21 +60,30 @@ exports.postSetHeight = (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-};
+}
 
-exports.postSetGender = (req, res) => {
-  const { userGender } = req.body;
+exports.setBodyData = async (req, res)=>{
+  const {userHeight, userGender} = req.body;
   const id = req.session.user.id;
-  axios({
-    method: 'POST',
-    url: 'http://localhost:3001/user/postSetGender',
-    headers: { apisecret: 123 },
-    data: { id, userGender },
-  })
-    .then((results) => {
-      return res.send({ data: results.data });
+
+  await axios.all([
+    axios({
+      method: 'POST',
+      url: 'http://localhost:3001/user/postSetHeight',
+      headers: { apisecret: 123 },
+      data: { id, userHeight },
+    }),
+    axios({
+      method: 'POST',
+      url: 'http://localhost:3001/user/postSetGender',
+      headers: { apisecret: 123 },
+      data: { id, userGender },
     })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+  ])
+  .then(axios.spread((height, gender)=>{
+    req.session.user.magassag = userHeight;
+    req.session.user.nem = userGender;
+    req.session.save();
+    res.send({success:true});
+  }))
+}

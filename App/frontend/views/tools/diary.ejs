@@ -1,0 +1,126 @@
+<%- include("../header") %>
+<h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+    <div class="container mt-0 mt-sm-3">
+        <%- include("../menu") %>
+        <div class="content row m-0 p-3">
+            <div class="user-form mb-3">
+                
+                <input type="date" name="" id="tolDate">
+                <input type="date" name="" id="igDate">
+                <button type="button" class="btn btn-success" onclick="szures()">Szűrés</button>
+                <button type="button" class="btn btn-warning" onclick="reset()">Reset</button>
+            </div>
+
+            <div id="accordion" class="p-3" style="background-color: var(--div);">
+                <h3>Étkezési napló</h3>
+                <div id="etkezes" class="p-3" style="overflow-x: scroll;">
+                  
+                </div>
+                <h3>Testmozgási napló</h3>
+                <div id="testmozgas" class="p-3" style="overflow-x: scroll;">
+                  
+                </div>
+                <h3>Folyadék napló</h3>
+                <div id="folyadek" class="p-3" style="overflow-x: scroll;">
+                  
+                </div>
+                <h3>Súly alakulás</h3>
+                <div id="suly" class="p-3" style="overflow-x: scroll;">
+                  
+                </div>
+            </div>
+        </div>
+        
+        <%- include("../foot") %>
+    </div>
+
+    <script>
+        $( function() {
+          $( "#accordion" ).accordion({
+            heightStyle: "content"
+          });
+        } );
+    </script>
+
+<script>
+    //----------------------------------------------------
+    $.ajax({method:"POST", url:"/", data:{
+        drinkToday:0,
+        useToday:0,
+        eatenToday:0
+    }})
+
+    .done((res)=>{
+        console.log(res);
+        $("#testmozgas").html(toTable({datas:res.sports, headers: [ "Dátum", "Mennyiség (kcal)"], tableID:"mozgasTable"}))
+        tableHide({table:"mozgasTable", item:"felhasznalo_id"});
+        tableHide({table:"mozgasTable", item:"id"});
+
+        $("#folyadek").html(toTable({datas: res.waters, headers:[ "Mennyiség(dl)", "Dátum"], tableID:"folyadekTable"}))
+        tableHide({table:"folyadekTable", item:"felhasznalo_id"});
+        tableHide({table:"folyadekTable", item:"id"});
+
+        let foodTableData = [];
+
+        res.foods.forEach(food => {
+            let kcal = 0;
+            food.kcal.forEach(element => {
+                kcal += element.kcal * element.multiplier
+            });
+            foodTableData.push({id: food.id, name: food.name, kcal: kcal, date: food.date})
+        });
+
+        $("#etkezes").html(toTable({datas: foodTableData, isFunc: false, headers:["Név", "Mennyiség (kcal)", "Dátum"], tableID:"etelekTable"}))
+        tableHide({table:"etelekTable", item:"hozzavalok"});
+        tableHide({table:"etelekTable", item:"id"});
+    })
+    .fail((err)=>{
+
+    })
+    .always(()=>{})
+    //----------------------------------------------------------
+    $.ajax({method:"GET", url:"./getWeights"})
+    .done((res)=>{
+        console.log(res.data.allWeights);
+        $("#suly").html(toTable({datas: res.data.allWeights, headers:[ "Súly", "Dátum"], tableID:"sulyTable"}))
+        tableHide({table:"sulyTable", item:"felhasznalo_id"});
+        tableHide({table:"sulyTable", item:"id"});
+    })
+    .fail((err)=>{
+
+    })
+    .always(()=>{})
+
+    function szures() {
+        tableFilter(
+            {table:"etelekTable",
+            item:"date",
+            param:"Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
+        });
+        tableFilter({
+            table:"folyadekTable",
+            item:"datum",
+            param:"Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
+        });
+        tableFilter({
+            table:"mozgasTable",
+            item:"datum",
+            param:"Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
+        });
+        tableFilter({
+            table:"sulyTable",
+            item:"datum",
+            param:"Date.parse(text) >= Date.parse($('#tolDate').val()) && Date.parse(text) <= Date.parse($('#igDate').val())"
+        });
+    }
+    function reset() {
+        tableFilter({table:"etelekTable", item:"date", param:"true"});
+        tableFilter({table:"folyadekTable", item:"datum", param:"true"});
+        tableFilter({table:"mozgasTable", item:"datum", param:"true"});
+        tableFilter({table:"sulyTable", item:"datum", param:"true"});
+    }
+</script>
+
+<%- include("../footer") %>
+
+
