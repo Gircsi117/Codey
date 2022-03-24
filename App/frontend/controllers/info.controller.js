@@ -17,8 +17,9 @@ exports.getRolunkPage = async (req, res) => {
 };
 
 exports.postBlog = async (req, res) => {
-    const { cim, tartalom, idopont } = req.body;
+    const { cim, tartalom } = req.body;
     const felhasznalo_id = req.session.user.id;
+    const idopont = new Date();
 
     axios({
         method: 'POST',

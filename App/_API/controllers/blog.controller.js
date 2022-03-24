@@ -19,6 +19,7 @@ exports.postGetBlogByUser = async (req, res) => {
                 tartalom: blog.tartalom,
                 felhasznalo: user.nev,
                 idopont: blog.idopont,
+                status: blog.status,
             });
         }
 

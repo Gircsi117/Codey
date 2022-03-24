@@ -2,24 +2,86 @@
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
 <div class="container mt-0 mt-sm-3">
     <%- include("../menu") %>
-    <div class="content">
+
+    <div class="content row m-0 p-3">
         <div id="tabs" class="content">
             <ul>
                 <li><a href="#all-blogs">Összes blog</a></li>
                 <li><a href="#user-blogs">Saját blogok</a></li>
             </ul>
             <div class="container" id="all-blogs"></div>
-            <div class="container p-auto" id="user-blogs"></div>
+            <div class="container" id="user-blogs">
+                <div class="gray">
+                    <button type="button" class="btn btn-success" id="newBlog" onclick="openModal()">Hozzáadás</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="blogModal">
+            <div class="col-12 col-md-8 p-0 h-50">
+                <h1 id="cim"></h1>
+            </div>
+            <div class="form-floating p-2">
+                <input type="text" class="form-control" id="title" placeholder="" />
+                <label for="title">Cím:</label>
+            </div>
+            <div class="form-floating p-2">
+                <textarea type="text" class="form-control" style="min-height: 400px" id="blog" placeholder="asd"></textarea>
+                <label for="blog">Tartalom:</label>
+            </div>
         </div>
     </div>
+
     <%- include("../foot") %>
 </div>
 
 <script>
-    $(function () {
-        $('#tabs').tabs();
-    });
+    function openModal(param) {
+        $('#blogModal').removeClass('d-none');
+    }
 
+    $('#tabs')
+        .tabs()
+        .ready(() => {
+            $('#tabs')
+                .tabs()
+                .ready(() => {
+                    setModal('blogModal', {
+                        cim: 'Saját blog',
+                        buttons: [
+                            { type: 'success', text: 'Létrehozás', id: 'create' },
+                            { type: 'secondary', text: 'Vissza', id: 'back' },
+                        ],
+                    });
+
+                    //vissza
+                    $('#blogModal #back').on('click', () => {
+                        $('#blogModal').addClass('d-none');
+                    });
+
+                    //mentés
+                    $('#blogModal #create').on('click', () => {
+                        $.ajax({
+                            method: 'get',
+                            url: './postBlog',
+                            data: {
+                                cim: $('#blogModal #title').val(),
+                                tartalom: $('#blogModal #blog').val(),
+                            },
+                        })
+                            .done((res) => {
+                                if (!res.data.success) return notify(res.data.err);
+                                notify('Blog létrehozva, megerősítésre vár', 'green');
+                            })
+                            .fail((err) => {
+                                console.log(err);
+                            })
+                            .always(() => {});
+                    });
+                });
+        });
+
+    //GETS
     $.ajax({ method: 'get', url: './getAllActiveBlog' })
         .done((data) => {
             let str = '';
@@ -48,7 +110,7 @@
 
     $.ajax({ method: 'get', url: './getBlogByUser' })
         .done((data) => {
-            let str = '<button class="btn btn-success m-auto">Új blog</button>';
+            let str = $('#user-blogs').html();
 
             data.data.blogs.forEach((element) => {
                 if (element.status == 1) {
