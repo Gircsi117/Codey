@@ -8,6 +8,6 @@ router.get('/kaloriarol', require('../middleware/auth.middleware'), infoControll
 router.get('/rolunk', require('../middleware/auth.middleware'), infoController.getRolunkPage);
 router.get('/getAllActiveBlog', require('../middleware/auth.middleware'), infoController.getAllActiveBlog);
 router.get('/getBlogByUser', require('../middleware/auth.middleware'), infoController.getBlogByUser);
-router.get('/postBlog', require('../middleware/auth.middleware'), infoController.postBlog);
+router.post('/postBlog', require('../middleware/auth.middleware'), infoController.postBlog);
 
 module.exports = router;

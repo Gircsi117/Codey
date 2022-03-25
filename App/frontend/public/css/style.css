@@ -15,7 +15,6 @@
 }
 
 button {
-    width: 100px;
     margin: 0.5rem;
 }
 
@@ -232,7 +231,7 @@ i::before {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100hv;
+    width: 100vw;
     height: 100vh;
     background-color: #0000009c;
     display: flex;
