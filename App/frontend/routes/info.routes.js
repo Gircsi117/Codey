@@ -7,6 +7,7 @@ router.get('/gyakori', require('../middleware/auth.middleware'), infoController.
 router.get('/kaloriarol', require('../middleware/auth.middleware'), infoController.getKaloriarolPage);
 router.get('/rolunk', require('../middleware/auth.middleware'), infoController.getRolunkPage);
 router.get('/getAllActiveBlog', require('../middleware/auth.middleware'), infoController.getAllActiveBlog);
-router.get('/postBlog', require('../middleware/auth.middleware'), infoController.postBlog);
+router.get('/getBlogByUser', require('../middleware/auth.middleware'), infoController.getBlogByUser);
+router.post('/postBlog', require('../middleware/auth.middleware'), infoController.postBlog);
 
 module.exports = router;

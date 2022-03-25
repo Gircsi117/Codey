@@ -80,27 +80,26 @@
         $(`#${modalID}`).addClass('myModal d-none');
         let head = `<h2 class="text-center">${modalData.cim}</h2>`;
         let foot = '';
-
         modalData.buttons.forEach((element) => {
             foot += `<button type="button" class="btn btn-${element.type}" id="${element.id}">${element.text}</button>`;
         });
 
         $(`#${modalID}`).html(`
-      <div class=" gray col-12 col-sm-10 col-md-8" id="${modalID}Form">
+      <div class="gray col-12 col-sm-10 col-md-8" id="${modalID}Form">
         ${head}
         <hr>
         ${$(`#${modalID}`).html()}
         <hr>
         ${foot}
-    </div>
-    `);
+        </div>
+        `);
     }
 
     //készít egy grafikont
     function createGraphs(data) {
-        let content = []
+        let content = [];
 
-        data.results.forEach(element => {
+        data.results.forEach((element) => {
             content.push({
                 type: 'line',
                 showInLegend: true,
@@ -109,9 +108,8 @@
                 xValueFormatString: 'DD MMM, YYYY',
                 color: element.color,
                 dataPoints: element.datas,
-            })
+            });
         });
-      
 
         var chart = new CanvasJS.Chart(`${data.id}`, {
             animationEnabled: true,
