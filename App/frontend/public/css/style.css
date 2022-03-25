@@ -1,8 +1,8 @@
 :root {
-    --content: #6F4E37;
-    --div: #A67B5B;
-    --button: #6F4E37;
-    --footer: #EFB67E;
+    --content: #6f4e37;
+    --div: #a67b5b;
+    --button: #6f4e37;
+    --footer: #efb67e;
 
     --body: #301e0c;
     --cim-back: #fed8b1e7;
@@ -12,7 +12,7 @@
     --button-hover-text: #030303;
     --text: #ffffff;
     --footer-text: #000000;
-  }
+}
 
 button {
     margin: 0.5rem;
@@ -22,17 +22,17 @@ body {
     background-color: var(--body);
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
-.container{
+.container {
     padding: 0;
     color: var(--text);
 }
 
-header{
+header {
     background-image: url('/Img/header.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -43,7 +43,7 @@ header{
     align-items: center;
 }
 
-header h1{
+header h1 {
     padding: 5px;
     background-color: var(--cim-back);
     color: var(--cim);
@@ -51,63 +51,66 @@ header h1{
     width: 100%;
 }
 
-.nav-item{
+.nav-item {
     border-radius: 5px;
 }
 
-.nav-item:hover{
+.nav-item:hover {
     background-color: var(--content);
     color: black;
 }
 
-.user-form input, select{
+.user-form input,
+select {
     margin-bottom: 10px;
 }
 
-.content{
+.content {
     background-color: var(--content);
 }
 
-footer{
+footer {
     background-color: var(--footer);
     color: var(--footer-text);
 }
 
-.gray{
+.gray {
     background-color: var(--div);
     padding: 15px;
 }
 
-.left-bar{
+.left-bar {
     background-color: var(--content);
 }
 
-.right-bar{
+.right-bar {
     background-color: var(--div);
 }
 
-.row{
+.row {
     margin: 0;
     padding: 0;
 }
 
-.etkezes, .mozgas{
+.etkezes,
+.mozgas {
     min-height: 200px;
 }
 
-.mozgas select{
+.mozgas select {
     margin-bottom: 10px;
 }
 
-input, label{
+input,
+label {
     color: black;
 }
 
-.user-form{
+.user-form {
     background-color: var(--div);
 }
 
-input[type=submit]{
+input[type='submit'] {
     background-color: var(--button);
     color: var(--button-text);
     padding: 5px;
@@ -116,57 +119,59 @@ input[type=submit]{
     border: 1px solid black;
 }
 
-input[type=submit]:hover{
+input[type='submit']:hover {
     background-color: var(--button-hover);
     color: var(--button-hover-text);
 }
 
-.food-item{
+.food-item {
     border: 1px solid black;
 }
 
-.kozep{
+.kozep {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.gyik-item{
+.content-wrapper {
     background-color: var(--div);
-    padding: 15px;
-    margin-bottom: 20px;
 }
 
-.nevjegy h1{
+.gyik-item {
+    padding: 2rem;
+}
+
+.nevjegy h1 {
     background-color: var(--body);
     color: var(--button-text);
     width: 100%;
     text-align: center;
-    border-radius: 0 0 5px 5px
+    border-radius: 0 0 5px 5px;
 }
 
-.red{
+.red {
     background-color: rgba(255, 0, 0, 0.265);
 }
 
-.green{
+.green {
     background-color: rgba(0, 128, 0, 0.265);
 }
 
-.blog-content{
+.blog-content {
     height: 345px;
     overflow: hidden;
     margin-bottom: 25px;
 }
 
-.form-switch{
+.form-switch {
     display: flex;
     align-items: center;
     padding: 5px;
     margin-bottom: 10px;
 }
 
-.form-switch input[type=checkbox]{
+.form-switch input[type='checkbox'] {
     margin: 0;
     width: 60px;
     padding: 15px;
@@ -176,42 +181,44 @@ input[type=submit]:hover{
     color: red;
 }
 
-input[type=checkbox]:checked{
+input[type='checkbox']:checked {
     background-color: var(--footer);
     border: 1px solid var(--footer);
 }
 
-input[type=checkbox]:focus{
+input[type='checkbox']:focus {
     box-shadow: none;
     border: 1px solid var(--footer);
 }
 
-.form-switch label, .date-item label{
+.form-switch label,
+.date-item label {
     color: var(--text);
     font-size: larger;
 }
 
-.date-item input{
+.date-item input {
     padding: 5px;
 }
 
-.date-item td{
+.date-item td {
     padding-right: 10px;
 }
 
-.table td, th{
+.table td,
+th {
     color: var(--text);
 }
 
-tfoot tr{
+tfoot tr {
     background-color: var(--content);
 }
 
-.error{
+.error {
     display: none;
 }
 
-i::before{
+i::before {
     width: 100%;
     text-align: center;
 }
@@ -260,7 +267,7 @@ body::-webkit-scrollbar-thumb {
         display: none;
     }
 
-    .error{
+    .error {
         display: block;
     }
-  }
+}
