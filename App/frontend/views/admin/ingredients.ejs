@@ -1,6 +1,6 @@
 <%- include("../header") %>
-<h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-<div class="container mt-0 mt-sm-3">
+    <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+    <div class="container mt-0 mt-sm-3">
     <%- include("../menu") %>
 
     <div class="content row m-0 p-3">
@@ -36,9 +36,10 @@
         <div class="gray">
             <button type="button" class="btn btn-success" id="createNew">Hozzáadás</button>
         </div>
-        <div class="gray mt-3" id="tablazat" style="overflow-x: scroll">
+        <div class="gray mt-3" id="tablazat" style="overflow-x:scroll">
             <!-- Hozzávalók táblája -->
         </div>
+            
     </div>
     <%- include('../foot') %>
 </div>
@@ -47,193 +48,176 @@
     let ingredients = [];
     let select;
 
-    setModal('ingModal', {
-        cim: 'Hozzávaló',
-        buttons: [
-            { type: 'success', text: 'Létrehozás', id: 'create' },
-            { type: 'success', text: 'Mentés', id: 'edit' },
-            { type: 'danger', text: 'Törlés', id: 'delete' },
-            { type: 'secondary', text: 'Vissza', id: 'back' },
-        ],
+    setModal("ingModal", {
+        cim:"Hozzávaló",
+        buttons:[
+            {type: "success", text: "Létrehozás", id:"create"},
+            {type: "success", text: "Mentés", id:"edit"},
+            {type: "danger", text: "Törlés", id:"delete"},
+            {type: "secondary", text: "Vissza", id:"back"},
+        ]
     });
-
+    
     $.ajax({ method: 'get', url: './getAllIngredient' })
-        .done((res) => {
-            if (!res.data.success) return $('#tablazat').html('<h2>Hiba az adatok lekérésekor</h2>');
-            if (res.data.ingredients.length == 0) return;
+    .done((res) => {
+        if(!res.data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
+        if(res.data.ingredients.length == 0) return;
 
-            ingredients = res.data.ingredients;
+        ingredients = res.data.ingredients;
 
-            saveTable();
-        })
-        .fail((err) => {
-            console.log(err);
-            notify('Adatbázis hiba');
-        })
-        .always(() => {});
+        saveTable()
+      })
+    .fail((err) => {notify("Adatbázis hiba");})
+    .always(() => {});
 
     function saveTable() {
-        $('#tablazat').html(toTable({ datas: ingredients, isFunc: true, headers: ['ID', 'Név', 'Kcal', 'Fehérje', 'Szénhidrát', 'Zsír'], tableID: 'ingTable' }));
-        tableColor({ table: 'ingTable', item: 'ehetoe_magaban', param: 1 });
-        tableHide({ table: 'ingTable', item: 'ehetoe_magaban' });
+        $("#tablazat").html(toTable({datas:ingredients, isFunc:true, headers:["ID", "Név", "Kcal", "Fehérje", "Szénhidrát", "Zsír"], tableID:"ingTable"}));
+        tableColor({table: "ingTable", item:"ehetoe_magaban", param:1})
+        tableHide({table:"ingTable", item:"ehetoe_magaban"})
 
-        $('#ingTable').ready(() => {
+        $("#ingTable").ready(()=>{
             //Modal ablak megnyitása!
-            $('#ingTable #isFuncBTN').on('click', (event) => {
-                const index = $(event.currentTarget).data('value');
+            $("#ingTable #isFuncBTN").on("click", (event)=>{
+                const index = $(event.currentTarget).data("value");
                 select = ingredients[index];
 
-                $('#name').val(select.nev);
-                $('#kcal').val(select.kcal);
-                $('#feherje').val(select.feherje);
-                $('#szenhidrat').val(select.szenhidrat);
-                $('#zsir').val(select.zsir);
-                $('#eheto').val(select.ehetoe_magaban);
+                $("#name").val(select.nev)
+                $("#kcal").val(select.kcal)
+                $("#feherje").val(select.feherje)
+                $("#szenhidrat").val(select.szenhidrat)
+                $("#zsir").val(select.zsir)
+                $("#eheto").val(select.ehetoe_magaban)
 
-                $('#ingModal #edit').removeClass('d-none');
-                $('#ingModal #delete').removeClass('d-none');
-                $('#ingModal #create').removeClass('d-none');
+                $("#ingModal #edit").removeClass("d-none")
+                $("#ingModal #delete").removeClass("d-none")
+                $("#ingModal #create").removeClass("d-none")
 
-                $('#ingModal #create').addClass('d-none');
-                $('#ingModal').removeClass('d-none');
-            });
+                $("#ingModal #create").addClass("d-none")
+                $("#ingModal").removeClass("d-none");
+            })
 
             //Modal ablak bezárása
-            $('#ingModal #back').on('click', () => {
-                $('#ingModal').addClass('d-none');
+            $("#ingModal #back").on("click", ()=>{
+                $("#ingModal").addClass("d-none");
                 saveTable();
-            });
+            })
 
-            $('#createNew').on('click', () => {
-                $('#ingModal').removeClass('d-none');
+            $("#createNew").on("click", ()=>{
+                $("#ingModal").removeClass("d-none");
 
-                $('#name').val(null);
-                $('#kcal').val(null);
-                $('#feherje').val(null);
-                $('#szenhidrat').val(null);
-                $('#zsir').val(null);
-                $('#eheto').val(null);
+                $("#name").val(null)
+                $("#kcal").val(null)
+                $("#feherje").val(null)
+                $("#szenhidrat").val(null)
+                $("#zsir").val(null)
+                $("#eheto").val(null)
 
-                $('#ingModal #edit').removeClass('d-none');
-                $('#ingModal #delete').removeClass('d-none');
-                $('#ingModal #create').removeClass('d-none');
+                $("#ingModal #edit").removeClass("d-none")
+                $("#ingModal #delete").removeClass("d-none")
+                $("#ingModal #create").removeClass("d-none")
 
-                $('#ingModal #edit').addClass('d-none');
-                $('#ingModal #delete').addClass('d-none');
+                $("#ingModal #edit").addClass("d-none")
+                $("#ingModal #delete").addClass("d-none")
 
-                $('#ingModal').removeClass('d-none');
-            });
+                $("#ingModal").removeClass("d-none");
+            })
+
 
             //Törlés
-            $('#ingModal #delete').on('click', () => {
-                if (select == null) return notify('Nincs kiválasztott hozzávaló!');
-                if (!confirm('Bisztos Törölni akarod a kiválasztott elemet?')) return;
+            $("#ingModal #delete").on("click", ()=>{
+                if(select == null) return notify("Nincs kiválasztott hozzávaló!");
+                if(!confirm("Bisztos Törölni akarod a kiválasztott elemet?")) return;
 
-                $.ajax({
-                    method: 'post',
-                    url: './deleteIngredient',
-                    data: {
-                        id: select.id,
-                    },
+                $.ajax({method:"post", url:"./deleteIngredient", data:{
+                    id: select.id
+                }})
+                .done((res)=>{
+                    if(!res.data.success) return notify(res.data.err);
+                    notify("Hozzávaló sikeresen törölve!", "green");
+                    ingredients.splice(ingredients.indexOf(select), 1)
+
+                    saveTable();
+                    back();
                 })
-                    .done((res) => {
-                        if (!res.data.success) return notify(res.data.err);
-                        notify('Hozzávaló sikeresen törölve!', 'green');
-                        ingredients.splice(ingredients.indexOf(select), 1);
-
-                        saveTable();
-                        back();
-                    })
-                    .fail((err) => {
-                        console.log(err);
-                        notify('Adatbázis hiba');
-                    })
-                    .always(() => {});
+                .fail((err)=>{notify(err)})
+                .always(()=>{});
                 saveTable();
-            });
+            })
 
             //Mentés
-            $('#ingModal #edit').on('click', () => {
-                if (select == null) return notify('Nincs kiválasztott hozzávaló!');
-                if ($('#name').val() == '' || $('#kcal').val() == '' || $('#feherje').val() == '' || $('#szenhidrat').val() == '' || $('#zsir').val() == '' || $('#eheto').val() == '') {
-                    return notify('Nem adtál meg minden adatot!');
+            $("#ingModal #edit").on("click", ()=>{
+                if(select == null) return notify("Nincs kiválasztott hozzávaló!");
+                if ($("#name").val() == "" || $("#kcal").val() == "" || $("#feherje").val() == "" ||
+                    $("#szenhidrat").val() == "" || $("#zsir").val() == "" || $("#eheto").val() == "") {
+                    return notify("Nem adtál meg minden adatot!");
                 }
-                if (!confirm('Bisztos módosítani akarod a kiválasztott elemet?')) return;
+                if(!confirm("Bisztos módosítani akarod a kiválasztott elemet?")) return;
 
-                $.ajax({
-                    method: 'post',
-                    url: './setIngredient',
-                    data: {
-                        id: select.id,
-                        nev: $('#name').val(),
-                        kcal: $('#kcal').val(),
-                        feherje: $('#feherje').val(),
-                        szenhidrat: $('#szenhidrat').val(),
-                        zsir: $('#zsir').val(),
-                        ehetoe_magaban: $('#eheto').val(),
-                    },
+                $.ajax({ method: 'post', url: './setIngredient', data: {
+                    id: select.id,
+                    nev:  $("#name").val(),
+                    kcal: $("#kcal").val(),
+                    feherje: $("#feherje").val(),
+                    szenhidrat: $("#szenhidrat").val(),
+                    zsir: $("#zsir").val(),
+                    ehetoe_magaban: $("#eheto").val(),
+                } })
+                .done((res) => {
+                    if(!res.data.success) return notify(res.data.err);
+                    notify("Hozzávaló sikeresen módosítva!", "green");
+                    let index = ingredients.indexOf(select);
+
+                    ingredients[index].nev = $("#name").val(),
+                    ingredients[index].kcal = $("#kcal").val(),
+                    ingredients[index].feherje = $("#feherje").val(),
+                    ingredients[index].szenhidrat = $("#szenhidrat").val(),
+                    ingredients[index].zsir = $("#zsir").val(),
+                    ingredients[index].ehetoe_magaban = $("#eheto").val(),
+
+                    saveTable();
+                    back();
                 })
-                    .done((res) => {
-                        if (!res.data.success) return notify(res.data.err);
-                        notify('Hozzávaló sikeresen módosítva!', 'green');
-                        let index = ingredients.indexOf(select);
-
-                        (ingredients[index].nev = $('#name').val()),
-                            (ingredients[index].kcal = $('#kcal').val()),
-                            (ingredients[index].feherje = $('#feherje').val()),
-                            (ingredients[index].szenhidrat = $('#szenhidrat').val()),
-                            (ingredients[index].zsir = $('#zsir').val()),
-                            (ingredients[index].ehetoe_magaban = $('#eheto').val()),
-                            saveTable();
-                        back();
-                    })
-                    .fail((err) => {
-                        console.log(err);
-                        notify('Adatbázis hiba');
-                    })
-                    .always(() => {});
+                .fail((err) => {return console.log("Sikertelen módosítás!!!")})
+                .always(() => {});
                 saveTable();
-            });
-        });
+            })
+
+
+        })
     }
 
     function createNew(params) {
-        if ($('#name').val() == '' || $('#kcal').val() == '' || $('#feherje').val() == '' || $('#szenhidrat').val() == '' || $('#zsir').val() == '' || $('#eheto').val() == '') {
-            notify('Nem adtál meg minden adatot!');
+        if ($("#name").val() == "" || $("#kcal").val() == "" || $("#feherje").val() == "" ||
+        $("#szenhidrat").val() == "" || $("#zsir").val() == "" || $("#eheto").val() == "") {
+            notify("Nem adtál meg minden adatot!");
             return;
         }
 
-        $.ajax({
-            method: 'post',
-            url: './newIngredient',
-            data: {
-                nev: $('#name').val(),
-                kcal: $('#kcal').val(),
-                feherje: $('#feherje').val(),
-                szenhidrat: $('#szenhidrat').val(),
-                zsir: $('#zsir').val(),
-                ehetoe_magaban: $('#eheto').val(),
-            },
+        $.ajax({method:"post", url:"./newIngredient", data:{
+            nev: $("#name").val(),
+            kcal: $("#kcal").val(),
+            feherje: $("#feherje").val(),
+            szenhidrat: $("#szenhidrat").val(),
+            zsir: $("#zsir").val(),
+            ehetoe_magaban: $("#eheto").val(),
+        }})
+        .done((res)=>{
+            if(!res.data.success) return notify(res.data.err);
+            notify("Hozzávaló sikeresen felvéve az adatbázisba!", "green");
+            ingredients.push({
+                id: res.data.ing.id,
+                nev: res.data.ing.nev,
+                kcal: res.data.ing.kcal,
+                feherje: res.data.ing.feherje,
+                szenhidrat: res.data.ing.szenhidrat,
+                zsir: res.data.ing.zsir,
+                ehetoe_magaban: res.data.ing.ehetoe_magaban,
+            })
+            console.log(ingredients);
+            saveTable();
         })
-            .done((res) => {
-                if (!res.data.success) return notify(res.data.err);
-                notify('Hozzávaló sikeresen felvéve az adatbázisba!', 'green');
-                ingredients.push({
-                    id: res.data.ing.id,
-                    nev: res.data.ing.nev,
-                    kcal: res.data.ing.kcal,
-                    feherje: res.data.ing.feherje,
-                    szenhidrat: res.data.ing.szenhidrat,
-                    zsir: res.data.ing.zsir,
-                    ehetoe_magaban: res.data.ing.ehetoe_magaban,
-                });
-                saveTable();
-            })
-            .fail((err) => {
-                console.log(err);
-                notify('Adatbázis hiba');
-            })
-            .always(() => {});
+        .fail((err)=>{notify(err)})
+        .always(()=>{});
     }
 </script>
 
