@@ -10,8 +10,8 @@
 
     --success: rgb(0, 128, 0);
     --warning: rgb(255, 195, 85);
-
     --danger: rgb(255, 0, 0);
+    --secondary: gray;
 }
 
 * {
@@ -49,7 +49,7 @@ header h1 {
 .menu-div,
 .navbar {
     background-color: var(--menu);
-    z-index: 999999;
+    z-index: 9999;
 }
 
 .navbar .nav-item .nav-link,
@@ -83,7 +83,8 @@ header h1 {
     right: 0;
 }
 
-.log-out i::before {
+.log-out i::before,
+.form-icon::before {
     font-size: 150%;
 }
 
@@ -146,7 +147,7 @@ form{
 .form-floating .form-control,
 .form-select,
 #gender-input,
-.gender-icon {
+.form-icon {
     background-color: transparent;
     border: 0;
     color: var(--text);
@@ -160,22 +161,23 @@ form{
     box-shadow: inset 0px 0px 2px black;
 }
 
-#gender-input {
+#gender-input, #jog-input {
     border-radius: 0 4px 4px 0;
     cursor: default;
+    height: 100%;
 }
 
-.gender-icon {
+.form-icon {
     border-radius: 0;
     cursor: pointer;
 }
 
-.gender-icon:hover,
-.selected-gender-icon {
+.form-icon:hover,
+.selected-form-icon {
     background-color: var(--menu);
 }
 
-.gender-icon:nth-child(1) {
+.form-icon:nth-child(1) {
     border-radius: 4px 0 0 4px;
 }
 
@@ -247,6 +249,40 @@ i::before {
     box-shadow: 0 0 10px 2px var(--danger);
 }
 
+.btn-secondary {
+    background-color: var(--secondary);
+    border: 1px solid var(--secondary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary);
+    border: 1px solid var(--secondary);
+    box-shadow: 0 0 10px 2px var(--secondary);
+}
+
+.btn-secondary:focus {
+    background-color: var(--secondary);
+    border: 1px solid var(--secondary);
+    box-shadow: 0 0 10px 2px var(--secondary);
+}
+
+.btn-menu {
+    background-color: var(--menu);
+    border: 1px solid var(--menu);
+}
+
+.btn-menu:hover {
+    background-color: var(--menu);
+    border: 1px solid var(--menu);
+    box-shadow: 0 0 10px 2px var(--menu);
+}
+
+.btn-menu:focus {
+    background-color: var(--menu);
+    border: 1px solid var(--menu);
+    box-shadow: 0 0 10px 2px var(--menu);
+}
+
 /*Footer*/
 footer {
     background-color: var(--menu);
@@ -281,80 +317,7 @@ body::-webkit-scrollbar-thumb {
     background: var(--div);
 }
 
-/*
-input[type='submit']:hover {
-    background-color: var(--button-hover);
-    color: var(--button-hover-text);
-}
-
-.food-item {
-    border: 1px solid black;
-}
-
-.blog-content {
-    height: 345px;
-    overflow: hidden;
-    margin-bottom: 25px;
-}
-
-.form-switch {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    margin-bottom: 10px;
-}
-
-.form-switch input[type='checkbox'] {
-    margin: 0;
-    width: 60px;
-    padding: 15px;
-    color: yellow;
-    margin-right: 5px;
-    border: 1px solid var(--footer);
-    color: red;
-}
-
-input[type='checkbox']:checked {
-    background-color: var(--footer);
-    border: 1px solid var(--footer);
-}
-
-input[type='checkbox']:focus {
-    box-shadow: none;
-    border: 1px solid var(--footer);
-}
-
-.form-switch label,
-.date-item label {
-    color: var(--text);
-    font-size: larger;
-}
-
-.date-item input {
-    padding: 5px;
-}
-
-.date-item td {
-    padding-right: 10px;
-}
-
-.table td,
-th {
-    color: var(--text);
-}
-
-tfoot tr {
-    background-color: var(--content);
-}
-
-.error {
-    display: none;
-}
-
-#accordion {
-    color: var(--text);
-}
-
+/*MyModal*/
 .myModal {
     position: fixed;
     top: 0;
@@ -362,21 +325,21 @@ tfoot tr {
     width: 100vw;
     height: 100vh;
     background-color: #0000009c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow-y: scroll;
+    z-index: 10000;
+    padding: 50px;
 }
-*/
 
-/*@media only screen and (max-width: 405px) {
-    .container {
+/*Media vezérlők*/
+@media only screen and (max-width: 300px) {
+    .container, footer {
         display: none;
     }
 
     .error {
         display: block;
     }
-}*/
+}
 
 @media only screen and (max-width: 992px) {
     .log-out {
@@ -385,5 +348,19 @@ tfoot tr {
 
     .log-out i::before {
         text-align: start;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #jog-input{
+        border-radius: 0 0 4px 4px;
+    }
+
+    .jog-select div:nth-child(1){
+        border-radius: 4px 0 0 0;
+    }
+
+    .jog-select div:nth-child(3){
+        border-radius: 0 4px 0 0;
     }
 }

@@ -1,4 +1,4 @@
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
     const notify = (msg, color = 'red', pos = 'right', grav = 'top') => {
         Toastify({
@@ -81,17 +81,17 @@
         let head = `<h2 class="text-center">${modalData.cim}</h2>`;
         let foot = '';
         modalData.buttons.forEach((element) => {
-            foot += `<button type="button" class="btn btn-${element.type}" id="${element.id}">${element.text}</button>`;
+            foot += `<button type="button" class="btn btn-${element.type} me-2" id="${element.id}">${element.text}</button>`;
         });
 
         $(`#${modalID}`).html(`
-      <div class="gray col-12 col-sm-10 col-md-8" id="${modalID}Form">
-        ${head}
-        <hr>
-        ${$(`#${modalID}`).html()}
-        <hr>
-        ${foot}
-        </div>
+            <div class="content-wrapper p-3 col-12 col-sm-10 col-md-8 m-auto" id="${modalID}Form">
+            ${head}
+            <hr>
+            ${$(`#${modalID}`).html()}
+            <hr>
+            ${foot}
+            </div>
         `);
     }
 

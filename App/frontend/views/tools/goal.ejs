@@ -1,3 +1,4 @@
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <%- include("../header") %>
 <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
     <div class="container mt-2 mt-lg-3 top-p">
@@ -15,14 +16,15 @@
                         <label for="login-email">Magasság (cm)</label>
                     </div>
                     <div class="row p-0 m-0">
-                        <div class="col-2 p-1 m-0 bi bi-gender-female d-flex justify-content-center align-items-center gender-icon <% if(nem == 0){ %> selected-gender-icon <% }%>" id="female">
+                        <div title="Nő" class="col-2 p-1 m-0 bi bi-gender-female d-flex justify-content-center align-items-center form-icon <% if(nem == 0){ %> selected-form-icon <% }%>" id="female">
 
                         </div>
-                        <div class="col-2 p-1 m-0 bi bi-gender-male d-flex justify-content-center align-items-center gender-icon <% if(nem == 1){ %> selected-gender-icon <% }%>" id="male">
+                        <div title="Férfi" class="col-2 p-1 m-0 bi bi-gender-male d-flex justify-content-center align-items-center form-icon <% if(nem == 1){ %> selected-form-icon <% }%>" id="male">
 
                         </div>
-                        <div class="col-8 p-0 m-0">
-                            <input type="text" class="form-control" id="gender-input" readonly value="<% if(nem == 0){ %> Nő <% }%><% if(nem == 1){ %> Férfi <% }%>">
+                        <div class="form-floating col-8 p-0 m-0">
+                            <input type="text" class="form-control" id="gender-input" placeholder="null" readonly value="<% if(nem == 0){ %> Nő <% }%><% if(nem == 1){ %> Férfi <% }%>" />
+                            <label for="gender-input">Nemed</label>
                         </div>
                     </div>
                     <button type="button" class="btn btn-success col-12 mt-2" id="saveBody">Számítás és mentés</button>
@@ -84,13 +86,13 @@
 <script>
     $("#male").on("click", ()=>{
         $("#gender-input").val("Férfi");
-        $("#female").removeClass("selected-gender-icon");
-        $("#male").addClass("selected-gender-icon");
+        $("#female").removeClass("selected-form-icon");
+        $("#male").addClass("selected-form-icon");
     })
     $("#female").on("click", ()=>{
         $("#gender-input").val("Nő");
-        $("#male").removeClass("selected-gender-icon");
-        $("#female").addClass("selected-gender-icon");
+        $("#male").removeClass("selected-form-icon");
+        $("#female").addClass("selected-form-icon");
     })
 </script>
 <script>

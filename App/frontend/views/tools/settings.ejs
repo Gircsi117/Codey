@@ -13,10 +13,10 @@
             <div id="passModal">
                 <div class="user-form">
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="oldPass" placeholder="János" />
+                        <input type="password" class="form-control mb-2" id="oldPass" placeholder="János" />
                         <label for="name">Régi jelszó</label>
                     </div>
-                    <div class="form-floating">
+                    <div class="form-floating mb-2">
                         <input type="password" class="form-control" id="newPass1" placeholder="János" />
                         <label for="name">Új jelszó</label>
                     </div>
@@ -114,12 +114,12 @@
     //Név modal!!
     setModal("nameModal", {cim:"Név módosítás", buttons:[
         {type:"success", text:"Mentés", id:"nevEdit"},
-        {type:"danger", text:"Vissza", id:"backTo"}
+        {type:"secondary", text:"Vissza", id:"backTo"}
     ]})
 
     setModal("passModal", {cim:"Jelszó módosítás", buttons:[
         {type:"success", text:"Mentés", id:"passEdit"},
-        {type:"danger", text:"Vissza", id:"backTo"}
+        {type:"secondary", text:"Vissza", id:"backTo"}
     ]})
 
     $("document").ready(()=>{
