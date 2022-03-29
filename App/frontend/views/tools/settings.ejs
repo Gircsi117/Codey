@@ -1,9 +1,9 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-    <div class="container mt-0 mt-sm-3">
+    <div class="container mt-2 mt-lg-3 top-p">
 
         <%- include("../menu") %>
-        <div class="content row m-0 p-3">
+        <div class="content m-0 p-3">
             <div id="nameModal">
                 <div class="form-floating">
                     <input type="text" class="form-control" id="name" placeholder="János" />
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="gray">
+            <div class="content-wrapper p-3">
                 <table class="table">
                     <thead>
                         <tr>
@@ -86,8 +86,9 @@
                 <button type="button" class="btn btn-warning" id="editPass">Jelszó módosítás</button>
             </div>
         </div>
-        <%- include("../foot") %>
     </div>
+    <%- include("../foot") %>
+
 <script>
     $.ajax({method:"GET", url:"./getLastWeight"})
         .done((res)=>{

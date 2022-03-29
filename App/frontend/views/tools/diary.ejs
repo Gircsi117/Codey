@@ -1,17 +1,16 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-    <div class="container mt-0 mt-sm-3">
+    <div class="container mt-2 mt-lg-3 top-p">
         <%- include("../menu") %>
-        <div class="content row m-0 p-3">
-            <div class="user-form mb-3">
-                
+        <div class="content m-0 p-3">
+            <div class="user-form content-wrapper p-3 mb-3">
                 <input type="date" name="" id="tolDate">
                 <input type="date" name="" id="igDate">
                 <button type="button" class="btn btn-success" onclick="szures()">Szűrés</button>
                 <button type="button" class="btn btn-warning" onclick="reset()">Reset</button>
             </div>
 
-            <div id="accordion" class="p-3" style="background-color: var(--div);">
+            <div id="accordion" class="content-wrapper p-3">
                 <h3>Étkezési napló</h3>
                 <div id="etkezes" class="p-3" style="overflow-x: scroll;">
                   
@@ -30,9 +29,8 @@
                 </div>
             </div>
         </div>
-        
-        <%- include("../foot") %>
     </div>
+    <%- include("../foot") %>
 
     <script>
         $( function() {

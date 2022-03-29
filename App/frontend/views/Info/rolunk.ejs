@@ -1,37 +1,42 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-<div class="container mt-0 mt-sm-3">
+<div class="container mt-2 mt-lg-3 top-p">
     <%- include("../menu") %>
     <div class="content row m-0 p-3">
-        <div class="content-wrapper row">
-            <h2>Fejlesztők</h2>
-            <div class="col-12 row p-0 m-0">
-                <div class="col-12 col-md-6 d-flex flex-column">
-                    <h3>Gilián Erik</h3>
+        <div class="content-wrapper p-3">
+            <h1 class="text-center">Fejlesztők</h1>
+        </div>
+
+        <div class="col-12 row p-0 m-0">
+            <div class="col-12 col-md-6 p-3">
+                <div class="content-wrapper dev-card d-flex flex-column">
                     <img src="/Img/erik.png" alt="" class="w-50 align-self-center" />
+                    <h3 class="text-center">Gilián Erik</h3>
                     <ul>
                         <li>Full-Stack junior fejlesztő</li>
-                        <li>Design</li>
+                        <li>Frontend</li>
                         <li>Felhasználói élmény</li>
                         <li>Kezdő testépítő</li>
                     </ul>
                 </div>
-                <div class="col-12 col-md-6 d-flex flex-column">
-                    <h3>Pető Bálint László</h3>
+            </div>
+
+            <div class="col-12 col-md-6 p-3">
+                <div class="content-wrapper dev-card d-flex flex-column">
                     <img src="/Img/balint.png" alt="" class="w-50 align-self-center" />
+                    <h3 class="text-center">Pető Bálint László</h3>
                     <ul>
                         <li>Full-Stack junior fejlesztő</li>
+                        <li>Backend</li>
                         <li>Adatbázisok</li>
-                        <li>Blogok</li>
                         <li>Kezdő Sportoló</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-
-    <%- include("../foot") %>
 </div>
+<%- include("../foot") %>
 
 <script></script>
 

@@ -41,10 +41,10 @@
     //A táblázat sorait beszinezi egy megadott szempont alapján
     function tableColor(data) {
         for (let i = 0; i < $(`#${data.table} .sor`).length; i++) {
-            $(`#${data.table} .sor`).eq(i).removeClass('green').removeClass('red');
+            $(`#${data.table} .sor`).eq(i).removeClass('good').removeClass('wrong');
             $(`#${data.table} .sor`)
                 .eq(i)
-                .addClass($(`#${data.table} .sor ._${data.item}`).eq(i).html() == data.param ? 'green' : 'red');
+                .addClass($(`#${data.table} .sor ._${data.item}`).eq(i).html() == data.param ? 'good' : 'wrong');
         }
     }
 

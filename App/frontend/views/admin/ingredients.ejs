@@ -1,6 +1,6 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-<div class="container mt-0 mt-sm-3">
+<div class="container mt-2 mt-lg-3 top-p">
     <%- include("../menu") %>
 
     <div class="content row m-0 p-3">
@@ -33,15 +33,15 @@
                 </select>
             </div>
         </div>
-        <div class="gray">
+        <div class="content-wrapper p-3">
             <button type="button" class="btn btn-success" id="createNew">Hozzáadás</button>
         </div>
-        <div class="gray mt-3" id="tablazat" style="overflow-x: scroll">
+        <div class="content-wrapper p-3 mt-3" id="tablazat" style="overflow-x: scroll">
             <!-- Hozzávalók táblája -->
         </div>
     </div>
-    <%- include('../foot') %>
 </div>
+<%- include('../foot') %>
 
 <script>
     let ingredients = [];
