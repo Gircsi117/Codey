@@ -1,17 +1,28 @@
 <%- include("../header") %>
+<style>
+    @media only screen and (max-width: 768px) {
+        .fn .btn{
+            width: 100%;
+            margin: 0 0 10px 0;
+        }
+
+        .fn .btn:nth-child(3){
+            margin-bottom: 0px;
+        }
+    }
+</style>
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
 <div class="container mt-2 mt-lg-3 top-p">
     <%- include("../menu") %>
 
     <div class="content row m-0 p-3">
-
-        <div class="content-wrapper p-3">
+        <div class="content-wrapper p-3 fn">
             <button class="btn btn-warning" id="allBlogsBTN">Összes blog</button>
             <button class="btn btn-warning" id="myBlogsBTN">Saját blogok</button>
             <button class="btn btn-success" id="newBlog" onclick="openModal()">Hozzáadás</button>
         </div>
-        <div id="all-blogs"></div>
-        <div id="user-blogs"></div>
+        <div id="all-blogs" class=""></div>
+        <div id="user-blogs" class="d-none"></div>
 
         <div id="blogModal">
             <div class="col-12 col-md-8 p-0 h-50">
@@ -30,6 +41,9 @@
     <%- include("../foot") %>
 
     <script>
+        var allBlogs = [];
+        var myBlogs = [];
+
         function openModal() {
             $('#blogModal').removeClass('d-none');
         }
@@ -40,6 +54,16 @@
                 { type: 'success', text: 'Létrehozás', id: 'create' },
                 { type: 'secondary', text: 'Vissza', id: 'back' },
             ],
+        });
+
+        $('#allBlogsBTN').on('click', () => {
+            $('#all-blogs').removeClass('d-none');
+            $('#user-blogs').addClass('d-none');
+        });
+
+        $('#myBlogsBTN').on('click', () => {
+            $('#user-blogs').removeClass('d-none');
+            $('#all-blogs').addClass('d-none');
         });
 
         //vissza
@@ -59,6 +83,35 @@
             })
                 .done((res) => {
                     if (!res.data.success) return notify(res.data.err);
+                    res.data.blog.felhasznalo = res.user;
+                    myBlogs.push(res.data.blog);
+                    console.log(res.data.blog);
+                    let str = "";
+                    myBlogs.forEach((element) => {
+                        if (element.status == 1) {
+                            style = 'btn btn-success';
+                            state = 'Aktív';
+                        } else {
+                            style = 'btn btn-danger';
+                            state = 'Inaktív';
+                        }
+
+                        str += `<div class="content-wrapper mt-3 col-12 col-lg-8 m-auto">
+                        <div class="m-1 p-4 gray blog-container">
+                            <div style="width: 100px" class="float-end ${style}">${state}</div>
+                            <h2 class="d-block p-0 cim">${element.cim}</h2>
+                            <h6 class="keszito">Készítette: ${element.felhasznalo}</h6>
+                            <hr />
+                            <div class="blog-content">
+                                <p>${element.tartalom}</p>
+                            </div>
+                            <hr/>
+                            <h6 class="col-12 text-end datum">${moment(element.idopont).format('YYYY-MM-D, hh:mm')}</h6>
+                        </div>
+                        </div>`;
+                    });
+
+                    $('#user-blogs').html(str);
                     notify('Blog létrehozva, megerősítésre vár', 'green');
                 })
                 .fail((err) => {
@@ -66,25 +119,26 @@
                 })
                 .always(() => {});
             $('#blogModal').addClass('d-none');
-        })
+        });
 
         //összes blog
         $.ajax({ method: 'get', url: './getAllActiveBlog' })
             .done((data) => {
                 let str = '';
-
-                data.data.blogs.forEach((element) => {
+                allBlogs = data.data.blogs;
+                allBlogs.forEach((element) => {
                     str += `<div class="content-wrapper mt-3 col-12 col-lg-8 m-auto">
-            <div class="m-1 p-4 gray blog-container">
-                <h2 class="d-block p-0 cim">${element.cim}</h2>
-                <h6 class="keszito">Készítette: ${element.felhasznalo}</h6>
-                <hr />
-                <div class="blog-content">
-                    <p>${element.tartalom}</p>
-                </div>
-                <h6 class="col-12 text-end datum">${moment(element.idopont).format('YYYY-MM-DD, hh:mm')}</h6>
-            </div>
-            </div>`;
+                    <div class="m-1 p-4 gray blog-container">
+                        <h2 class="d-block p-0 cim">${element.cim}</h2>
+                        <h6 class="keszito">Készítette: ${element.felhasznalo}</h6>
+                        <hr />
+                        <div class="blog-content">
+                            <p>${element.tartalom}</p>
+                        </div>
+                        <hr/>
+                        <h6 class="col-12 text-end datum">${moment(element.idopont).format('YYYY-MM-DD, hh:mm')}</h6>
+                    </div>
+                    </div>`;
                 });
 
                 $('#all-blogs').html(str);
@@ -98,9 +152,10 @@
         //felhasználó blogjai
         $.ajax({ method: 'get', url: './getBlogByUser' })
             .done((data) => {
-                let str = $('#user-blogs').html();
-
-                data.data.blogs.forEach((element) => {
+                let str = "";
+                myBlogs = data.data.blogs;
+                console.log(myBlogs);
+                myBlogs.forEach((element) => {
                     if (element.status == 1) {
                         style = 'btn btn-success';
                         state = 'Aktív';
@@ -118,6 +173,7 @@
                         <div class="blog-content">
                             <p>${element.tartalom}</p>
                         </div>
+                        <hr/>
                         <h6 class="col-12 text-end datum">${moment(element.idopont).format('YYYY-MM-D, hh:mm')}</h6>
                     </div>
                     </div>`;

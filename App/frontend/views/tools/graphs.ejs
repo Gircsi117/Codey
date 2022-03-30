@@ -4,11 +4,13 @@
 
         <%- include("../menu") %>
         <div class="content m-0 p-3">
-            <div class="user-form mb-3 content-wrapper p-3">
-                <input type="date" name="" id="tolDate">
-                <input type="date" name="" id="igDate">
-                <button type="button" class="btn btn-success" id="filter">Szűrés</button>
-                <button type="button" class="btn btn-warning" id="reset">Reset</button>
+            <div class="user-form mb-3 content-wrapper p-3 row">
+                <input type="date" name="" id="tolDate" class="col-12 col-md-6">
+                <input type="date" name="" id="igDate" class="col-12 col-md-6 mt-2 mt-md-0">
+                <div class="p-0 m-0 pt-3">
+                    <button type="button" class="btn btn-success" id="filter">Szűrés</button>
+                    <button type="button" class="btn btn-warning" id="reset">Reset</button>
+                </div>
             </div>
             <div class="content-wrapper p-3 mb-3">
                 <div id="chartContainerFS" style="height: 370px; width: 100%; padding: 0; margin: 0;"></div>

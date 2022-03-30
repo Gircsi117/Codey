@@ -23,6 +23,11 @@
     display: none;
 }
 
+::selection{
+    background-color: var(--menu) !important;
+    color: var(--body);
+}
+
 /*Header*/
 header {
     background-image: url('/Img/header.jpg');
@@ -156,16 +161,43 @@ form {
     padding: 0px 10px 0px 10px;
 }
 
+.blog-content{
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+
+
 /*Form*/
 .form-floating .form-control,
 .form-select,
 #gender-input,
-.form-icon {
-    background-color: transparent;
+.form-icon,
+input[type=date]{
     border: 0;
     color: var(--text);
     background-color: var(--body);
     box-shadow: inset 0px 0px 2px black;
+}
+
+input[type=date]{
+    padding: 0 0 0 10px;
+    border-radius: 4px;
+    outline: none;
+}
+
+input::-webkit-datetime-edit-day-field:focus,
+input::-webkit-datetime-edit-month-field:focus,
+input::-webkit-datetime-edit-year-field:focus {
+    padding: 5px;
+    background-color: var(--menu);
+    color: var(--body);
+}
+
+::-webkit-calendar-picker-indicator {
+    background-color: var(--menu);
+    padding: 10px;
+    cursor: pointer;
 }
 
 .form-floating .form-control:focus,
@@ -379,10 +411,6 @@ body::-webkit-scrollbar-thumb {
     .jog-select div:nth-child(3) {
         border-radius: 0 4px 0 0;
     }
-}
-
-.alma{
-    display: none;
 }
 
 /*Tesztelés*/
