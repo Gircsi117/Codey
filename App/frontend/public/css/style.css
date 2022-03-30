@@ -99,7 +99,7 @@ body {
 
 .content,
 .content table,
-form{
+form {
     color: var(--text);
 }
 
@@ -118,6 +118,19 @@ form{
     margin: 0 15px 0 15px;
     border-radius: 10px;
     box-shadow: 0px 1px 5px black;
+    padding: 5px;
+}
+
+.dev-card li {
+    list-style-type: none;
+    background-color: var(--body);
+    display: block;
+    width: 60%;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 10px auto 0px auto;
+    text-align: center;
+    box-shadow: 0px 1px 4px black;
 }
 
 .canvasjs-chart-canvas {
@@ -161,7 +174,9 @@ form{
     box-shadow: inset 0px 0px 2px black;
 }
 
-#gender-input, #jog-input {
+#gender-input,
+#jog-input,
+#food-input {
     border-radius: 0 4px 4px 0;
     cursor: default;
     height: 100%;
@@ -332,7 +347,8 @@ body::-webkit-scrollbar-thumb {
 
 /*Media vezérlők*/
 @media only screen and (max-width: 300px) {
-    .container, footer {
+    .container,
+    footer {
         display: none;
     }
 
@@ -352,15 +368,21 @@ body::-webkit-scrollbar-thumb {
 }
 
 @media only screen and (max-width: 768px) {
-    #jog-input{
+    #jog-input {
         border-radius: 0 0 4px 4px;
     }
 
-    .jog-select div:nth-child(1){
+    .jog-select div:nth-child(1) {
         border-radius: 4px 0 0 0;
     }
 
-    .jog-select div:nth-child(3){
+    .jog-select div:nth-child(3) {
         border-radius: 0 4px 0 0;
     }
 }
+
+.alma{
+    display: none;
+}
+
+/*Tesztelés*/

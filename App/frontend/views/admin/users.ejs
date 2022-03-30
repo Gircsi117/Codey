@@ -117,6 +117,11 @@
         .always(() => {});
 
     function saveTable() {
+        $('#userTable #isFuncBTN').unbind();
+        $('#userModal #edit').unbind();
+        $('#userModal #delete').unbind();
+        $('#userModal #back').unbind();
+
         $('#tablazat').html(
             toTable({ datas: users, isFunc: true, headers: ['ID', 'Név', 'E-mail', 'Nem', 'Jogok', 'Magasság', 'Cél'], tableID: 'userTable' })
         );
@@ -132,7 +137,6 @@
 
         $('document').ready(() => {
             $('#userTable #isFuncBTN').on('click', (event) => {
-                $('#userTable #isFuncBTN').unbind();
                 const index = $(event.currentTarget).data('value');
                 select = users[index];
                 $('#name').val(select.nev);
@@ -155,10 +159,10 @@
                 
 
                 $('#userModal').removeClass('d-none');
+                saveTable();
             });
 
             $('#userModal #edit').on('click', () => {
-                $('#userModal #edit').unbind();
                 if (select == null) return notify('Nincs kiválasztott felhasználó!');
                 if (!confirm('Biztos Módosítani akarod a felhasználó adatait?')) return;
 
@@ -208,7 +212,6 @@
             });
 
             $('#userModal #delete').on('click', () => {
-                $('#userModal #delete').unbind();
                 if (select == null) return notify('Nincs kiválasztott felhasználó!');
                 if (!confirm('Biztos törölni akarod a felhasználót?')) return;
 
@@ -240,7 +243,6 @@
 
             $('#userModal #back').on('click', () => {
                 $('#userModal').addClass('d-none');
-                saveTable();
             });
         });
     }
