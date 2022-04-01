@@ -24,7 +24,7 @@
 }
 
 ::selection{
-    background-color: var(--menu) !important;
+    background-color: var(--menu-items) !important;
     color: var(--body);
 }
 
@@ -102,6 +102,10 @@ body {
     padding-top: 60px;
 }
 
+.container:nth-child(2){
+    min-height: calc(100vh - 56px);
+}
+
 .content,
 .content table,
 form {
@@ -110,8 +114,10 @@ form {
 
 .content-wrapper {
     background-color: var(--div);
+    border: 5px solid var(--div);
     border-radius: 15px;
     box-shadow: 1px 1px 5px black;
+    overflow: hidden;
 }
 
 .content a {
@@ -119,7 +125,8 @@ form {
 }
 
 .dev-card h3 {
-    background-color: var(--menu);
+    background-color: var(--menu-items);
+    color: var(--body);
     margin: 0 15px 0 15px;
     border-radius: 10px;
     box-shadow: 0px 1px 5px black;
@@ -190,12 +197,12 @@ input::-webkit-datetime-edit-day-field:focus,
 input::-webkit-datetime-edit-month-field:focus,
 input::-webkit-datetime-edit-year-field:focus {
     padding: 5px;
-    background-color: var(--menu);
+    background-color: var(--menu-items);
     color: var(--body);
 }
 
 ::-webkit-calendar-picker-indicator {
-    background-color: var(--menu);
+    background-color: var(--menu-items);
     padding: 10px;
     cursor: pointer;
 }
@@ -221,7 +228,7 @@ input::-webkit-datetime-edit-year-field:focus {
 
 .form-icon:hover,
 .selected-form-icon {
-    background-color: var(--menu);
+    background-color: var(--menu-items);
 }
 
 .form-icon:nth-child(1) {
@@ -242,6 +249,17 @@ input[type='number'] {
 i::before {
     width: 100%;
     text-align: center;
+}
+
+/*Accordion*/
+.acc h3{
+    padding: 5px;
+    margin: 0;
+    user-select: none;
+}
+
+.acc div{
+    height: 300px;
 }
 
 /*Buttons*/
@@ -314,20 +332,21 @@ i::before {
 }
 
 .btn-menu {
-    background-color: var(--menu);
-    border: 1px solid var(--menu);
+    background-color: var(--menu-items);
+    border: 1px solid var(--menu-items);
 }
 
 .btn-menu:hover {
-    background-color: var(--menu);
-    border: 1px solid var(--menu);
-    box-shadow: 0 0 10px 2px var(--menu);
+    background-color: var(--menu-items);
+    border: 1px solid var(--menu-items);
+    box-shadow: 0 0 10px 2px var(--menu-items);
+    text-shadow: 0 0 1px var(--body);
 }
 
 .btn-menu:focus {
-    background-color: var(--menu);
-    border: 1px solid var(--menu);
-    box-shadow: 0 0 10px 2px var(--menu);
+    background-color: var(--menu-items);
+    border: 1px solid var(--menu-items);
+    box-shadow: 0 0 10px 2px var(--menu-items);
 }
 
 /*Footer*/
@@ -396,6 +415,10 @@ body::-webkit-scrollbar-thumb {
 
     .log-out i::before {
         text-align: start;
+    }
+
+    .container:nth-child(2){
+        min-height: calc(100vh - 48px);
     }
 }
 

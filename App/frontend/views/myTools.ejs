@@ -1,4 +1,4 @@
- <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
     const notify = (msg, color = 'red', pos = 'right', grav = 'top') => {
         Toastify({
@@ -6,6 +6,7 @@
             close: true,
             position: pos,
             graity: grav,
+            duration: 3000,
             style: {
                 background: color,
             },
@@ -66,12 +67,12 @@
     }
 
     //A megadott paraméter szerint elrejti vagy mejeleníti a sorokat
-    function tableFilter(data /*table, item, param*/) {
+    function tableFilter(data) {
         $(`#${data.table} .sor`).show();
 
         for (let i = 0; i < $(`#${data.table} ._${data.item}`).length; i++) {
             let text = $(`#${data.table} ._${data.item}`).eq(i).html();
-            if (!eval(param)) $(`#${data.table} .sor`).eq(i).hide();
+            if (!eval(data.param)) $(`#${data.table} .sor`).eq(i).hide();
         }
     }
 
