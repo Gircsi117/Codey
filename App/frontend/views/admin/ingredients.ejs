@@ -1,47 +1,58 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-<div class="container mt-0 mt-sm-3">
+<div class="container mt-2 mt-lg-3 top-p">
     <%- include("../menu") %>
 
     <div class="content row m-0 p-3">
         <div id="ingModal">
             <div class="user-form">
-                <div class="form-floating">
+                <div class="form-floating mb-2">
                     <input type="text" class="form-control" id="name" placeholder="János" />
                     <label for="name">Név</label>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating mb-2">
                     <input type="number" class="form-control" id="kcal" placeholder="null" min="1" />
                     <label for="login-email">Kcal</label>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating mb-2">
                     <input type="number" class="form-control" id="feherje" placeholder="null" min="1" />
                     <label for="login-email">Fehérje</label>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating mb-2">
                     <input type="number" class="form-control" id="szenhidrat" placeholder="null" min="1" />
                     <label for="login-email">Szénhidrát</label>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating mb-2">
                     <input type="number" class="form-control" id="zsir" placeholder="null" min="1" />
                     <label for="login-email">Zsír</label>
                 </div>
-                <select name="" id="eheto" class="form-select">
-                    <option value="">Ehető e magában?</option>
-                    <option value="1">Igen</option>
-                    <option value="0">Nem</option>
-                </select>
+                <div class="row p-0 m-0 mb-2">
+                    <div
+                        title="Ehető magában"
+                        class="col-3 col-md-2 col-lg-1 | p-1 m-0 bi bi-check2 | d-flex justify-content-center align-items-center form-icon"
+                        id="eat"
+                    ></div>
+                    <div
+                        title="Nem ehető magában"
+                        class="col-3 col-md-2 col-lg-1 | p-1 m-0 bi bi-x-lg | d-flex justify-content-center align-items-center form-icon"
+                        id="noteat"
+                    ></div>
+                    <div class="form-floating col-6 col-md-8 col-lg-10 | p-0 m-0">
+                        <input type="text" class="form-control" id="food-input" placeholder="null" readonly value="" />
+                        <label for="food-input">Ehető?</label>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="gray">
-            <button type="button" class="btn btn-success" id="createNew">Hozzáadás</button>
+        <div class="content-wrapper p-3">
+            <button type="button" class="btn btn-success col-12" id="createNew">Hozzáadás</button>
         </div>
-        <div class="gray mt-3" id="tablazat" style="overflow-x: scroll">
+        <div class="content-wrapper p-3 mt-3" id="tablazat" style="overflow-x: scroll">
             <!-- Hozzávalók táblája -->
         </div>
     </div>
-    <%- include('../foot') %>
 </div>
+<%- include('../foot') %>
 
 <script>
     let ingredients = [];
@@ -55,6 +66,18 @@
             { type: 'danger', text: 'Törlés', id: 'delete' },
             { type: 'secondary', text: 'Vissza', id: 'back' },
         ],
+    });
+
+    $('#noteat').on('click', () => {
+        $('#food-input').val('Nem');
+        $('#eat').removeClass('selected-form-icon');
+        $('#noteat').addClass('selected-form-icon');
+    });
+
+    $('#eat').on('click', () => {
+        $('#food-input').val('Igen');
+        $('#noteat').removeClass('selected-form-icon');
+        $('#eat').addClass('selected-form-icon');
     });
 
     $.ajax({ method: 'get', url: './getAllIngredient' })
@@ -73,12 +96,21 @@
         .always(() => {});
 
     function saveTable() {
-        $('#tablazat').html(toTable({ datas: ingredients, isFunc: true, headers: ['ID', 'Név', 'Kcal', 'Fehérje', 'Szénhidrát', 'Zsír'], tableID: 'ingTable' }));
+        $('#ingTable #isFuncBTN').unbind();
+        $('#ingModal #back').unbind();
+        $('#createNew').unbind();
+        $('#ingModal #delete').unbind();
+        $('#ingModal #edit').unbind();
+        $('#create').unbind();
+
+        $('#tablazat').html(
+            toTable({ datas: ingredients, isFunc: true, headers: ['ID', 'Név', 'Kcal', 'Fehérje', 'Szénhidrát', 'Zsír'], tableID: 'ingTable' })
+        );
         tableColor({ table: 'ingTable', item: 'ehetoe_magaban', param: 1 });
         tableHide({ table: 'ingTable', item: 'ehetoe_magaban' });
 
-        $('#ingTable').ready(() => {
-            //Modal ablak megnyitása!
+        $('document').ready(() => {
+
             $('#ingTable #isFuncBTN').on('click', (event) => {
                 const index = $(event.currentTarget).data('value');
                 select = ingredients[index];
@@ -88,7 +120,16 @@
                 $('#feherje').val(select.feherje);
                 $('#szenhidrat').val(select.szenhidrat);
                 $('#zsir').val(select.zsir);
-                $('#eheto').val(select.ehetoe_magaban);
+
+                if (select.ehetoe_magaban == 1) {
+                    $('#noteat').removeClass('selected-form-icon');
+                    $('#eat').addClass('selected-form-icon');
+                    $('#food-input').val('Igen');
+                } else {
+                    $('#eat').removeClass('selected-form-icon');
+                    $('#noteat').addClass('selected-form-icon');
+                    $('#food-input').val('Nem');
+                }
 
                 $('#ingModal #edit').removeClass('d-none');
                 $('#ingModal #delete').removeClass('d-none');
@@ -96,11 +137,15 @@
 
                 $('#ingModal #create').addClass('d-none');
                 $('#ingModal').removeClass('d-none');
+                saveTable();
             });
 
             //Modal ablak bezárása
             $('#ingModal #back').on('click', () => {
                 $('#ingModal').addClass('d-none');
+                $('#noteat').removeClass('selected-form-icon');
+                $('#eat').removeClass('selected-form-icon');
+                $('#food-input').val('');
                 saveTable();
             });
 
@@ -112,7 +157,6 @@
                 $('#feherje').val(null);
                 $('#szenhidrat').val(null);
                 $('#zsir').val(null);
-                $('#eheto').val(null);
 
                 $('#ingModal #edit').removeClass('d-none');
                 $('#ingModal #delete').removeClass('d-none');
@@ -122,6 +166,7 @@
                 $('#ingModal #delete').addClass('d-none');
 
                 $('#ingModal').removeClass('d-none');
+                saveTable()
             });
 
             //Törlés
@@ -136,26 +181,30 @@
                         id: select.id,
                     },
                 })
-                    .done((res) => {
-                        if (!res.data.success) return notify(res.data.err);
-                        notify('Hozzávaló sikeresen törölve!', 'green');
-                        ingredients.splice(ingredients.indexOf(select), 1);
-
-                        saveTable();
-                        back();
-                    })
-                    .fail((err) => {
-                        console.log(err);
-                        notify('Adatbázis hiba');
-                    })
-                    .always(() => {});
-                saveTable();
+                .done((res) => {
+                    if (!res.data.success) return notify(res.data.err);
+                    notify('Hozzávaló sikeresen törölve!', 'green');
+                    ingredients.splice(ingredients.indexOf(select), 1);
+                })
+                .fail((err) => {
+                    console.log(err);
+                    notify('Adatbázis hiba');
+                })
+                .always(() => {saveTable();});
+                //saveTable();
             });
 
             //Mentés
             $('#ingModal #edit').on('click', () => {
                 if (select == null) return notify('Nincs kiválasztott hozzávaló!');
-                if ($('#name').val() == '' || $('#kcal').val() == '' || $('#feherje').val() == '' || $('#szenhidrat').val() == '' || $('#zsir').val() == '' || $('#eheto').val() == '') {
+                if (
+                    $('#name').val() == '' ||
+                    $('#kcal').val() == '' ||
+                    $('#feherje').val() == '' ||
+                    $('#szenhidrat').val() == '' ||
+                    $('#zsir').val() == '' ||
+                    $('#food-input').val() == ''
+                ) {
                     return notify('Nem adtál meg minden adatot!');
                 }
                 if (!confirm('Bisztos módosítani akarod a kiválasztott elemet?')) return;
@@ -170,70 +219,75 @@
                         feherje: $('#feherje').val(),
                         szenhidrat: $('#szenhidrat').val(),
                         zsir: $('#zsir').val(),
-                        ehetoe_magaban: $('#eheto').val(),
+                        ehetoe_magaban: $('#food-input').val() == 'Igen' ? 1 : 0,
                     },
                 })
-                    .done((res) => {
-                        if (!res.data.success) return notify(res.data.err);
-                        notify('Hozzávaló sikeresen módosítva!', 'green');
-                        let index = ingredients.indexOf(select);
+                .done((res) => {
+                    if (!res.data.success) return notify(res.data.err);
+                    notify('Hozzávaló sikeresen módosítva!', 'green');
+                    let index = ingredients.indexOf(select);
 
-                        (ingredients[index].nev = $('#name').val()),
-                            (ingredients[index].kcal = $('#kcal').val()),
-                            (ingredients[index].feherje = $('#feherje').val()),
-                            (ingredients[index].szenhidrat = $('#szenhidrat').val()),
-                            (ingredients[index].zsir = $('#zsir').val()),
-                            (ingredients[index].ehetoe_magaban = $('#eheto').val()),
-                            saveTable();
-                        back();
-                    })
-                    .fail((err) => {
-                        console.log(err);
-                        notify('Adatbázis hiba');
-                    })
-                    .always(() => {});
-                saveTable();
+                    ingredients[index].nev = $('#name').val();
+                    ingredients[index].kcal = $('#kcal').val();
+                    ingredients[index].feherje = $('#feherje').val();
+                    ingredients[index].szenhidrat = $('#szenhidrat').val();
+                    ingredients[index].zsir = $('#zsir').val();
+                    ingredients[index].ehetoe_magaban = $('#food-input').val() == 'Igen' ? 1 : 0;
+                })
+                .fail((err) => {
+                    console.log(err);
+                    notify('Adatbázis hiba');
+                })
+                .always(() => {saveTable();});
+                //saveTable();
+            });
+
+            $('#create').on('click', () => {
+                if (
+                    $('#name').val() == '' ||
+                    $('#kcal').val() == '' ||
+                    $('#feherje').val() == '' ||
+                    $('#szenhidrat').val() == '' ||
+                    $('#zsir').val() == '' ||
+                    $('#food-input').val() == ''
+                ) {
+                    notify('Nem adtál meg minden adatot!');
+                    return;
+                }
+
+                $.ajax({
+                    method: 'post',
+                    url: './newIngredient',
+                    data: {
+                        nev: $('#name').val(),
+                        kcal: $('#kcal').val(),
+                        feherje: $('#feherje').val(),
+                        szenhidrat: $('#szenhidrat').val(),
+                        zsir: $('#zsir').val(),
+                        ehetoe_magaban: $('#food-input').val() == 'Igen' ? 1 : 0,
+                    },
+                })
+                .done((res) => {
+                    if (!res.data.success) return notify(res.data.err);
+                    notify('Hozzávaló sikeresen felvéve az adatbázisba!', 'green');
+                    ingredients.push({
+                        id: res.data.ing.id,
+                        nev: res.data.ing.nev,
+                        kcal: res.data.ing.kcal,
+                        feherje: res.data.ing.feherje,
+                        szenhidrat: res.data.ing.szenhidrat,
+                        zsir: res.data.ing.zsir,
+                        ehetoe_magaban: res.data.ing.ehetoe_magaban,
+                    });
+                })
+                .fail((err) => {
+                    console.log(err);
+                    notify('Adatbázis hiba');
+                })
+                .always(() => {saveTable();});
+                //saveTable();
             });
         });
-    }
-
-    function createNew(params) {
-        if ($('#name').val() == '' || $('#kcal').val() == '' || $('#feherje').val() == '' || $('#szenhidrat').val() == '' || $('#zsir').val() == '' || $('#eheto').val() == '') {
-            notify('Nem adtál meg minden adatot!');
-            return;
-        }
-
-        $.ajax({
-            method: 'post',
-            url: './newIngredient',
-            data: {
-                nev: $('#name').val(),
-                kcal: $('#kcal').val(),
-                feherje: $('#feherje').val(),
-                szenhidrat: $('#szenhidrat').val(),
-                zsir: $('#zsir').val(),
-                ehetoe_magaban: $('#eheto').val(),
-            },
-        })
-            .done((res) => {
-                if (!res.data.success) return notify(res.data.err);
-                notify('Hozzávaló sikeresen felvéve az adatbázisba!', 'green');
-                ingredients.push({
-                    id: res.data.ing.id,
-                    nev: res.data.ing.nev,
-                    kcal: res.data.ing.kcal,
-                    feherje: res.data.ing.feherje,
-                    szenhidrat: res.data.ing.szenhidrat,
-                    zsir: res.data.ing.zsir,
-                    ehetoe_magaban: res.data.ing.ehetoe_magaban,
-                });
-                saveTable();
-            })
-            .fail((err) => {
-                console.log(err);
-                notify('Adatbázis hiba');
-            })
-            .always(() => {});
     }
 </script>
 

@@ -1,46 +1,54 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-    <div class="container mt-0 mt-sm-3">
+    <div class="container mt-2 mt-lg-3 top-p">
         <%- include("../menu") %>
-        <div class="content row m-0 p-3">
-            <div class="user-form mb-3">
-                
-                <input type="date" name="" id="tolDate">
-                <input type="date" name="" id="igDate">
-                <button type="button" class="btn btn-success" onclick="szures()">Szűrés</button>
+        <div class="content m-0 p-3">
+            <div class="user-form content-wrapper p-3 row">
+                <input type="date" name="" id="tolDate" class="col-12 col-md-6">
+                <input type="date" name="" id="igDate" class="col-12 col-md-6 mt-2 mt-md-0">
+                <div class="p-0 m-0 pt-3">
+                    <button type="button" class="btn btn-success" onclick="szures()">Szűrés</button>
                 <button type="button" class="btn btn-warning" onclick="reset()">Reset</button>
+                </div>
             </div>
 
-            <div id="accordion" class="p-3" style="background-color: var(--div);">
-                <h3>Étkezési napló</h3>
-                <div id="etkezes" class="p-3" style="overflow-x: scroll;">
-                  
+            <div class="row justify-content-center">
+                <div class="m-0 p-2 col-12 col-lg-6">
+                    <div class="content-wrapper mt-2 acc">
+                        <h3 class="p-3">Étkezési napló</h3>
+                        <hr class="col-11 m-auto">
+                        <div id="etkezes" class="p-3" style="overflow-x: scroll;"></div>
+                    </div>
                 </div>
-                <h3>Testmozgási napló</h3>
-                <div id="testmozgas" class="p-3" style="overflow-x: scroll;">
-                  
+                
+                <div class="m-0 p-2 col-12 col-md-6">
+                    <div class="content-wrapper mt-2 acc">
+                        <h3 class="p-3">Testmozgási napló</h3>
+                        <hr class="col-11 m-auto">
+                        <div id="testmozgas" class="p-3" style="overflow-x: scroll;"></div>
+                    </div>
                 </div>
-                <h3>Folyadék napló</h3>
-                <div id="folyadek" class="p-3" style="overflow-x: scroll;">
-                  
+                    
+                <div class="m-0 p-2 col-12 col-md-6">
+                    <div class="content-wrapper mt-2 acc">
+                        <h3 class="p-3">Folyadék napló</h3>
+                        <hr class="col-11 m-auto">
+                        <div id="folyadek" class="p-3" style="overflow-x: scroll;"></div>
+                    </div>
                 </div>
-                <h3>Súly alakulás</h3>
-                <div id="suly" class="p-3" style="overflow-x: scroll;">
-                  
+                    
+                <div class="m-0 p-2 col-12 col-md-8 col-lg-6">
+                    <div class="content-wrapper mt-2 acc">
+                        <h3 class="p-3">Súly alakulás</h3>
+                        <hr class="col-11 m-auto">
+                        <div id="suly" class="p-3" style="overflow-x: scroll;"></div>
+                    </div>
                 </div>
             </div>
+
         </div>
-        
-        <%- include("../foot") %>
     </div>
-
-    <script>
-        $( function() {
-          $( "#accordion" ).accordion({
-            heightStyle: "content"
-          });
-        } );
-    </script>
+    <%- include("../foot") %>
 
 <script>
     //----------------------------------------------------

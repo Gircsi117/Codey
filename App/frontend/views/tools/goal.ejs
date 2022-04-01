@@ -1,33 +1,41 @@
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <%- include("../header") %>
 <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-    <div class="container mt-0 mt-sm-3">
+    <div class="container mt-2 mt-lg-3 top-p">
 
         <%- include("../menu") %>
         <div class="content row m-0 p-3">
-            <div class="gray mb-3">
+            <div class="content-wrapper p-3 mb-3">
                 <h4 class="p-0 text-center">Felhívjuk a kedves látogatóink figyelmét, hogy az itt található adatok kizárólag tájékozató jellegűek, ezek használata csak saját felelősségre. <span style="font-weight: bold;">Mi szóltunk!</span></h4>
             </div>
-            <div class="row gray">
+            <div class="row content-wrapper p-0 m-0">
                 <h1 class="text-center pt-3">Optimális súly kiszámítása</h1>
-                <div class="col-6 p-3">
+                <div class="col-12 col-md-6 p-3">
                     <div class="form-floating mb-2">
                         <input type="number" class="form-control" id="magassag" placeholder="null" min="0" value="<%= magas %>" />
                         <label for="login-email">Magasság (cm)</label>
                     </div>
-                    <select name="" id="nem" class="form-select">
-                        <option value="">-</option>
-                        <option value="0" <% if(nem == 0){ %> selected <% }%> >Nő</option>
-                        <option value="1" <% if(nem == 1){ %> selected <% }%> >Férfi</option>
-                    </select>
-                    <button type="button" class="btn btn-success col-12" id="saveBody">Számítás és mentés</button>
+                    <div class="row p-0 m-0">
+                        <div title="Nő" class="col-2 p-1 m-0 bi bi-gender-female d-flex justify-content-center align-items-center form-icon <% if(nem == 0){ %> selected-form-icon <% }%>" id="female">
+
+                        </div>
+                        <div title="Férfi" class="col-2 p-1 m-0 bi bi-gender-male d-flex justify-content-center align-items-center form-icon <% if(nem == 1){ %> selected-form-icon <% }%>" id="male">
+
+                        </div>
+                        <div class="form-floating col-8 p-0 m-0">
+                            <input type="text" class="form-control" id="gender-input" placeholder="null" readonly value="<% if(nem == 0){ %> Nő <% }%><% if(nem == 1){ %> Férfi <% }%>" />
+                            <label for="gender-input">Nemed</label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success col-12 mt-2" id="saveBody">Számítás és mentés</button>
                 </div>
-                <div class="col-6 p-3 d-flex align-items-center" id="idealis">
+                <div class="col-12 col-md-6 p-3 d-flex align-items-center" id="idealis">
                     <!--Ideális testi adatok-->
                 </div>
             </div>
-            <div class="row gray mt-3" id="bmi">
+            <div class="row content-wrapper m-0 p-0 mt-3" id="bmi">
                 <h1 class="text-center pt-3">Kalóriaszükséglet kiszámítása</h1>
-                <div class="col-6 p-3">
+                <div class="col-12 col-md-6 p-3">
                     <div class="form-floating mb-2">
                         <input type="number" class="form-control" id="suly" placeholder="null" min="0" value="" />
                         <label for="login-email">Testsúly (kg)</label>
@@ -60,12 +68,12 @@
                     </table>
                     <button type="button" class="btn btn-success col-12" id="calcBMI">Számítás</button>
                 </div>
-                <div class="col-6 p-3 d-flex align-items-center" id="bmiAdatok">
+                <div class="col-12 col-md-6 p-3 d-flex align-items-center" id="bmiAdatok">
                     <!--BMI táblázat-->
                 </div>
             </div>
-            <div class="gray mt-3" id="setCel">
-                <h1 class="text-center pt-3">Cél meghatározása</h1>
+            <div class="content-wrapper m-0 p-3 mt-3" id="setCel">
+                <h1 class="text-center">Cél meghatározása</h1>
                 <div class="form-floating mb-2">
                     <input type="number" class="form-control" id="goalWeight" placeholder="null" min="0" value="<%= cel %>" />
                     <label for="login-email">Cél testsúly (kg)</label>
@@ -73,9 +81,20 @@
                 <button type="button" class="btn btn-success col-12" id="editGoal">Mentés</button>
             </div>
         </div>
-        
-        <%- include("../foot") %>
     </div>
+    <%- include("../foot") %>
+<script>
+    $("#male").on("click", ()=>{
+        $("#gender-input").val("Férfi");
+        $("#female").removeClass("selected-form-icon");
+        $("#male").addClass("selected-form-icon");
+    })
+    $("#female").on("click", ()=>{
+        $("#gender-input").val("Nő");
+        $("#male").removeClass("selected-form-icon");
+        $("#female").addClass("selected-form-icon");
+    })
+</script>
 <script>
     $("#bmi").hide();
     $("#setCel").hide();
@@ -87,7 +106,7 @@
     function calcOtimal() {
         if ($("#magassag").val() == "" || $("#nem").val() == "") return
         let magassag = $("#magassag").val();
-        let nem = $("#nem").val();
+        let nem = ($("#gender-input").val() == "Nő") ? 0 : 1;
 
         let suly = (magassag - 100) * (nem == 1 ? 1 : 0.9);
         
@@ -124,11 +143,11 @@
     }
 
     function calcBMI() {
-        if ($("#magassag").val() == "" || $("#suly").val() == "" || $("#nem").val() == "") return;
+        if ($("#magassag").val() == "" || $("#suly").val() == "" || $("#gender-input").val() == "") return;
 
         let suly = $("#suly").val();
         let magassag = $("#magassag").val();
-        let nem = $("#nem").val();
+        let nem = ($("#gender-input").val() == "Nő") ? 0 : 1;
 
         let bmi = (suly / Math.pow((magassag / 100), 2)).toFixed(2);
         let allapot = "";

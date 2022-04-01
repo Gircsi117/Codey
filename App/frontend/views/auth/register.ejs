@@ -1,28 +1,28 @@
 <%- include ('../header.ejs') %>
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-<div class="container kozep gray" style="height: 100vh; display: flex; flex-direction: column">
+<div class="container content-wrapper d-flex justify-content-center align-items-center" style="height: 100vh;">
   <form class="user-form col-10 col-sm-10 col-md-8 col-lg-6" method="POST" id="reg-form">
     <h1 class="h3 mb-3 fw-normal">Regisztráció</h1>
 
-    <div class="form-floating">
+    <div class="form-floating mb-2">
       <input type="email" class="form-control" id="reg-email" placeholder="name@example.com" />
       <label for="reg-email">E-mail cím</label>
     </div>
-    <div class="form-floating">
+    <div class="form-floating mb-2">
       <input type="text" class="form-control" id="reg-username" placeholder="name@example.com" />
       <label for="reg-email">Felhasználói név</label>
     </div>
-    <div class="form-floating">
+    <div class="form-floating mb-2">
       <input type="password" class="form-control" id="password1" placeholder="Jelszó" />
       <label for="password1">Jelszó</label>
     </div>
-    <div class="form-floating">
+    <div class="form-floating mb-3">
       <input type="password" class="form-control" id="password2" placeholder="Jelszó megismétlése" />
       <label for="password2">Jelszó</label>
     </div>
-    <input class="col-12 p-2" style="border-radius: 5px; font-size: larger" type="submit" value="Regisztráció" />
+    <input class="col-12 p-2 btn btn-success" type="submit" value="Regisztráció" />
+    <a href="/" class="p-2" style="border-radius: 5px; font-size: larger">Bejelentkezés</a>
   </form>
-  <a href="/" class="p-2" style="border-radius: 5px; font-size: larger">Bejelentkezés</a>
 </div>
 <script>
   $('#reg-form').on('submit', (e) => {

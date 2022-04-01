@@ -33,7 +33,7 @@ exports.postBlog = async (req, res) => {
         },
     })
         .then((response) => {
-            res.send({ data: response.data });
+            res.send({ data: response.data, user: req.session.user.nev });
         })
         .catch((err) => {
             console.log(err);

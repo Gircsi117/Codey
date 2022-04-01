@@ -1,9 +1,9 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-    <div class="container mt-0 mt-sm-3">
+    <div class="container mt-2 mt-lg-3 top-p">
 
         <%- include("../menu") %>
-        <div class="content row m-0 p-3">
+        <div class="content m-0 p-3">
             <div id="nameModal">
                 <div class="form-floating">
                     <input type="text" class="form-control" id="name" placeholder="János" />
@@ -13,10 +13,10 @@
             <div id="passModal">
                 <div class="user-form">
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="oldPass" placeholder="János" />
+                        <input type="password" class="form-control mb-2" id="oldPass" placeholder="János" />
                         <label for="name">Régi jelszó</label>
                     </div>
-                    <div class="form-floating">
+                    <div class="form-floating mb-2">
                         <input type="password" class="form-control" id="newPass1" placeholder="János" />
                         <label for="name">Új jelszó</label>
                     </div>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="gray">
+            <div class="content-wrapper p-3">
                 <table class="table">
                     <thead>
                         <tr>
@@ -86,8 +86,9 @@
                 <button type="button" class="btn btn-warning" id="editPass">Jelszó módosítás</button>
             </div>
         </div>
-        <%- include("../foot") %>
     </div>
+    <%- include("../foot") %>
+
 <script>
     $.ajax({method:"GET", url:"./getLastWeight"})
         .done((res)=>{
@@ -113,12 +114,12 @@
     //Név modal!!
     setModal("nameModal", {cim:"Név módosítás", buttons:[
         {type:"success", text:"Mentés", id:"nevEdit"},
-        {type:"danger", text:"Vissza", id:"backTo"}
+        {type:"secondary", text:"Vissza", id:"backTo"}
     ]})
 
     setModal("passModal", {cim:"Jelszó módosítás", buttons:[
         {type:"success", text:"Mentés", id:"passEdit"},
-        {type:"danger", text:"Vissza", id:"backTo"}
+        {type:"secondary", text:"Vissza", id:"backTo"}
     ]})
 
     $("document").ready(()=>{

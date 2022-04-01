@@ -1,45 +1,62 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-<div class="container mt-0 mt-sm-3">
+<div class="container mt-2 mt-lg-3 top-p">
     <%- include("../menu") %>
 
-    <div class="content row m-0 p-3">
+    <div class="content m-0 p-3">
         <div id="userModal">
             <div class="user-form">
-                <div class="form-floating">
+                <div class="form-floating mb-2">
                     <input type="text" class="form-control" id="name" placeholder="János" />
                     <label for="name">Név</label>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating mb-2">
                     <input type="email" class="form-control" id="email" placeholder="name@example.com" />
                     <label for="login-email">Email cím</label>
                 </div>
-                <select name="" id="jog" class="form-select">
-                    <option value="0">User</option>
-                    <option value="1">Moderátor</option>
-                    <option value="2">Admin</option>
-                </select>
-                <select name="" id="nem" class="form-select">
-                    <option value="">-</option>
-                    <option value="0">Nő</option>
-                    <option value="1">Férfi</option>
-                </select>
-                <div class="form-floating">
+                <div class="row p-0 m-0 mb-2 jog-select">
+                    <div title="User" class="col-4 col-md-2 col-lg-1 | p-1 m-0 bi bi-person d-flex justify-content-center align-items-center form-icon" id="user">
+                    </div>
+                    <div title="Moderátor" class="col-4 col-md-2 col-lg-1 | p-1 m-0 bi bi-person-plus d-flex justify-content-center align-items-center form-icon" id="mod">
+                    </div>
+                    <div title="Admin" class="col-4 col-md-2 col-lg-1 | p-1 m-0 bi bi-person-workspace d-flex justify-content-center align-items-center form-icon" id="admin">
+                    </div>
+                    <div class="form-floating col-12 col-md-6 col-lg-9 | p-0 m-0">
+                        <input type="text" class="form-control" id="jog-input" placeholder="null" readonly value="Admin" />
+                        <label for="gender-input">Jog</label>
+                    </div>
+                </div>
+
+                <!--Nem választó-->
+                <div class="row p-0 m-0 mb-2">
+                    <div title="Nő" class="col-3 col-md-2 col-lg-1 | p-1 m-0 bi bi-gender-female d-flex justify-content-center align-items-center form-icon" id="female">
+
+                    </div>
+                    <div title="Férfi" class="col-3 col-md-2 col-lg-1 | p-1 m-0 bi bi-gender-male d-flex justify-content-center align-items-center form-icon" id="male">
+
+                    </div>
+                    <div class="form-floating col-6 col-md-8 col-lg-10 | p-0 m-0">
+                        <input type="text" class="form-control" id="gender-input" placeholder="null" readonly value="" />
+                        <label for="gender-input">Nemed</label>
+                    </div>
+                </div>
+
+                <div class="form-floating mb-2">
                     <input type="number" class="form-control" id="magas" placeholder="null" min="1" />
                     <label for="login-email">Magasság (cm)</label>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating mb-2">
                     <input type="number" class="form-control" id="cel" placeholder="null" min="1" />
                     <label for="login-email">Cél súly (kg)</label>
                 </div>
             </div>
         </div>
-        <div class="gray" id="tablazat" style="overflow-x: scroll">
+        <div class="content-wrapper p-3" id="tablazat" style="overflow-x: scroll">
             <!-- Felhasználók táblája -->
         </div>
     </div>
-    <%- include('../foot') %>
 </div>
+<%- include('../foot') %>
 
 <script>
     let users = [];
@@ -49,10 +66,43 @@
         cim: 'Felhasználó műveletek',
         buttons: [
             { type: 'success', text: 'Mentés', id: 'edit' },
-            { type: 'warning', text: 'Törlés', id: 'delete' },
+            { type: 'danger', text: 'Törlés', id: 'delete' },
             { type: 'secondary', text: 'Vissza', id: 'back' },
         ],
     });
+
+    $("#male").on("click", ()=>{
+        $("#gender-input").val("Férfi");
+        $("#female").removeClass("selected-form-icon");
+        $("#male").addClass("selected-form-icon");
+    })
+
+    $("#female").on("click", ()=>{
+        $("#gender-input").val("Nő");
+        $("#male").removeClass("selected-form-icon");
+        $("#female").addClass("selected-form-icon");
+    })
+
+    $("#user").on("click", ()=>{
+        $("#jog-input").val("User");
+        $("#admin").removeClass("selected-form-icon");
+        $("#mod").removeClass("selected-form-icon");
+        $("#user").addClass("selected-form-icon");
+    })
+
+    $("#mod").on("click", ()=>{
+        $("#jog-input").val("Moderátor");
+        $("#admin").removeClass("selected-form-icon");
+        $("#user").removeClass("selected-form-icon");
+        $("#mod").addClass("selected-form-icon");
+    })
+
+    $("#admin").on("click", ()=>{
+        $("#jog-input").val("Admin");
+        $("#user").removeClass("selected-form-icon");
+        $("#mod").removeClass("selected-form-icon");
+        $("#admin").addClass("selected-form-icon");
+    })
 
     $.ajax({ method: 'post', url: './getAllUserData', data: {} })
         .done((data) => {
@@ -67,7 +117,14 @@
         .always(() => {});
 
     function saveTable() {
-        $('#tablazat').html(toTable({ datas: users, isFunc: true, headers: ['ID', 'Név', 'E-mail', 'Nem', 'Jogok', 'Magasság', 'Cél'], tableID: 'userTable' }));
+        $('#userTable #isFuncBTN').unbind();
+        $('#userModal #edit').unbind();
+        $('#userModal #delete').unbind();
+        $('#userModal #back').unbind();
+
+        $('#tablazat').html(
+            toTable({ datas: users, isFunc: true, headers: ['ID', 'Név', 'E-mail', 'Nem', 'Jogok', 'Magasság', 'Cél'], tableID: 'userTable' })
+        );
         tableColor({ table: 'userTable', item: 'reg_token', param: '' });
         tableHide({ table: 'userTable', item: 'reg_token' });
 
@@ -75,26 +132,37 @@
         tableItemEdit({ table: 'userTable', item: 'jogosultsag', param: '1', result1: "'Moderator'", result2: 'text' });
         tableItemEdit({ table: 'userTable', item: 'jogosultsag', param: '2', result1: "'Admin'", result2: 'text' });
 
-        tableItemEdit('userTable', 'nem', '0', "'Nő'", 'text');
-        tableItemEdit('userTable', 'nem', '1', "'Férfi'", 'text');
+        tableItemEdit({table:'userTable', item:'nem', param:'0', result1:"'Nő'", result2:'text'});
+        tableItemEdit({table:'userTable', item:'nem', param:'1', result1:"'Férfi'", result2:'text'});
 
         $('document').ready(() => {
             $('#userTable #isFuncBTN').on('click', (event) => {
-                $('#userTable #isFuncBTN').unbind();
                 const index = $(event.currentTarget).data('value');
                 select = users[index];
                 $('#name').val(select.nev);
                 $('#email').val(select.email);
-                $('#jog').val(select.jogosultsag);
                 $('#magas').val(select.magassag);
-                $('#nem').val(select.nem);
                 $('#cel').val(select.cel_suly);
 
+                $("#admin").removeClass("selected-form-icon");
+                $("#mod").removeClass("selected-form-icon");
+                $("#user").removeClass("selected-form-icon");
+                if(select.jogosultsag == 0){ $(`#user`).addClass("selected-form-icon"); $("#jog-input").val("User")}
+                if(select.jogosultsag == 1) {$(`#mod`).addClass("selected-form-icon"); $("#jog-input").val("Moderátor")}
+                if(select.jogosultsag == 2) {$(`#admin`).addClass("selected-form-icon"); $("#jog-input").val("Admin")}
+
+                $("#male").removeClass("selected-form-icon");
+                $("#female").removeClass("selected-form-icon");
+                if (select.nem == 1) $(`#male`).addClass("selected-form-icon");
+                if (select.nem == 0) $(`#female`).addClass("selected-form-icon");
+                $("#gender-input").val(select.nem == null ? "" : (select.nem == 1) ? "Férfi" : "Nő")
+                
+
                 $('#userModal').removeClass('d-none');
+                saveTable();
             });
 
             $('#userModal #edit').on('click', () => {
-                $('#userModal #edit').unbind();
                 if (select == null) return notify('Nincs kiválasztott felhasználó!');
                 if (!confirm('Biztos Módosítani akarod a felhasználó adatait?')) return;
 
@@ -105,8 +173,8 @@
                         id: select.id,
                         username: $('#name').val(),
                         email: $('#email').val(),
-                        nem: $('#nem').val() == '' ? null : $('#nem').val(),
-                        status: $('#jog').val(),
+                        nem: $('#gender-input').val() == '' ? null : ($('#gender-input').val() == "Férfi" ? 1 : 0),
+                        status: $('#jog-input').val() == '' ? null : ($('#jog-input').val() == "User" ? 0 : ($('#jog-input').val() == "Moderátor" ? 1 : 2) ),
                         magassag: $('#magas').val() == 0 ? null : $('#magas').val(),
                         cel: $('#cel').val() == 0 ? null : $('#cel').val(),
                     },
@@ -120,8 +188,8 @@
                             id: select.id,
                             nev: $('#name').val(),
                             email: $('#email').val(),
-                            nem: $('#nem').val() == '' ? null : $('#nem').val(),
-                            jogosultsag: $('#jog').val(),
+                            nem: $('#gender-input').val() == '' ? null : ($('#gender-input').val() == "Férfi" ? 1 : 0),
+                            jogosultsag: $('#jog-input').val() == '' ? null : ($('#jog-input').val() == "User" ? 0 : ($('#jog-input').val() == "Moderátor" ? 1 : 2) ),
                             reg_token: select.reg_token,
                             magassag: $('#magas').val() == 0 ? null : $('#magas').val(),
                             cel_suly: $('#cel').val() == 0 ? null : $('#cel').val(),
@@ -131,9 +199,8 @@
 
                         $('#name').val('');
                         $('#email').val('');
-                        $('#jog').val(0);
                         $('#magas').val('');
-                        $('#nem').val('');
+                        $('#gender-input').val('');
                         $('#cel').val('');
                         select = null;
                         notify('Adatok sikeresen módosítva!', 'green');
@@ -145,7 +212,6 @@
             });
 
             $('#userModal #delete').on('click', () => {
-                $('#userModal #delete').unbind();
                 if (select == null) return notify('Nincs kiválasztott felhasználó!');
                 if (!confirm('Biztos törölni akarod a felhasználót?')) return;
 
@@ -163,7 +229,7 @@
                         $('#email').val('');
                         $('#jog').val(0);
                         $('#magas').val('');
-                        $('#nem').val('');
+                        $('#gender-input').val('');
                         $('#cel').val('');
                         select = null;
 
@@ -177,7 +243,6 @@
 
             $('#userModal #back').on('click', () => {
                 $('#userModal').addClass('d-none');
-                saveTable();
             });
         });
     }

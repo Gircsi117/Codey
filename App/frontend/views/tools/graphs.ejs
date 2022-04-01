@@ -1,28 +1,29 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-    <div class="container mt-0 mt-sm-3">
+    <div class="container mt-2 mt-lg-3 top-p">
 
         <%- include("../menu") %>
-        <div class="content row m-0 p-3">
-            <div class="user-form mb-3 gray">
-                <input type="date" name="" id="tolDate">
-                <input type="date" name="" id="igDate">
-                <button type="button" class="btn btn-success" id="filter">Szűrés</button>
-                <button type="button" class="btn btn-warning" id="reset">Reset</button>
+        <div class="content m-0 p-3">
+            <div class="user-form mb-3 content-wrapper p-3 row">
+                <input type="date" name="" id="tolDate" class="col-12 col-md-6">
+                <input type="date" name="" id="igDate" class="col-12 col-md-6 mt-2 mt-md-0">
+                <div class="p-0 m-0 pt-3">
+                    <button type="button" class="btn btn-success" id="filter">Szűrés</button>
+                    <button type="button" class="btn btn-warning" id="reset">Reset</button>
+                </div>
             </div>
-            <div class="gray mb-3">
+            <div class="content-wrapper p-3 mb-3">
                 <div id="chartContainerFS" style="height: 370px; width: 100%; padding: 0; margin: 0;"></div>
             </div>
-            <div class="gray mb-3">
+            <div class="content-wrapper p-3 mb-3">
                 <div id="chartContainerWater" style="height: 370px; width: 100%; padding: 0; margin: 0;"></div>
             </div>
-            <div class="gray">
+            <div class="content-wrapper p-3">
                 <div id="chartContainerWeight" style="height: 370px; width: 100%; padding: 0; margin: 0;"></div>
             </div>
         </div>
-        
-        <%- include("../foot") %>
     </div>
+    <%- include("../foot") %>
 
 <script>
     let food = [];

@@ -6,6 +6,7 @@
             close: true,
             position: pos,
             graity: grav,
+            duration: 3000,
             style: {
                 background: color,
             },
@@ -15,7 +16,7 @@
     //Tábla generálása
     function toTable(data /*, edit=false, header = [], tableID = "table"*/) {
         const keys = Object.keys(data.datas[0]);
-        let string = `<table class="table" id="${!data.tableID ? '' : data.tableID}"><thead>`;
+        let string = `<table class="table toTable" id="${!data.tableID ? '' : data.tableID}"><thead>`;
         string += `<tr>`;
         let th = !data.headers ? keys : data.headers;
         th.forEach((element) => {
@@ -28,7 +29,7 @@
         for (let i = 0; i < data.datas.length; i++) {
             string += `<tr class="sor"><td class="_index d-none">${i}</td>`;
             keys.forEach((key) => {
-                string += `<td class="_${key}">${data.datas[i][key] != null ? data.datas[i][key] : '-'}</td>`;
+                string += `<td class="_${key}" data-label="${key}">${data.datas[i][key] != null ? data.datas[i][key] : '-'}</td>`;
             });
             if (!!data.isFunc) string += `<td style="cursor:pointer" id="isFuncBTN" data-value="${i}"><i class="bi bi-gear"></i></td>`;
             string += `</tr>`;
@@ -41,10 +42,10 @@
     //A táblázat sorait beszinezi egy megadott szempont alapján
     function tableColor(data) {
         for (let i = 0; i < $(`#${data.table} .sor`).length; i++) {
-            $(`#${data.table} .sor`).eq(i).removeClass('green').removeClass('red');
+            $(`#${data.table} .sor`).eq(i).removeClass('good').removeClass('wrong');
             $(`#${data.table} .sor`)
                 .eq(i)
-                .addClass($(`#${data.table} .sor ._${data.item}`).eq(i).html() == data.param ? 'green' : 'red');
+                .addClass($(`#${data.table} .sor ._${data.item}`).eq(i).html() == data.param ? 'good' : 'wrong');
         }
     }
 
@@ -66,12 +67,12 @@
     }
 
     //A megadott paraméter szerint elrejti vagy mejeleníti a sorokat
-    function tableFilter(data /*table, item, param*/) {
+    function tableFilter(data) {
         $(`#${data.table} .sor`).show();
 
         for (let i = 0; i < $(`#${data.table} ._${data.item}`).length; i++) {
             let text = $(`#${data.table} ._${data.item}`).eq(i).html();
-            if (!eval(param)) $(`#${data.table} .sor`).eq(i).hide();
+            if (!eval(data.param)) $(`#${data.table} .sor`).eq(i).hide();
         }
     }
 
@@ -81,17 +82,17 @@
         let head = `<h2 class="text-center">${modalData.cim}</h2>`;
         let foot = '';
         modalData.buttons.forEach((element) => {
-            foot += `<button type="button" class="btn btn-${element.type}" id="${element.id}">${element.text}</button>`;
+            foot += `<button type="button" class="btn btn-${element.type} me-2" id="${element.id}">${element.text}</button>`;
         });
 
         $(`#${modalID}`).html(`
-      <div class="gray col-12 col-sm-10 col-md-8" id="${modalID}Form">
-        ${head}
-        <hr>
-        ${$(`#${modalID}`).html()}
-        <hr>
-        ${foot}
-        </div>
+            <div class="content-wrapper p-3 col-12 col-sm-10 col-md-8 m-auto" id="${modalID}Form">
+            ${head}
+            <hr>
+            ${$(`#${modalID}`).html()}
+            <hr>
+            ${foot}
+            </div>
         `);
     }
 

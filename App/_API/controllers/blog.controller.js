@@ -68,7 +68,7 @@ exports.postBlog = async (req, res) => {
 
         if (!blog) return res.send({ success: false });
 
-        return res.send({ success: true });
+        return res.send({ success: true, blog: blog });
     } catch (error) {
         console.log(error);
     }
