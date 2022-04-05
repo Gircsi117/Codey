@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const ProtonMail = require('protonmail-api');
+require('dotenv').config;
 
 const randomString = (length) => {
   var result = '';
@@ -39,8 +40,8 @@ exports.postRegister = async (req, res) => {
         res.send({ success: true });
 
         const pm = await ProtonMail.connect({
-          username: 'codeyhealth@protonmail.com',
-          password: 'Codeyhealth123',
+          username: process.env.PROTON_EMAIL,
+          password: process.env.PROTON_PASSWORD,
         });
 
         await pm.sendEmail({

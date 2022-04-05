@@ -81,7 +81,6 @@ exports.postNewIngredients = async (req, res) => {
       zsir: zsir,
       ehetoe_magaban: ehetoe_magaban,
     });
-    console.log(newIngredients);
     if (!newIngredients) return res.send({ success: false, err: 'Sikertelen felvétel!' });
 
     return res.send({ success: true, ing: newIngredients });

@@ -1,4 +1,5 @@
 const axios = require('axios');
+require('dotenv').config();
 
 exports.getDiaryPage = (req, res) => {
   res.render('tools/diary', {cim: "Étkezési napló", jog: req.session.user.jogosultsag});
@@ -10,7 +11,7 @@ exports.getWeights = (req, res)=>{
   axios({
     method: 'POST',
     url: 'http://localhost:3001/weight/postGetWeights',
-    headers: {apisecret: 123},
+    headers: {apisecret: process.env.API_SECRET},
     data: { id }
 })
 .then((results)=>{

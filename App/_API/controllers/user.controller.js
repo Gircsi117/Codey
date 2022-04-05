@@ -42,7 +42,7 @@ exports.postModifyPassword = async (req, res) => {
 exports.postSetHeight = async (req, res) => {
   try {
     const { id, userHeight } = req.body;
-    console.log(req.body);
+
     if (!userHeight) res.send({ success: false, error: 'Töltsd ki a mezőt' });
     const user = await User.update({ magassag: userHeight }, { where: { id: id } });
 
