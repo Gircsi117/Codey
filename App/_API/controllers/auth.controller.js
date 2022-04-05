@@ -20,13 +20,25 @@ exports.postRegister = async (req, res) => {
     let errors = [];
 
     if (!email || !username || !password1 || !password2) errors.push('Tölts ki minden mezőt!');
+
+    const Lenght = RegExp(/^.{8,32}$/);
+    const hasNumber = RegExp(/^.*[0-9].*$/);
+    const hasUpperLowerCase = RegExp(/(?=.*[a-z])(?=.*[A-Z])/);
+
+    if (errors.length < 1) {
+      if (!Lenght.test(password1)) errors.push('A jelszónak min. 8 max. 32 karakter hosszúságú lehet');
+      if (!hasNumber.test(password1)) errors.push('A jelszónak tartalmaznia kell számot');
+      if (!hasUpperLowerCase.test(password1)) errors.push('A jelszónak tartalmaznia kell kis- és nagybetűket is');
+    }
+
+    if (errors.length > 0) return res.send({ success: false, errors });
+
     if (errors.length < 1) {
       const existEmail = await User.findOne({ where: { email } });
       const existUser = await User.findOne({ where: { nev: username } });
       if (existEmail) errors.push('Már létezik ilyen e-mail cím!');
       if (existUser) errors.push('Már létezik ilyen felhasználó!');
       if (password1 != password2) errors.push('Jelszavak nem egyeznek!');
-
       if (username == password1) errors.push('A felhasználónév nem egyezhet meg a jelszóval!');
       if (email == password1) errors.push('Az email cím nem egyezhet meg a jelszóval!');
     }
