@@ -8,14 +8,15 @@ exports.postGetFoodsByUser = async (req, res) => {
   try {
     const { id, eatenToday } = req.body;
     let query = { felhasznalo_id: id };
+
     if (eatenToday != false) query = [{ felhasznalo_id: id }, { hozzadva: new Date() }];
 
-    const foods = await Food.findAll({ where: query, order:["hozzadva"]});
+    const foods = await Food.findAll({ where: query, order: ['hozzadva'] });
 
     let foodsArray = [];
 
     for await (const food of foods) {
-      const foodAssoc = await FoodXIngredient.findAll({ where: { etel_id: food.id }});
+      const foodAssoc = await FoodXIngredient.findAll({ where: { etel_id: food.id } });
 
       foodsArray.push({ id: food.id, name: food.nev, hozzavalok: [], kcal: [], date: food.hozzadva });
 
@@ -32,6 +33,7 @@ exports.postGetFoodsByUser = async (req, res) => {
     }
 
     let kcalData = { totalKcal: 0, foodsArray: [] };
+
     for (let food of foodsArray) {
       let foodKcal = 0;
       for (const ingDetail of food.kcal) {
@@ -59,8 +61,9 @@ exports.postGetSportByUser = async (req, res) => {
   try {
     const { id, useToday } = req.body;
     let query = { felhasznalo_id: id };
+
     if (useToday != false) query = [{ felhasznalo_id: id, datum: new Date() }];
-    const sports = await Sport.findAll({ where: query, order: ["datum"] });
+    const sports = await Sport.findAll({ where: query, order: ['datum'] });
 
     return res.send({ success: true, sports: sports });
   } catch (error) {
@@ -72,9 +75,9 @@ exports.postGetWaterByUser = async (req, res) => {
   try {
     const { id, drinkToday } = req.body;
     let query = { felhasznalo_id: id };
+
     if (drinkToday != false) query = [{ felhasznalo_id: id }, { datum: new Date() }];
-    const waters = await Water.findAll({ where: query, order: ["datum"]});
-    console.log(query);
+    const waters = await Water.findAll({ where: query, order: ['datum'] });
 
     return res.send({ success: true, waters: waters });
   } catch (error) {
@@ -154,7 +157,6 @@ exports.postFoodByUser = async (req, res) => {
 
 exports.getIngredients = async (req, res) => {
   try {
-    console.log("Kecskebéka");
     const ingredients = await Ingredients.findAll();
 
     return res.send({ success: true, ingredients });

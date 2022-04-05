@@ -1,4 +1,5 @@
 const axios = require('axios');
+require('dotenv').config();
 
 exports.getRegister = (req, res) => {
   res.render('auth/register');
@@ -10,11 +11,10 @@ exports.postRegister = (req, res) => {
   axios({
     method: 'post',
     url: 'http://localhost:3001/auth/register',
-    headers: { apisecret: '123' },
+    headers: { apisecret: process.env.API_SECRET },
     data: { email, username, password1, password2 },
   })
     .then((result) => {
-      console.log(result);
       res.send(result.data);
     })
     .catch((err) => {
@@ -27,7 +27,7 @@ exports.getRegisterVerification = (req, res) => {
   axios({
     method: 'post',
     url: 'http://localhost:3001/auth/register-verification/' + token,
-    headers: { apisecret: '123' },
+    headers: { apisecret: process.env.API_SECRET },
   })
     .then((result) => {
       if (!result.data.success) {
@@ -50,11 +50,10 @@ exports.postLogin = (req, res) => {
   axios({
     method: 'post',
     url: 'http://localhost:3001/auth/login',
-    headers: { apisecret: '123' },
+    headers: { apisecret: process.env.API_SECRET },
     data: { email, password },
   })
     .then((result) => {
-      //console.log(result.data);
       if (!result.data.success) return res.send(result.data);
       result.data.user.password = undefined;
       req.session.user = result.data.user;
