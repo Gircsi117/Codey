@@ -25,13 +25,35 @@ exports.postModifyPassword = async (req, res) => {
   try {
     const { id, oldpassword, password1, password2 } = req.body;
 
-    if (oldpassword == password1) return res.send({ success: false, error: 'Az új jelszó nem egyezhet a régivel' });
-    if (!password1 || !password2) return res.send({ success: false, error: 'Tölts ki minden mezőt' });
-    if (password1 != password2) return res.send({ success: false, error: 'A jelszavak nem egyeznek' });
+    let errors = [];
+
+    const Lenght = RegExp(/^.{8,32}$/);
+    const hasNumber = RegExp(/^.*[0-9].*$/);
+    const hasUpperLowerCase = RegExp(/(?=.*[a-z])(?=.*[A-Z])/);
+
+    if (errors.length < 1) {
+      if (!Lenght.test(password1)) errors.push('A jelszónak min. 8 max. 32 karakter hosszúságú lehet');
+      if (!hasNumber.test(password1)) errors.push('A jelszónak tartalmaznia kell számot');
+      if (!hasUpperLowerCase.test(password1)) errors.push('A jelszónak tartalmaznia kell kis- és nagybetűket is');
+    }
+
+    if (errors.length > 0) return res.send({ success: false, errors });
+
+    const foundUser = await User.findOne({ where: { id } });
+    const isMatching = await bcrypt.compare(oldpassword, foundUser.password);
+
+    if (errors.length < 1) {
+      if (isMatching) errors.push('Hibás jelenlegi jelszó');
+      if (oldpassword == password1) errors.push('Az új jelszó nem egyezhet a jelenlegivel');
+      if (!password1 || !password2) errors.push('Tölts ki minden mezőt');
+      if (password1 != password2) errors.push('A jelszavak nem egyeznek');
+    }
+
+    if (errors.length > 0) return res.send({ success: false, errors });
 
     const hashedPassword = await bcrypt.hash(password1, 10);
     const newPassword = await User.update({ password: hashedPassword }, { where: { id: id } });
-    if (!newPassword) return res.send({ success: false, error: 'Sikertelen adatmódosítás' });
+    if (!newPassword) return res.send({ success: false, errors: 'Sikertelen adatmódosítás' });
 
     res.send({ success: true });
   } catch (error) {

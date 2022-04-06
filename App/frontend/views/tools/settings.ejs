@@ -1,174 +1,167 @@
 <%- include("../header") %>
-<h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-    <div class="container mt-2 mt-lg-3 top-p">
-
-        <%- include("../menu") %>
-        <div class="content m-0 p-3">
-            <div id="nameModal">
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="name" placeholder="János" />
-                    <label for="name">Név</label>
-                </div>
-            </div>
-            <div id="passModal">
-                <div class="user-form">
-                    <div class="form-floating">
-                        <input type="password" class="form-control mb-2" id="oldPass" placeholder="János" />
-                        <label for="name">Régi jelszó</label>
-                    </div>
-                    <div class="form-floating mb-2">
-                        <input type="password" class="form-control" id="newPass1" placeholder="János" />
-                        <label for="name">Új jelszó</label>
-                    </div>
-                    <div class="form-floating">
-                        <input type="password" class="form-control" id="newPass2" placeholder="János" />
-                        <label for="name">Új jelszó újra</label>
-                    </div>
-                </div>
-            </div>
-            <div class="content-wrapper p-3">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Key</th>
-                            <th>Érték</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Név</td>
-                            <td id="t-name"><%= user.nev %></td>
-                        </tr>
-                        <tr>
-                            <td>E-mail</td>
-                            <td><%= user.email %></td>
-                        </tr>
-                        <tr>
-                            <td>Nem</td>
-                            <td>
-                                <% if (user.nem == 1) {%>
-                                    Férfi
-                                <% } %>
-                                <% if (user.nem == 0) {%>
-                                    Nő
-                                <% } %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Jogosultság</td>
-                            <td>
-                                <% if (user.jogosultsag == 0) {%>
-                                    User
-                                <% } %>
-                                <% if (user.jogosultsag == 1) {%>
-                                    Moderátor
-                                <% } %>
-                                <% if (user.jogosultsag == 2) {%>
-                                    Admin
-                                <% } %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Magasság</td>
-                            <td><%= user.magassag %> cm</td>
-                        </tr>
-                        <tr>
-                            <td>Jelenlegi súly</td>
-                            <td id="jelenSúly"></td>
-                        </tr>
-                        <tr>
-                            <td>Cél súly</td>
-                            <td><%= user.cel_suly %> kg</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button type="button" class="btn btn-warning" id="editName">Név módosítás</button>
-                <button type="button" class="btn btn-warning" id="editPass">Jelszó módosítás</button>
-            </div>
-        </div>
+<h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+<div class="container mt-2 mt-lg-3 top-p">
+  <%- include("../menu") %>
+  <div class="content m-0 p-3">
+    <div id="nameModal">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="name" placeholder="János" />
+        <label for="name">Név</label>
+      </div>
     </div>
-    <%- include("../foot") %>
+    <div id="passModal">
+      <div class="user-form">
+        <div class="form-floating">
+          <input type="password" class="form-control mb-2" id="oldPass" placeholder="János" />
+          <label for="name">Régi jelszó</label>
+        </div>
+        <div class="form-floating mb-2">
+          <input type="password" class="form-control" id="newPass1" placeholder="János" />
+          <label for="name">Új jelszó</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" class="form-control" id="newPass2" placeholder="János" />
+          <label for="name">Új jelszó újra</label>
+        </div>
+      </div>
+    </div>
+    <div class="content-wrapper p-3">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Érték</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Név</td>
+            <td id="t-name"><%= user.nev %></td>
+          </tr>
+          <tr>
+            <td>E-mail</td>
+            <td><%= user.email %></td>
+          </tr>
+          <tr>
+            <td>Nem</td>
+            <td><% if (user.nem == 1) {%> Férfi <% } %> <% if (user.nem == 0) {%> Nő <% } %></td>
+          </tr>
+          <tr>
+            <td>Jogosultság</td>
+            <td><% if (user.jogosultsag == 0) {%> User <% } %> <% if (user.jogosultsag == 1) {%> Moderátor <% } %> <% if (user.jogosultsag == 2) {%> Admin <% } %></td>
+          </tr>
+          <tr>
+            <td>Magasság</td>
+            <td><%= user.magassag %> cm</td>
+          </tr>
+          <tr>
+            <td>Jelenlegi súly</td>
+            <td id="jelenSúly"></td>
+          </tr>
+          <tr>
+            <td>Cél súly</td>
+            <td><%= user.cel_suly %> kg</td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-warning" id="editName">Név módosítás</button>
+      <button type="button" class="btn btn-warning" id="editPass">Jelszó módosítás</button>
+    </div>
+  </div>
+</div>
+<%- include("../foot") %>
 
 <script>
-    $.ajax({method:"GET", url:"./getLastWeight"})
-        .done((res)=>{
-            if(res.data.lastWeight == null) return;
-            $("#jelenSúly").html(`${res.data.lastWeight.suly} kg`);
-        })
-        .fail((err)=>{
-            console.log(err);
-            notify("Adatok lekérése sikertelen!");
-        })
-        .always(()=>{})
-    
-    $("#editName").on("click", ()=>{
-        $("#nameModal").removeClass("d-none")
+  $.ajax({ method: 'GET', url: './getLastWeight' })
+    .done((res) => {
+      if (res.data.lastWeight == null) return;
+      $('#jelenSúly').html(`${res.data.lastWeight.suly} kg`);
     })
-    $("#editPass").on("click", ()=>{
-        $("#passModal").removeClass("d-none")
+    .fail((err) => {
+      console.log(err);
+      notify('Adatok lekérése sikertelen!');
     })
+    .always(() => {});
+
+  $('#editName').on('click', () => {
+    $('#nameModal').removeClass('d-none');
+  });
+  $('#editPass').on('click', () => {
+    $('#passModal').removeClass('d-none');
+  });
 </script>
 <script>
-    //Modal beállításai
+  //Modal beállításai
 
-    //Név modal!!
-    setModal("nameModal", {cim:"Név módosítás", buttons:[
-        {type:"success", text:"Mentés", id:"nevEdit"},
-        {type:"secondary", text:"Vissza", id:"backTo"}
-    ]})
+  //Név modal!!
+  setModal('nameModal', {
+    cim: 'Név módosítás',
+    buttons: [
+      { type: 'success', text: 'Mentés', id: 'nevEdit' },
+      { type: 'secondary', text: 'Vissza', id: 'backTo' },
+    ],
+  });
 
-    setModal("passModal", {cim:"Jelszó módosítás", buttons:[
-        {type:"success", text:"Mentés", id:"passEdit"},
-        {type:"secondary", text:"Vissza", id:"backTo"}
-    ]})
+  setModal('passModal', {
+    cim: 'Jelszó módosítás',
+    buttons: [
+      { type: 'success', text: 'Mentés', id: 'passEdit' },
+      { type: 'secondary', text: 'Vissza', id: 'backTo' },
+    ],
+  });
 
-    $("document").ready(()=>{
-        $("#nameModal #backTo").on("click", ()=>{
-            $("#nameModal").addClass("d-none");
-            $("#passModal").addClass("d-none");
+  $('document').ready(() => {
+    $('#nameModal #backTo').on('click', () => {
+      $('#nameModal').addClass('d-none');
+      $('#passModal').addClass('d-none');
+    });
+
+    $('#passModal #backTo').on('click', () => {
+      $('#nameModal').addClass('d-none');
+      $('#passModal').addClass('d-none');
+    });
+
+    $('#nevEdit').on('click', () => {
+      $.ajax({ method: 'POST', url: './modifyUsername', data: { username: $('#name').val() } })
+        .done((res) => {
+          if (res.data.success) {
+            $('#t-name').html($('#name').val());
+            return notify('Adatok sikeresen mentve', 'green');
+          }
+
+          return notify(res.data.errors);
         })
-
-        $("#passModal #backTo").on("click", ()=>{
-            $("#nameModal").addClass("d-none");
-            $("#passModal").addClass("d-none");
+        .fail((err) => {
+          return notify('Sikertelen mentés!');
         })
+        .always(() => {});
+    });
 
-        $("#nevEdit").on("click", ()=>{
-            $.ajax({method:"POST", url:"./modifyUsername", data:{username: $("#name").val()}})
-            .done((res)=>{
-                if (res.data.success) {
-                    $("#t-name").html($("#name").val());
-                    return notify("Adatok sikeresen mentve", "green");
-                }
-
-                notify(res.data.error)
-            })
-            .fail((err)=>{
-                return notify("Sikertelen mentés!")
-            })
-            .always(()=>{ });
+    $('#passEdit').on('click', () => {
+      $.ajax({
+        method: 'POST',
+        url: './modifyPassword',
+        data: {
+          oldpassword: $('#oldPass').val(),
+          password1: $('#newPass1').val(),
+          password2: $('#newPass2').val(),
+        },
+      })
+        .done((res) => {
+          if (res.data.success) return notify('Adatok sikeresen mentve', 'green');
+          if (!res.data.success) {
+            res.data.errors.forEach((error) => {
+              notify(error);
+            });
+            return;
+          }
         })
-
-        $("#passEdit").on("click", ()=>{
-            $.ajax({method:"POST", url:"./modifyPassword", data:{
-                oldpassword: $("#oldPass").val(),
-                password1: $("#newPass1").val(),
-                password2: $("#newPass2").val()
-            }})
-            .done((res)=>{
-                if (res.data.success) return notify("Adatok sikeresen mentve", "green");
-                return notify(res.data.error)
-            })
-            .fail((err)=>{
-                return notify("Sikertelen mentés!")
-            })
-            .always(()=>{ });
+        .fail((err) => {
+          return notify('Sikertelen mentés!');
         })
-    })
-
-
+        .always(() => {});
+    });
+  });
 </script>
 
 <%- include("../footer") %>
-
-
