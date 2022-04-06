@@ -1,12 +1,11 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-    const notify = (msg, color = 'red', pos = 'right', grav = 'top') => {
+    const notify = (msg, color = 'red') => {
         Toastify({
             text: msg,
             close: true,
-            position: pos,
-            graity: grav,
             duration: 3000,
+            selector: "foot",
             style: {
                 background: color,
             },

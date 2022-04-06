@@ -14,7 +14,6 @@ exports.postRegister = (req, res) => {
     data: { email, username, password1, password2 },
   })
     .then((result) => {
-      console.log(result);
       res.send(result.data);
     })
     .catch((err) => {

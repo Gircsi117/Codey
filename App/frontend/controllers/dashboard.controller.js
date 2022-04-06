@@ -45,12 +45,12 @@ exports.postWater = (req, res)=>{
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/postWaterByUser',
+    url: 'http://localhost:3001/kcal/postWaterByUser',
     headers: {apisecret: 123},
     data: {id, mennyiseg, date}
   })
   .then((results)=>{
-    return res.send({success: true});
+    return res.send(results.data);
   })
   .catch((err)=>{
     console.log(err);
@@ -62,12 +62,12 @@ exports.postSport = (req, res)=>{
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/postSportByUser',
+    url: 'http://localhost:3001/kcal/postSportByUser',
     headers: {apisecret: 123},
     data: {id, mennyiseg, date}
   })
   .then((results)=>{
-    return res.send({success: true});
+    return res.send(results.data);
   })
   .catch((err)=>{
     console.log(err);
@@ -79,12 +79,12 @@ exports.postFood = (req, res)=>{
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/postFoodByUser',
+    url: 'http://localhost:3001/kcal/postFoodByUser',
     headers: {apisecret: 123},
     data: {id, food}
   })
   .then((results)=>{
-    return res.send({success: true});
+    return res.send(results.data);
   })
   .catch((err)=>{
     console.log(err);
