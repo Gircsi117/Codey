@@ -1,39 +1,64 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center" class="error d-none">Az oldal nem támogatja ezt a képernyő szélességet</h1>
 <div class="container mt-2 mt-lg-3 top-p">
-
     <%- include("../menu") %>
-    <div class="content row m-0 p-3" >
+    <div class="content row m-0 p-3">
         <div class="content-wrapper p-3">
             <h3 class="text-center"><span id="db"></span> érv, amiért mi a kalóriaszámolást tartjuk a fogyás leghatékonyabb módszerének:</h3>
         </div>
 
         <!--Elválasztó-->
-        <div class="m-0 p-0" id="gyik-content">
-            
-        </div>
+        <div class="m-0 p-0" id="gyik-content"></div>
     </div>
 </div>
 <%- include("../foot") %>
 
 <script>
     const datas = [
-        {id: 1, title: "Nem rakéta tudomány", text:"A legegyszerűbb tényre hívnánk fel a figyelmedet. Akármit is sportolsz, akármit is eszel, akkor fogsz csak lefogyni, ha több kalóriát égetsz el, mint amit beviszel. Ennyire egyszerű."},
-        {id: 2, title: "Jegyezd fel mit ettél", text:"Az ételfogyasztás feljegyzése egy felelősség tudat saját magad felé. Valószínűleg egy visszatartó faktor, ha fel kell jegyezned azt az extra csokit. Ugyan úgy segíthet észrevenned, ha valami féle étel szabotálja a fogyásodat."},
-        {id: 3, title: "Ingyenes", text:"A kalóriaszámolás és honlapunk használata is ingyenes. Oldalunk célja ennek legegyszerűsítése."},
-        {id: 4, title: "Egyszerű", text:"A kalóriaszámolás gyorsan megtanulható. Először bonyolultnak tűnhet, de ha kitartó vagy, napról napra egyszerűbbé válik."},
-        {id: 5, title: "Motiváció", text:"Tartós fogyást nem lehet elérni két hét alatt. Nehéz dolog folyamatosan betartani az étrendet, a kezdő lelkesedés idővel alábbhagy. Nincs jobb motiváció egy fogyókúra betartására, mint ha nap mint nap látod, hogyan haladsz egyre közelebb kitűzött célod felé."},
-        {id: 6, title: "Más módszerek mellett is alkalmazhatod", text:"Egyfajta diétát követsz, zsírégetőt vagy diétás tablettákat szedsz? Nem gond. Ezek mellett is alkalmazhatod a kalóriaszámolást és pontosan nyomon követheted a hatásukat."},
-        {id: 7, title: "Nem az számít, hogy mit eszünk, hanem hogy mennyit", text:"Egy 10 hetes kísérlet során egy amerikai egyetemi tanár, Mark Haub bebizonyította, hogy akkor is le lehet fogyni, ha az ember csak károsnak kikiáltott ételeket vesz magához. A férfi 12,1 kg-ot adott le úgy, hogy csak gyorsételeket fogyasztott - a kulcs a mennyiség volt."},
-        {id: 8, title: "Tanító hatás", text:"A kalóriaszámolás módszere hamar berögzül, fejből tudni fogod mely étel laktat és mégse hízlal, illetve mi az ami ártalmatlannak tűnik, mégis tönkreteheti a diétádat. Rámutat arra is, hol hibázol: ha például sportolsz, de mellette sokat eszel, látni fogod, hogy miért nem fogysz és tudni fogod, hogy miben kell változtatnod."},
-        {id: 9, title: "Közösség", text:"Célod elérésében sokat segíthet, hogy egy olyan aktív közösségbe kerülsz, akik szintén fogyni szeretnének. Kérdéseidet, probémáidat, tapasztalataidat közzé teheted blog szekciónkban"},
+        {
+            id: 1,
+            title: 'Nem rakéta tudomány',
+            text: 'A legegyszerűbb tényre hívnánk fel a figyelmedet. Akármit is sportolsz, akármit is eszel, akkor fogsz csak lefogyni, ha több kalóriát égetsz el, mint amit beviszel. Ennyire egyszerű.',
+        },
+        {
+            id: 2,
+            title: 'Jegyezd fel mit ettél',
+            text: 'Az ételfogyasztás feljegyzése egy felelősség tudat saját magad felé. Valószínűleg egy visszatartó faktor, ha fel kell jegyezned azt az extra csokit. Ugyan úgy segíthet észrevenned, ha valami féle étel szabotálja a fogyásodat.',
+        },
+        { id: 3, title: 'Ingyenes', text: 'A kalóriaszámolás és honlapunk használata is ingyenes. Oldalunk célja ennek legegyszerűsítése.' },
+        { id: 4, title: 'Egyszerű', text: 'A kalóriaszámolás gyorsan megtanulható. Először bonyolultnak tűnhet, de ha kitartó vagy, napról napra egyszerűbbé válik.' },
+        {
+            id: 5,
+            title: 'Motiváció',
+            text: 'Tartós fogyást nem lehet elérni két hét alatt. Nehéz dolog folyamatosan betartani az étrendet, a kezdő lelkesedés idővel alábbhagy. Nincs jobb motiváció egy fogyókúra betartására, mint ha nap mint nap látod, hogyan haladsz egyre közelebb kitűzött célod felé.',
+        },
+        {
+            id: 6,
+            title: 'Más módszerek mellett is alkalmazhatod',
+            text: 'Egyfajta diétát követsz, zsírégetőt vagy diétás tablettákat szedsz? Nem gond. Ezek mellett is alkalmazhatod a kalóriaszámolást és pontosan nyomon követheted a hatásukat.',
+        },
+        {
+            id: 7,
+            title: 'Nem az számít, hogy mit eszünk, hanem hogy mennyit',
+            text: 'Egy 10 hetes kísérlet során egy amerikai egyetemi tanár, Mark Haub bebizonyította, hogy akkor is le lehet fogyni, ha az ember csak károsnak kikiáltott ételeket vesz magához. A férfi 12,1 kg-ot adott le úgy, hogy csak gyorsételeket fogyasztott - a kulcs a mennyiség volt.',
+        },
+        {
+            id: 8,
+            title: 'Tanító hatás',
+            text: 'A kalóriaszámolás módszere hamar berögzül, fejből tudni fogod mely étel laktat és mégse hízlal, illetve mi az ami ártalmatlannak tűnik, mégis tönkreteheti a diétádat. Rámutat arra is, hol hibázol: ha például sportolsz, de mellette sokat eszel, látni fogod, hogy miért nem fogysz és tudni fogod, hogy miben kell változtatnod.',
+        },
+        {
+            id: 9,
+            title: 'Közösség',
+            text: 'Célod elérésében sokat segíthet, hogy egy olyan aktív közösségbe kerülsz, akik szintén fogyni szeretnének. Kérdéseidet, probémáidat, tapasztalataidat közzé teheted blog szekciónkban',
+        },
     ];
 
-    $("#db").html(datas.length)
+    $('#db').html(datas.length);
 
-    var str = "";
+    var str = '';
 
-    datas.forEach(element => {
+    datas.forEach((element) => {
         str += `<div class="content-wrapper d-flex flex-row p-0 mt-3">
                 <div class="row-number d-flex justify-content-center align-items-center"><h2 class="p-0 m-0">${element.id}.</h2></div>
                 <div class="p-3">
@@ -46,8 +71,7 @@
             </div>`;
     });
 
-    $("#gyik-content").html(str);
-
+    $('#gyik-content').html(str);
 </script>
 
 <%- include("../footer") %>

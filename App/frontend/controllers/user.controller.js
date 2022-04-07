@@ -1,24 +1,26 @@
 const axios = require('axios');
+require('dotenv').config();
 
 exports.getSettingsPage = (req, res) => {
   res.render('tools/settings', {
-    cim: "Beállítások",
+    cim: 'Beállítások',
     jog: req.session.user.jogosultsag,
-    user: req.session.user
+    user: req.session.user,
   });
 };
 
 exports.postModifyUsername = (req, res) => {
   const { username } = req.body;
   const id = req.session.user.id;
+
   axios({
     method: 'POST',
     url: 'http://localhost:3001/user/postModifyUsername',
-    headers: { apisecret: 123 },
+    headers: { apisecret: process.env.API_SECRET },
     data: { id, username },
   })
     .then((results) => {
-      if(results.data.success){
+      if (results.data.success) {
         req.session.user.nev = username;
         req.session.save();
       }
@@ -35,7 +37,7 @@ exports.postModifyPassword = (req, res) => {
   axios({
     method: 'POST',
     url: 'http://localhost:3001/user/postModifyPassword',
-    headers: { apisecret: 123 },
+    headers: { apisecret: process.env.API_SECRET },
     data: { id, oldpassword, password1, password2 },
   })
     .then((results) => {

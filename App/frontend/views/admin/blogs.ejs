@@ -1,6 +1,6 @@
 <%- include("../header") %>
-    <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
-    <div class="container mt-2 mt-lg-3 top-p">
+<h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+<div class="container mt-2 mt-lg-3 top-p">
     <%- include("../menu") %>
 
     <div class="content row m-0 p-3">
@@ -12,19 +12,16 @@
                         <p id="idopont"></p>
                     </div>
                     <div class="col-12 col-md-4 p-0 d-md-flex justify-content-md-end align-items-start">
-                        <button class="form-icon btn btn-secondary btn-menu bi bi-unlock" style="border: 0; border-radius: 4px;" id="blogChecker"></button>
+                        <button class="form-icon btn btn-secondary btn-menu bi bi-unlock" style="border: 0; border-radius: 4px" id="blogChecker"></button>
                     </div>
                 </div>
-                <hr>
-                <div class="" style="height: 400px; overflow-y: scroll;" id="tartalom">
-                    
-                </div>
+                <hr />
+                <div class="" style="height: 400px; overflow-y: scroll" id="tartalom"></div>
             </div>
         </div>
-        <div class="content-wrapper p-3" id="tablazat" style="overflow-x:scroll">
+        <div class="content-wrapper p-3" id="tablazat" style="overflow-x: scroll">
             <!-- Blogok táblája -->
         </div>
-            
     </div>
 </div>
 <%- include('../foot') %>
@@ -33,98 +30,101 @@
     let blogs = [];
     let select;
 
-    setModal("blogModal", {
-        cim:"Státusz állítás",
-        buttons:[{type: "secondary", id:"back", text:"Vissza"}]
+    setModal('blogModal', {
+        cim: 'Státusz állítás',
+        buttons: [{ type: 'secondary', id: 'back', text: 'Vissza' }],
     });
 
     function saveTable() {
-        $("#tablazat").html(toTable({datas:blogs, isFunc:true, headers:["ID", "Cím", "Tartalom", "Felhasználó", "Időpont"], tableID:"blogTable"}));
-        tableColor({table:"blogTable", item:"status", param:1});
-        tableHide({table:"blogTable", item:"status"});
-        tableItemEdit({table:"blogTable", item:"idopont", param:"", result1:"text.replace('T', ' ').substring(0, 19)"});
-        tableItemEdit({table:"blogTable", item:"tartalom", param:"", result1:"text.substring(0, 25) + '...'"});
+        $('#tablazat').html(toTable({ datas: blogs, isFunc: true, headers: ['ID', 'Cím', 'Tartalom', 'Felhasználó', 'Időpont'], tableID: 'blogTable' }));
+        tableColor({ table: 'blogTable', item: 'status', param: 1 });
+        tableHide({ table: 'blogTable', item: 'status' });
+        tableItemEdit({ table: 'blogTable', item: 'idopont', param: '', result1: "text.replace('T', ' ').substring(0, 19)" });
+        tableItemEdit({ table: 'blogTable', item: 'tartalom', param: '', result1: "text.substring(0, 25) + '...'" });
 
-        $("document").ready(()=>{
-            $("#blogTable #isFuncBTN").on("click", (event)=>{
-                const index = $(event.currentTarget).data("value");
+        $('document').ready(() => {
+            $('#blogTable #isFuncBTN').on('click', (event) => {
+                const index = $(event.currentTarget).data('value');
                 select = blogs[index];
 
-                console.log(select);
-                $("#cim").html(select.cim);
-                $("#idopont").html(select.idopont.replace('T', ' ').substring(0, 19));
-                $("#tartalom").html(select.tartalom);
-                $("#active").prop( "checked", (select.status == 1) ? true : false );
+                $('#cim').html(select.cim);
+                $('#idopont').html(select.idopont.replace('T', ' ').substring(0, 19));
+                $('#tartalom').html(select.tartalom);
+                $('#active').prop('checked', select.status == 1 ? true : false);
 
                 if (select.status == 1) {
-                    $("#blogChecker").removeClass("btn-menu");
-                    $("#blogChecker").addClass("btn-menu");
+                    $('#blogChecker').removeClass('btn-menu');
+                    $('#blogChecker').addClass('btn-menu');
 
-                    $("#blogChecker").removeClass("bi-lock");
-                    $("#blogChecker").addClass("bi-unlock");
+                    $('#blogChecker').removeClass('bi-lock');
+                    $('#blogChecker').addClass('bi-unlock');
+                } else {
+                    $('#blogChecker').removeClass('btn-menu');
+                    $('#blogChecker').addClass('bi-lock');
+                    $('#blogChecker').removeClass('bi-unlock');
                 }
-                else{
-                    $("#blogChecker").removeClass("btn-menu");
-                    $("#blogChecker").addClass("bi-lock");
-                    $("#blogChecker").removeClass("bi-unlock");
-                }
 
-                $("#blogModal").removeClass("d-none");
-            })  
+                $('#blogModal').removeClass('d-none');
+            });
 
-            $("#blogModal #back").on("click", ()=>{
-                $("#blogModal").addClass("d-none")
-            })
+            $('#blogModal #back').on('click', () => {
+                $('#blogModal').addClass('d-none');
+            });
 
             //-----------------------------------------------------------------------
-            $("#blogChecker").on("click", ()=>{
-                if(select == null) return notify("Nincs kiválasztott felhasználó!");
+            $('#blogChecker').on('click', () => {
+                if (select == null) return notify('Nincs kiválasztott felhasználó!');
 
                 let stat = -1;
 
-                if ($("#blogChecker").hasClass("btn-menu")) {
-                    $("#blogChecker").removeClass("btn-menu");
-                    $("#blogChecker").removeClass("bi-unlock");
-                    $("#blogChecker").addClass("bi-lock");
+                if ($('#blogChecker').hasClass('btn-menu')) {
+                    $('#blogChecker').removeClass('btn-menu');
+                    $('#blogChecker').removeClass('bi-unlock');
+                    $('#blogChecker').addClass('bi-lock');
                     stat = 0;
-                }
-                else{
-                    $("#blogChecker").addClass("btn-menu");
-                    $("#blogChecker").removeClass("bi-lock");
-                    $("#blogChecker").addClass("bi-unlock");
+                } else {
+                    $('#blogChecker').addClass('btn-menu');
+                    $('#blogChecker').removeClass('bi-lock');
+                    $('#blogChecker').addClass('bi-unlock');
                     stat = 1;
                 }
 
-                $.ajax({ method: 'post', url: './setBlogStatus', data: {
-                    id: select.id,
-                    status: stat
-                } })
-                .done((results) => {
-                    notify("Sikeres adatmódosítás", "green")
-                    blogs[blogs.indexOf(select)].status = stat;
-                    $("#blogTable ._status").eq(blogs.indexOf(select)).html(stat);
-                    tableColor({table:"blogTable", item:"status", param:1});
+                $.ajax({
+                    method: 'post',
+                    url: './setBlogStatus',
+                    data: {
+                        id: select.id,
+                        status: stat,
+                    },
                 })
-                .fail((err) => {return notify("Sikertelen módosítás!!!")})
-                .always(() => {});
-            })
-        })
+                    .done((results) => {
+                        notify('Sikeres adatmódosítás', 'green');
+                        blogs[blogs.indexOf(select)].status = stat;
+                        $('#blogTable ._status').eq(blogs.indexOf(select)).html(stat);
+                        tableColor({ table: 'blogTable', item: 'status', param: 1 });
+                    })
+                    .fail((err) => {
+                        return notify('Sikertelen módosítás!!!');
+                    })
+                    .always(() => {});
+            });
+        });
     }
 
     $.ajax({ method: 'get', url: './getAllBlog' })
-    .done((data) => {
-        if(!data.success) return $("#tablazat").html("<h2>Hiba az adatok lekérésekor</h2>");
-        if(data.blogs.length == 0) return;
-        blogs = data.blogs;
+        .done((data) => {
+            if (!data.success) return $('#tablazat').html('<h2>Hiba az adatok lekérésekor</h2>');
+            if (data.blogs.length == 0) return;
+            blogs = data.blogs;
 
-        saveTable();
-      })
-    .fail((err) => {notify("Adatbázis hiba");})
-    .always(() => {});
+            saveTable();
+        })
+        .fail((err) => {
+            notify('Adatbázis hiba');
+        })
+        .always(() => {});
 
     //Gomb kattintások érzékelése
-    
 </script>
 
 <%- include("../footer") %>
-

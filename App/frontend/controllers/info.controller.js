@@ -1,4 +1,5 @@
-const { default: axios } = require('axios');
+const axios = require('axios');
+require('dotenv').config();
 
 exports.getBlogPage = async (req, res) => {
     res.render('info/blogok', { cim: 'Blog', jog: req.session.user.jogosultsag });
@@ -24,7 +25,7 @@ exports.postBlog = async (req, res) => {
     axios({
         method: 'POST',
         url: 'http://localhost:3001/blog/postBlog',
-        headers: { apisecret: 123 },
+        headers: { apisecret: process.env.API_SECRET },
         data: {
             felhasznalo_id,
             cim,
@@ -44,7 +45,7 @@ exports.getAllActiveBlog = async (req, res) => {
     axios({
         method: 'GET',
         url: 'http://localhost:3001/blog/getAllActiveBlog',
-        headers: { apisecret: 123 },
+        headers: { apisecret: process.env.API_SECRET },
     })
         .then((response) => {
             res.send({ data: response.data });
@@ -60,7 +61,7 @@ exports.getBlogByUser = async (req, res) => {
     axios({
         method: 'POST',
         url: 'http://localhost:3001/blog/postGetBlogByUser',
-        headers: { apisecret: 123 },
+        headers: { apisecret: process.env.API_SECRET },
         data: {
             id,
         },
