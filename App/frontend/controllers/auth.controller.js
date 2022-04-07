@@ -53,7 +53,6 @@ exports.postLogin = (req, res) => {
     data: { email, password },
   })
     .then((result) => {
-      //console.log(result.data);
       if (!result.data.success) return res.send(result.data);
       result.data.user.password = undefined;
       req.session.user = result.data.user;

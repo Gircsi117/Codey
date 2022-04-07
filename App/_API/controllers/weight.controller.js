@@ -21,7 +21,7 @@ exports.postGetLastWeight = async (req, res) => {
     const lastWeight = await Weight.findAll({ order: ['datum'], where: { felhasznalo_id: id } });
     if (!lastWeight) return res.send({ success: false, error: 'Sikertelen adatlekérés' });
 
-    res.send({ success: true, lastWeight: lastWeight[lastWeight.length-1] });
+    res.send({ success: true, lastWeight: lastWeight[lastWeight.length - 1] });
   } catch (error) {
     console.log(error);
   }
@@ -38,7 +38,7 @@ exports.postSetGoal = async (req, res) => {
 
     res.send({ success: true });
   } catch (error) {
-    Console.log(error);
+    console.log(error);
   }
 };
 
@@ -59,6 +59,6 @@ exports.postModifyWeight = async (req, res) => {
 
     res.send({ success: true });
   } catch (error) {
-    Console.log(error);
+    console.log(error);
   }
 };

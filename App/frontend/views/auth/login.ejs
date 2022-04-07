@@ -1,5 +1,16 @@
 <%- include ('../header') %>
 
+<style>
+  .rights {
+    display: none;
+  }
+
+  footer {
+    position: fixed;
+    bottom: -150;
+  }
+</style>
+
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
 <div class="container content-wrapper d-flex justify-content-center align-items-center" style="height: 100vh">
   <form class="user-form col-10 col-sm-10 col-md-8 col-lg-6" id="login-form">
@@ -17,6 +28,7 @@
   </form>
 </div>
 
+<%- include ('../foot') %>
 <script>
   $('#login-form').on('submit', (e) => {
     e.preventDefault();
