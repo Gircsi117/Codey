@@ -173,7 +173,9 @@ form {
     overflow-y: scroll;
 }
 
-
+.ing{
+    border-bottom: 2px solid var(--body);
+}
 
 /*Form*/
 .form-floating .form-control,
@@ -224,6 +226,14 @@ input::-webkit-datetime-edit-year-field:focus {
 .form-icon {
     border-radius: 0;
     cursor: pointer;
+}
+
+.fas{
+    user-select: none;
+}
+
+.fas::before{
+    padding-right: 10px;
 }
 
 .form-icon:hover,
@@ -419,6 +429,10 @@ body::-webkit-scrollbar-thumb {
 
     .container:nth-child(2){
         min-height: calc(100vh - 48px);
+    }
+
+    .fas{
+        text-align: center;
     }
 }
 

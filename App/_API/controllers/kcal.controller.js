@@ -93,14 +93,14 @@ exports.postWaterByUser = async (req, res) => {
 
     if (!foundItem) {
       const item = await Water.create({
-        mennyiseg: mennyiseg,
+        mennyiseg: Number(mennyiseg),
         datum: date,
         felhasznalo_id: id,
       });
       return res.send({ success: true, item: item });
     }
 
-    const item = await Water.update({ mennyiseg: foundItem.mennyiseg + mennyiseg }, { where: { felhasznalo_id: id, datum: date } });
+    const item = await Water.update({ mennyiseg: foundItem.mennyiseg + Number(mennyiseg) }, { where: { felhasznalo_id: id, datum: date } });
     return res.send({ success: true, item: item });
   } catch (error) {
     console.log(error);
@@ -112,17 +112,16 @@ exports.postSportByUser = async (req, res) => {
     const { id, mennyiseg, date } = req.body;
 
     const foundItem = await Sport.findOne({ where: { felhasznalo_id: id, datum: date } });
-
     if (!foundItem) {
       const item = await Sport.create({
-        mennyiseg: mennyiseg,
+        mennyiseg: Number(mennyiseg),
         datum: date,
         felhasznalo_id: id,
       });
       return res.send({ success: true, item: item });
     }
 
-    const item = await Sport.update({ mennyiseg: foundItem.mennyiseg + mennyiseg }, { where: { felhasznalo_id: id, datum: date } });
+    const item = await Sport.update({ mennyiseg: foundItem.mennyiseg + Number(mennyiseg) }, { where: { felhasznalo_id: id, datum: date } });
     return res.send({ success: true, item: item });
   } catch (error) {
     console.log(error);

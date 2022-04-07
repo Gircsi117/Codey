@@ -1,16 +1,379 @@
 <%- include("../header") %>
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
 <div class="container mt-2 mt-lg-3 top-p">
-    <%- include("../menu") %>
-    <div class="content row m-0 p-3">
-        <div class="content-wrapper p-3">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione voluptatum distinctio, perferendis ipsa ullam ab autem fuga expedita nobis ex aliquid consequuntur recusandae
-            necessitatibus nihil odit, amet, nulla quibusdam praesentium. Sunt, amet hic ad similique molestiae molestias ab adipisci! Veniam perferendis dolorem suscipit tenetur. Quas alias totam
-            reiciendis corporis, quaerat sit deserunt accusantium fuga, earum molestiae exercitationem architecto eligendi nobis.
+  <%- include("../menu") %>
+  <div class="content row flex-lg-row-reverse m-0 p-0 pt-3 pb-3">
+    <div class="col-12 col-lg-4">
+      <div class="content-wrapper p-3">
+        <button class="btn btn-warning col-12" id="foodFormBTN">Étkezés</button>
+        <button class="btn btn-warning col-12 mt-2" id="sportFormBTN">Testmozgás</button>
+        <button class="btn btn-warning col-12 mt-2" id="waterFormBTN">Folyadék</button>
+        <hr />
+        <h2 class="text-center">A mai nap adatai</h2>
+        <div class="row p-0 m-0">
+          <h4 class="fas fa-hamburger col-12 col-sm-4 col-lg-12" title="Bevitt kalória"><span id="todayFood">-</span> Kcal</h4>
+          <h4 class="fas fa-running col-12 col-sm-4 col-lg-12" title="Lemozgott kalória"><span id="todaySport">-</span> Kcal</h4>
+          <h4 class="fas fa-tint col-12 col-sm-4 col-lg-12" title="Bevitt folyadék"><span id="todayWater">-</span> dl</h4>
         </div>
+      </div>
     </div>
+
+    <div id="ingModal">
+      <div class="form-floating mb-2">
+        <input type="text" class="form-control" id="filterIngName" placeholder="Alma" />
+        <label for="name">Szűrés</label>
+      </div>
+      <div class="row" id="ingOptions"></div>
+    </div>
+    <div id="foodModal">
+      <div class="form-floating mb-2">
+        <input type="text" class="form-control" id="filterFoodName" placeholder="Alma" />
+        <label for="name">Szűrés</label>
+      </div>
+      <div class="row" id="foodOptions"></div>
+    </div>
+
+    <div class="col-12 col-lg-8 mt-3 mt-lg-0">
+      <div class="content-wrapper p-3" id="foodForm">
+        <h2>Étkezés felvétel</h2>
+        <div class="row">
+          <div class="col-12 col-md-6 p-1">
+            <button class="btn btn-warning col-12" id="addIngBTN">Hozzávaló felvétele</button>
+          </div>
+          <div class="col-12 col-md-6 p-1">
+            <button class="btn btn-warning col-12" id="addFoodBTN">Étel felvétele</button>
+          </div>
+        </div>
+        <hr />
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="foodName" placeholder="Alma" />
+          <label for="name">Étel megnevezése</label>
+        </div>
+        <div id="ingController">
+          <!--Hozzávalók-->
+        </div>
+        <button class="btn btn-success mt-3" id="saveFood">Étkezés mentése</button>
+      </div>
+
+      <div class="content-wrapper p-3 d-none" id="sportForm">
+        <h2>Sport felvétel</h2>
+        <hr />
+        <p><strong>A lesportolt kalóriák kiszámolását egy külső alkalmazás segítségével ajánljuk!</strong></p>
+        <div class="form-floating">
+          <input type="number" class="form-control" id="sport" placeholder="null" min="1" />
+          <label for="">Lemozgott kcal</label>
+        </div>
+        <button class="btn btn-success col-12 mt-2" id="saveSport">Sport felvétele</button>
+      </div>
+
+      <div class="content-wrapper p-3 d-none" id="waterForm">
+        <h2>Folyadék felvétel</h2>
+        <hr />
+        <p>Egy átlagos felnőtt ember napi folyadék szükséglete ~ 2 - 2.5 l</p>
+        <div class="form-floating">
+          <input type="number" class="form-control" id="water" placeholder="null" min="1" />
+          <label for="">Folyadék (dl)</label>
+        </div>
+        <button class="btn btn-success col-12 mt-2" id="saveWater">Folyadék felvétele</button>
+      </div>
+    </div>
+  </div>
 </div>
 <%- include("../foot") %>
-<script></script>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script>
+  var ingredients = [];
+  var foods = [];
+
+  setModal('ingModal', {
+    cim: 'Hozzávaló felvétele',
+    buttons: [{ type: 'secondary', id: 'back', text: 'Vissza' }],
+  });
+
+  setModal('foodModal', {
+    cim: 'Étel felvétele',
+    buttons: [{ type: 'secondary', id: 'back', text: 'Vissza' }],
+  });
+
+  //Formok cserélgetése
+  $('#foodFormBTN').on('click', () => {
+    $('#foodForm').removeClass('d-none');
+    $('#sportForm').addClass('d-none');
+    $('#waterForm').addClass('d-none');
+  });
+
+  $('#sportFormBTN').on('click', () => {
+    $('#foodForm').addClass('d-none');
+    $('#sportForm').removeClass('d-none');
+    $('#waterForm').addClass('d-none');
+  });
+
+  $('#waterFormBTN').on('click', () => {
+    $('#foodForm').addClass('d-none');
+    $('#sportForm').addClass('d-none');
+    $('#waterForm').removeClass('d-none');
+  });
+
+  //--------------------------------------------------------
+
+  $.ajax({ method: 'GET', url: 'tools/getIngredients' })
+    .done((res) => {
+      $('#ingOptions .addSelectIng').unbind();
+      $('#ingOptions').html('');
+      ingredients = res.data.ingredients;
+
+      ingredients.forEach((element) => {
+        $('#ingOptions').append(`
+                <div class="p-1 col-12 col-md-6 addSelectIngDiv">
+                    <button class="btn btn-warning col-12 addSelectIng" data-value="${element.id}">${element.nev}</button>    
+                </div>
+            `);
+      });
+
+      $('#ingOptions .addSelectIng').on('click', (event) => {
+        const id = $(event.currentTarget).data('value');
+        const selected = ingredients.find((x) => x.id == id);
+        addIngredient({ ing: selected.nev, value: 0 });
+      });
+
+      $('#filterIngName').on('keyup', () => {
+        $('#ingOptions .addSelectIngDiv').removeClass('d-none');
+
+        for (let i = 0; i < $('#ingOptions .addSelectIng').length; i++) {
+          var felirat = $('.addSelectIng').eq(i).html();
+          let data = $('#filterIngName').val();
+          if (!felirat.toLowerCase().includes(data.toLowerCase())) $('#ingOptions .addSelectIngDiv').eq(i).addClass('d-none');
+        }
+      });
+    })
+    .fail((err) => {
+      console.log(err);
+    })
+    .always(() => {});
+
+  const getTodayData = () => {
+    $.ajax({
+      method: 'post',
+      url: '/',
+      data: {
+        drinkToday: 1,
+        useToday: 1,
+        eatenToday: 1,
+      },
+    })
+      .done((res) => {
+        let todayFood = 0;
+        let todaySport = 0;
+        let todayWater = 0;
+
+        if (res.sports.length != 0)
+          res.sports.map((x) => {
+            todaySport += Number(x.mennyiseg);
+          });
+        if (res.waters.length != 0)
+          res.waters.map((x) => {
+            todayWater += Number(x.mennyiseg);
+          });
+
+        if (res.foods.length != 0) {
+          res.foods.forEach((element) => {
+            element.kcal.map((x) => {
+              todayFood += x.kcal * x.multiplier;
+            });
+          });
+        }
+
+        setTodayData({
+          food: Math.round(todayFood * 100) / 100,
+          sport: Math.round(todaySport * 100) / 100,
+          water: Math.round(todayWater * 100) / 100,
+        });
+      })
+      .fail((err) => {
+        console.log(err);
+      })
+      .always(() => {});
+  };
+
+  const getAllData = () => {
+    $.ajax({
+      method: 'post',
+      url: '/',
+      data: {
+        drinkToday: 1,
+        useToday: 1,
+        eatenToday: 0,
+      },
+    })
+      .done((res) => {
+        $('#foodOptions .addSelectFood').unbind();
+        $('#foodOptions').html('');
+        foods = [];
+
+        res.foods.map((x) => {
+          if (foods.find((y) => y.name == x.name) == null) foods.push(x);
+        });
+
+        foods.forEach((element) => {
+          $('#foodOptions').append(`
+                    <div class="p-1 col-12 col-md-6 addSelectFoodDiv">
+                        <button class="btn btn-warning col-12 addSelectFood" data-value="${element.id}">${element.name}</button>    
+                    </div>
+                `);
+        });
+
+        $('#filterFoodName').on('keyup', () => {
+          $('#foodOptions .addSelectFoodDiv').removeClass('d-none');
+
+          for (let i = 0; i < $('#foodOptions .addSelectFood').length; i++) {
+            var felirat = $('.addSelectFood').eq(i).html();
+            let data = $('#filterFoodName').val();
+            if (!felirat.toLowerCase().includes(data.toLowerCase())) $('#foodOptions .addSelectFoodDiv').eq(i).addClass('d-none');
+          }
+        });
+
+        $('#foodOptions .addSelectFood').on('click', (event) => {
+          if ($('.ing').length != 0 && !confirm('Ezzel törli az eddig felvett hozzávalókat. Folytatni kívánja?')) return;
+          $('#ingController').html('');
+          const id = $(event.currentTarget).data('value');
+          const selected = foods.find((x) => x.id == id);
+          $('#foodName').val(selected.name);
+
+          selected.hozzavalok.map((x, index) => {
+            addIngredient({ ing: x.nev, value: selected.kcal[index].multiplier * 100 });
+          });
+        });
+      })
+      .fail((err) => {
+        console.log(err);
+      })
+      .always(() => {});
+  };
+
+  //--------------------------------------------------------
+  getTodayData();
+  getAllData();
+
+  const setTodayData = (data) => {
+    if (data.food) $('#todayFood').html(data.food);
+    if (data.sport) $('#todaySport').html(data.sport);
+    if (data.water) $('#todayWater').html(data.water);
+  };
+
+  const addIngredient = (data) => {
+    $('.removeIng').unbind();
+    $('#ingController').append(`
+            <div class="ing col-12 p-3 d-flex flex-wrap">
+                <div class="form-floating col-12 col-md-7 col-lg-8">
+                    <input type="text" class="form-control" id="ingName" placeholder="null" readonly style="cursor: auto;" value="${data.ing}" />
+                    <label for="">Hozzávaló neve</label>
+                </div>
+                <div class="form-floating col-12 col-md-5 col-lg-4 mt-1 mt-md-0">
+                    <input type="number" class="form-control" id="ingValue" placeholder="null" min="1" value="${data.value}" />
+                    <label for="">Mennyiség (dkg)</label>
+                </div>
+                <button class="btn btn-danger mt-1 col-12 removeIng" data-value="${$('.ing').length}" id="">Eltávolítás</button>
+            </div>
+        `);
+
+    $('.removeIng').on('click', (event) => {
+      const index = $(event.currentTarget).data('value');
+
+      let datas = [];
+
+      for (let i = 0; i < $('.ing').length; i++) {
+        if (i == index) continue;
+        datas.push({ ing: $('.ing #ingName')[i].value, value: $('.ing #ingValue')[i].value });
+      }
+      $('#ingController').html('');
+
+      datas.forEach((element) => {
+        addIngredient({ ing: element.ing, value: element.value });
+      });
+    });
+  };
+
+  $('#addIngBTN').on('click', () => {
+    $('#ingModal').removeClass('d-none');
+  });
+
+  $('#addFoodBTN').on('click', () => {
+    $('#foodModal').removeClass('d-none');
+  });
+
+  $('#ingModal #back').on('click', () => {
+    $('#ingModal').addClass('d-none');
+  });
+
+  $('#foodModal #back').on('click', () => {
+    $('#foodModal').addClass('d-none');
+  });
+
+  //------------------------------------------------------------
+  $('#saveFood').on('click', () => {
+    if ($('#foodName').val() == '') return notify('Nem adtál meg étel nevet!');
+    if ($('.ing').length == 0) return notify('Adj leg legalább 1 hozzávalót!');
+    if (!confirm('Biztos felveszed az étkezést?')) return;
+
+    var food = {
+      name: $('#foodName').val(),
+      date: new Date(),
+      hozzavalok: [],
+    };
+
+    for (let i = 0; i < $('.ing').length; i++) {
+      food.hozzavalok.push({
+        hozzavalo_id: ingredients.find((x) => x.nev == $('.ing #ingName')[i].value).id,
+        szorzo: $('.ing #ingValue')[i].value / 100,
+      });
+    }
+
+    $.ajax({ method: 'POST', url: '/postFood', data: { food: food } })
+      .done((res) => {
+        if (res.success) {
+          notify('Étkezés sikeresen felvéve!', 'green');
+          getTodayData();
+          getAllData();
+        }
+      })
+      .fail((err) => {
+        notify('Sikertelen adatfelvétel!');
+      })
+      .always(() => {});
+  });
+
+  const saveSportOrWater = (data) => {
+    if ($(`#${data.toLowerCase()}`).val() == '') return notify('Nem adtál meg adatot!');
+    if (!confirm('Bizos felveszi az adatot?')) return;
+
+    $.ajax({
+      method: 'POST',
+      url: `/post${data}`,
+      data: {
+        mennyiseg: Number($(`#${data.toLowerCase()}`).val()),
+        date: new Date(),
+      },
+    })
+      .done((res) => {
+        if (res.success) {
+          notify('Adatok sikeresen felvéve!', 'green');
+          getTodayData();
+        }
+      })
+      .fail((err) => {
+        notify('Sikertelen adatfelvétel!');
+      })
+      .always(() => {});
+  };
+
+  $('#saveSport').on('click', () => {
+    saveSportOrWater('Sport');
+  });
+
+  $('#saveWater').on('click', () => {
+    saveSportOrWater('Water');
+  });
+</script>
 
 <%- include("../footer") %>
