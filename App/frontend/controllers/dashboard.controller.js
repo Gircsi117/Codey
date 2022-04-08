@@ -47,7 +47,7 @@ exports.postWater = (req, res) => {
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/postWaterByUser',
+    url: 'http://localhost:3001/kcal/postWaterByUser',
     headers: { apisecret: process.env.API_SECRET },
     data: { id, mennyiseg, date },
   })
@@ -64,7 +64,7 @@ exports.postSport = (req, res) => {
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/postSportByUser',
+    url: 'http://localhost:3001/kcal/postSportByUser',
     headers: { apisecret: process.env.API_SECRET },
     data: { id, mennyiseg, date },
   })
@@ -81,7 +81,7 @@ exports.postFood = (req, res) => {
   const id = req.session.user.id;
   axios({
     method: 'POST',
-    url: 'http://localhost:3001/postFoodByUser',
+    url: 'http://localhost:3001/kcal/postFoodByUser',
     headers: { apisecret: process.env.API_SECRET },
     data: { id, food },
   })

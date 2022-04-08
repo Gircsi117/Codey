@@ -81,6 +81,7 @@
         $("#etkezes").html(toTable({datas: foodTableData, isFunc: false, headers:["Név", "Mennyiség (kcal)", "Dátum"], tableID:"etelekTable"}))
         tableHide({table:"etelekTable", item:"hozzavalok"});
         tableHide({table:"etelekTable", item:"id"});
+        tableItemEdit({ table: 'etelekTable', item: 'kcal', param: '0', result1: "Number(text).toFixed(2)" });
     })
     .fail((err)=>{
 

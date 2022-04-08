@@ -256,9 +256,9 @@
   getAllData();
 
   const setTodayData = (data) => {
-    if (data.food) $('#todayFood').html(data.food);
-    if (data.sport) $('#todaySport').html(data.sport);
-    if (data.water) $('#todayWater').html(data.water);
+    if (data.food) $('#todayFood').html(Math.floor(data.food * 100) / 100);
+    if (data.sport) $('#todaySport').html(Math.floor(data.sport * 100) / 100);
+    if (data.water) $('#todayWater').html(Math.floor(data.water * 100) / 100);
   };
 
   const addIngredient = (data) => {

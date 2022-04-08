@@ -66,7 +66,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-success col-12" id="calcBMI">Számítás</button>
+                    <button type="button" class="btn btn-success col-12" id="calcBMI">Számítás és módosítás</button>
                 </div>
                 <div class="col-12 col-md-6 p-3 d-flex align-items-center" id="bmiAdatok">
                     <!--BMI táblázat-->
@@ -111,7 +111,7 @@
         let suly = (magassag - 100) * (nem == 1 ? 1 : 0.9);
         
         $("#idealis").html(toTable({
-            datas:[{suly: `${suly} kg`, tartomany:`${suly * 0.95} - ${suly * 1.05}`}],
+            datas:[{suly: `${suly} kg`, tartomany:`${(suly * 0.95).toFixed(2)} - ${(suly * 1.05).toFixed(2)}`}],
             headers: ["Ideális súly", "Optimális tartomány"]
         }))
         $("#bmi").show();
@@ -199,6 +199,7 @@
         })
 
         $("#calcBMI").on("click", ()=>{
+            felvisz = true;
             calcBMI();
         })
     })
