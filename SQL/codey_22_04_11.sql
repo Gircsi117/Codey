@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Már 07. 13:13
--- Kiszolgáló verziója: 10.4.6-MariaDB
--- PHP verzió: 7.3.8
+-- Létrehozás ideje: 2022. Ápr 11. 11:43
+-- Kiszolgáló verziója: 10.4.19-MariaDB
+-- PHP verzió: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,7 +43,8 @@ CREATE TABLE `blogok` (
 --
 
 INSERT INTO `blogok` (`id`, `cim`, `tartalom`, `felhasznalo_id`, `idopont`, `status`) VALUES
-(1, 'Ez a cim', 'ghuzfgrugruzgrufzg eugtrutgeurtg zgrtuegtu', 2, '2022-02-20 13:36:45', 0);
+(3, 'Teszt cim 1', 'Teszt tartalom', 7, '2022-04-11 07:57:45', 1),
+(4, 'Teszt cim 2', 'Ez a teszt cim', 7, '2022-04-11 08:59:45', 0);
 
 -- --------------------------------------------------------
 
@@ -63,10 +64,7 @@ CREATE TABLE `etelek` (
 --
 
 INSERT INTO `etelek` (`id`, `nev`, `hozzadva`, `felhasznalo_id`) VALUES
-(1, 'Alma', '2022-03-03', 1),
-(2, 'Krumpripaprikás', '2022-03-03', 1),
-(3, 'Bableves', '2022-02-28', 1),
-(6, 'Paprika', '2022-03-01', 1);
+(7, 'Krumplis csirke', '2022-04-11', 7);
 
 -- --------------------------------------------------------
 
@@ -86,12 +84,9 @@ CREATE TABLE `etelek_x_hozzavalok` (
 --
 
 INSERT INTO `etelek_x_hozzavalok` (`id`, `etel_id`, `hozzavalo_id`, `adag_szorzo`) VALUES
-(1, 1, 1, 2.3),
-(2, 2, 2, 3),
-(3, 2, 3, 1),
-(4, 3, 2, 0.1),
-(5, 3, 3, 1.5),
-(6, 6, 3, 1);
+(7, 7, 30, 0.05),
+(8, 7, 17, 0.4),
+(9, 7, 24, 0.5);
 
 -- --------------------------------------------------------
 
@@ -116,11 +111,11 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`id`, `nev`, `email`, `nem`, `password`, `jogosultsag`, `reg_token`, `magassag`, `cel_suly`) VALUES
-(1, 'gilianerik1107@gmail.com', 'gilianerik1107@gmail.com', NULL, '$2b$10$ljYf4KnGRJe7eGjdgN8GYOuWZWG0p.qbXlapM96bxZXeXZdw54JWq', 2, '', NULL, 50),
-(2, 'kagi', 'teszt1@teszt.hu', NULL, '$2b$10$QWVHcrKnqnWiU6ojwTPgSed03IXlYKctuSrC5H5WwsT9f5l7H2k12', 0, '', NULL, NULL),
-(3, 'teszt2@teszt.hu', 'teszt2@teszt.hu', NULL, '$2b$10$95C1qTyo926.05bDcg/MC.cpLPs2nf.TCmzAWHGF38.WvK64JzaZu', 0, '', NULL, NULL),
-(4, 'teszt3@teszt.hu', 'teszt3@teszt.hu', NULL, '$2b$10$Or5Xk8cL.k1YE2.IJel8uOgfDnmzoXBjRn6ZU6URUIn/SoJUOJPUO', 0, '', NULL, NULL),
-(6, 'bekagi', 'asd@asd.asd', NULL, '$2b$10$NDkJlaj/KNcdfaE8lCDmyOdzXZU9t4Z5BojRVAPiQ.SE/a5LU5sAm', 0, 'yf9RNreZBX0vjeZAjcAR4r8g3JVYqaEy', NULL, NULL);
+(7, 'Admin', 'admin@admin.hu', 1, '$2b$10$Rk/R1QPNwgyH3H5c/OLIsug6fDghkNTbmKeANR6wdh8OUHYBN3UVy', 2, '', 180, 70),
+(8, 'Moderator', 'moderator@moderator.hu', 0, '$2b$10$8lqrX.CsQpgl3OJWR82Ca.nwQfOWBTRgXu7iIWe9cZgeLzr2lmgHi', 1, '', 165, 60),
+(9, 'Teszt1', 'teszt1@teszt.hu', 1, '$2b$10$RaPFAB1MIwSQzTZN.DjQ6uNdH0BkIjc7W9YKjnlUwpLj7K1LI.2qS', 0, '', 170, 70),
+(10, 'Teszt2', 'teszt2@teszt.hu', 0, '$2b$10$zF3Kww.9L4qt9E0rtAQkNeutmUwS597778FGY5ODGrCue4nsUJ5s2', 0, '', NULL, NULL),
+(11, 'Teszt3', 'teszt3@teszt.hu', NULL, '$2b$10$r3MN/Y1PJKhtSgJTioc5tuLlye8OOkUr30B0dXk0otwtGbAyMusly', 0, '1HHiNrr76OxTEVV3xhYpVwo7BU8jiLmw', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -140,10 +135,7 @@ CREATE TABLE `folyadek_bevitel` (
 --
 
 INSERT INTO `folyadek_bevitel` (`id`, `mennyiseg`, `datum`, `felhasznalo_id`) VALUES
-(2, 13, '2022-02-15', 1),
-(3, 45, '2022-02-14', 1),
-(4, 3000, '2022-02-13', 1),
-(5, 90, '2022-02-16', 1);
+(7, 12, '2022-04-11', 7);
 
 -- --------------------------------------------------------
 
@@ -166,10 +158,35 @@ CREATE TABLE `hozzavalok` (
 --
 
 INSERT INTO `hozzavalok` (`id`, `nev`, `kcal`, `feherje`, `szenhidrat`, `zsir`, `ehetoe_magaban`) VALUES
-(1, 'Alma', 123, 123, 123, 123, 1),
-(2, 'Krumpli', 75, 100, 100, 100, 0),
-(3, 'Paprika', 100, 100, 100, 100, 1),
-(5, 'Borsó', 555, 555, 555, 555, 0);
+(6, 'Alma', 50, 50, 50, 50, 1),
+(7, 'Körte', 50, 50, 50, 50, 1),
+(8, 'Barack', 50, 50, 50, 50, 1),
+(9, 'Szőlő', 50, 50, 50, 50, 1),
+(10, 'Eper', 50, 50, 50, 50, 1),
+(11, 'Cseresznye', 50, 50, 50, 50, 1),
+(12, 'Mogyoró', 50, 50, 50, 50, 1),
+(13, 'Dinnye', 50, 50, 50, 50, 1),
+(14, 'Tök', 50, 50, 50, 50, 1),
+(15, 'Csirkemell', 100, 100, 100, 100, 0),
+(16, 'Csirke comb', 100, 100, 100, 100, 0),
+(17, 'Csirke szárny', 100, 100, 100, 100, 0),
+(18, 'Mahahús', 120, 120, 120, 120, 0),
+(19, 'Disznóhús', 130, 130, 130, 130, 0),
+(20, 'Só', 10, 0, 0, 0, 1),
+(21, 'Cukor', 20, 0, 0, 0, 1),
+(22, 'Répa', 40, 0, 40, 0, 1),
+(23, 'Brokkoli', 40, 0, 40, 0, 1),
+(24, 'Krumpli', 40, 0, 40, 0, 1),
+(25, 'Uborka', 40, 0, 40, 0, 1),
+(26, 'Vörös hagyma', 40, 0, 40, 0, 1),
+(27, 'Lila hagyma', 45, 0, 40, 0, 1),
+(28, 'Margarin', 20, 20, 20, 20, 0),
+(29, 'Májkrém', 20, 20, 20, 20, 0),
+(30, 'Tej', 5, 5, 5, 5, 0),
+(31, 'Nutella', 30, 30, 0, 30, 1),
+(32, 'Fehér kenyér', 20, 20, 20, 20, 1),
+(33, 'Barna kenyér', 20, 20, 20, 15, 1),
+(34, 'Jégkrém', 36, 36, 5, 36, 1);
 
 -- --------------------------------------------------------
 
@@ -189,7 +206,7 @@ CREATE TABLE `testmozgasok` (
 --
 
 INSERT INTO `testmozgasok` (`id`, `felhasznalo_id`, `datum`, `mennyiseg`) VALUES
-(1, 1, '2022-02-15', 3000);
+(3, 7, '2022-04-11', 25);
 
 -- --------------------------------------------------------
 
@@ -209,8 +226,7 @@ CREATE TABLE `testsulyok` (
 --
 
 INSERT INTO `testsulyok` (`id`, `suly`, `datum`, `felhasznalo_id`) VALUES
-(1, 100, '2022-03-03', 1),
-(2, 90, '2022-03-04', 1);
+(3, 80, '2022-04-11', 7);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -283,49 +299,49 @@ ALTER TABLE `testsulyok`
 -- AUTO_INCREMENT a táblához `blogok`
 --
 ALTER TABLE `blogok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT a táblához `etelek`
 --
 ALTER TABLE `etelek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT a táblához `etelek_x_hozzavalok`
 --
 ALTER TABLE `etelek_x_hozzavalok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT a táblához `felhasznalok`
 --
 ALTER TABLE `felhasznalok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT a táblához `folyadek_bevitel`
 --
 ALTER TABLE `folyadek_bevitel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT a táblához `hozzavalok`
 --
 ALTER TABLE `hozzavalok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT a táblához `testmozgasok`
 --
 ALTER TABLE `testmozgasok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `testsulyok`
 --
 ALTER TABLE `testsulyok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Megkötések a kiírt táblákhoz
@@ -366,7 +382,7 @@ ALTER TABLE `testmozgasok`
 -- Megkötések a táblához `testsulyok`
 --
 ALTER TABLE `testsulyok`
-  ADD CONSTRAINT `testsulyok_ibfk_1` FOREIGN KEY (`felhasznalo_id`) REFERENCES `felhasznalok` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `testsulyok_ibfk_1` FOREIGN KEY (`felhasznalo_id`) REFERENCES `felhasznalok` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

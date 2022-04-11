@@ -1,20 +1,19 @@
 <%- include("../header") %>
-<style>
-    @media only screen and (max-width: 768px) {
-        .fn .btn {
-            width: 100%;
-            margin: 0 0 10px 0;
-        }
-
-        .fn .btn:nth-child(3) {
-            margin-bottom: 0px;
-        }
-    }
-</style>
 <h1 style="color: red; text-align: center" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
 <div class="container mt-2 mt-lg-3 top-p">
     <%- include("../menu") %>
-
+    <style>
+        @media only screen and (max-width: 768px) {
+            .fn .btn {
+                width: 100%;
+                margin: 0 0 10px 0;
+            }
+    
+            .fn .btn:nth-child(3) {
+                margin-bottom: 0px;
+            }
+        }
+    </style>
     <div class="content row m-0 p-3">
         <div class="content-wrapper p-3 fn">
             <button class="btn btn-warning" id="allBlogsBTN">Összes blog</button>
@@ -39,7 +38,6 @@
         </div>
     </div>
 </div>
-
 <%- include("../foot") %>
 
     <script>
