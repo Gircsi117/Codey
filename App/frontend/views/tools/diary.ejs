@@ -101,6 +101,9 @@
     .always(()=>{})
 
     function szures() {
+        if($("#tolDate").val() == "" || $("#igDate").val() == "") return notify("Nem adtál meg intervallumot!")
+        if(new Date($("#tolDate").val()).getTime() > new Date($("#igDate").val()).getTime()) return notify("A kezdet nem lehet nagyobb mit a vég!")
+        
         tableFilter(
             {table:"etelekTable",
             item:"date",

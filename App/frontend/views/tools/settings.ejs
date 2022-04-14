@@ -122,6 +122,7 @@
     });
 
     $('#nevEdit').on('click', () => {
+      if($('#name').val() == "") return notify("Nem adtál meg nevet!");
       $.ajax({ method: 'POST', url: './modifyUsername', data: { username: $('#name').val() } })
         .done((res) => {
           if (res.data.success) {
@@ -129,7 +130,7 @@
             return notify('Adatok sikeresen mentve', 'green');
           }
 
-          return notify(res.data.errors);
+          return notify("Adatok mentése sikertelen!");
         })
         .fail((err) => {
           return notify('Sikertelen mentés!');

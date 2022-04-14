@@ -313,7 +313,7 @@
   //------------------------------------------------------------
   $('#saveFood').on('click', () => {
     if ($('#foodName').val() == '') return notify('Nem adtál meg étel nevet!');
-    if ($('.ing').length == 0) return notify('Adj leg legalább 1 hozzávalót!');
+    if ($('.ing').length == 0) return notify('Adj meg legalább 1 hozzávalót!');
     if (!confirm('Biztos felveszed az étkezést?')) return;
 
     var food = {
