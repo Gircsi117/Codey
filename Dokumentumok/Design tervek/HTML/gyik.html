@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="hu" ng-app="CodyApp" ng-init="page='GYIK'">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./Img/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1 style="color: red; text-align: center;" class="error">Az oldal nem támogatja ezt a képernyő szélességet</h1>
+    <div class="container mt-0 mt-sm-3">
+
+        <menu></menu>
+        <div class="content row m-0 p-3" ng-controller="gyikCtrl">
+
+            <gyik-item
+                ng-repeat="item in kerdesek"
+                kerdes="{{item.kerdes}}"
+                valasz="{{item.valasz}}"
+            ></gyik-item>
+                
+        </div>
+        <own-footer></own-footer>
+
+    </div>
+
+    <script src="./js/systemJs/angular.min.js"></script>
+    <script src="./js/systemJs/bootstrap.js"></script>
+    <script src="./js/systemJs/jquery-3.6.0.min.js"></script>
+    <script src="./js/systemJs/jquery-ui.min.js"></script>
+    <script src="./js/code.js"></script>
+    <script src="./js/controllers.js"></script>
+    <script src="./js/directives.js"></script>
+    <script src="./js/filters.js"></script>
+</body>
+</html>
