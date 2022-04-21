@@ -37,7 +37,7 @@ exports.postSetUserData = async (req, res) => {
 
     let errors = [];
 
-    if (!email || !username || !status) errors.push('Tölts ki minden mezőt');
+    if (!email || !username || status === null) errors.push('Tölts ki minden mezőt');
 
     if (errors.length < 1) {
       const existEmail = await User.findOne({ where: { email: email, id: { [Op.not]: id } } });
