@@ -32,7 +32,7 @@ exports.postModifyPassword = async (req, res) => {
     const hasUpperLowerCase = RegExp(/(?=.*[a-z])(?=.*[A-Z])/);
 
     if (errors.length < 1) {
-      if (!Lenght.test(password1)) errors.push('A jelszónak min. 8 max. 32 karakter hosszúságú lehet');
+      if (!Lenght.test(password1)) errors.push('A jelszónak min. 8 max. 32 karakternek kell lennie');
       if (!hasNumber.test(password1)) errors.push('A jelszónak tartalmaznia kell számot');
       if (!hasUpperLowerCase.test(password1)) errors.push('A jelszónak tartalmaznia kell kis- és nagybetűket is');
     }

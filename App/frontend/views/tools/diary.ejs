@@ -91,7 +91,7 @@
     $.ajax({method:"GET", url:"./getWeights"})
     .done((res)=>{
         console.log(res.data.allWeights);
-        $("#suly").html(toTable({datas: res.data.allWeights, headers:[ "Súly", "Dátum"], tableID:"sulyTable"}))
+        $("#suly").html(toTable({datas: res.data.allWeights, headers:[ "Súly (kg)", "Dátum"], tableID:"sulyTable"}))
         tableHide({table:"sulyTable", item:"felhasznalo_id"});
         tableHide({table:"sulyTable", item:"id"});
     })
